@@ -1,18 +1,14 @@
-import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
-import Footer from '../components/Footer';
-import Main from '../components/Main';
+import React from "react";
+import Hero from "../components/Hero";
+import Main from "../components/Main";
 
-function Home() {
-    return (
-        <div>
-            <Navbar />
-            <Hero />
-            <Main />
-            <Footer />
-        </div>
-    );
-}
+const Home = () => {
+  return (
+    <>
+      <Hero />
+      <Main />
+    </>
+  );
+};
 
 export default Home;
-
