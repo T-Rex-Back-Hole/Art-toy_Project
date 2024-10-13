@@ -13,23 +13,23 @@ const Main = () => {
         >
           <img
             src="./images/qq.png"
-            alt=""
-            className="container-toy w-40 pb-5 lg:w-2/12 lg:pb-0 "
+            alt="" id="refer-img"
+            className="container-toy w-40 pb-5 lg:w-2/12 lg:pb-0 refer-img "
           />
           <img
             src="./images/ddd.png"
-            alt=""
-            className="container-toy hidden lg:inline"
+            alt="" id="refer-img"
+            className="container-toy hidden lg:inline refer-img"
           />
           <img
             src="./images/uu.png"
-            alt=""
-            className="container-toy hidden lg:inline"
+            alt="" id="refer-img"
+            className="container-toy hidden lg:inline refer-img"
           />
           <img
             src="./images/ii.png"
-            alt=""
-            className="container-toy hidden lg:inline"
+            alt="" id="refer-img"
+            className="container-toy hidden lg:inline refer-img"
           />
 
           <i
@@ -93,7 +93,7 @@ const Main = () => {
           </div>
           <div
             id="box-right"
-            className="flex flex-col justify-center text-center m-6 lg:m-0 lg:w-1/2 lg:p-12"
+            className="flex flex-col justify-center text-center m-6 shadow-lg p-6 rounded-xl lg:shadow-none lg:m-0 lg:w-1/2 lg:p-12"
           >
             <div id="right-img" className="flex justify-center">
               <img src="./images/toy1.png" alt="" className="w-1/2" />

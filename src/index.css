@@ -18,4 +18,7 @@
   .container-toy {
     @apply lg:w-2/12 lg:h-auto
   }
+  .refer-img {
+    @apply transform transition-transform duration-300 lg:hover:scale-110
+  }
 }
