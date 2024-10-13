@@ -20,7 +20,7 @@ const Contact = () => {
               <textarea name="" id="text-area" rows="4" placeholder="Message" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none" ></textarea>
             </div>
             <div id="btn-contact" className="flex w-full">
-              <button type="submit" class="w-full bg-purple-500 text-white py-3 px-6 mb-12 rounded-md hover:bg-purple-600 focus:outline-none">
+              <button type="submit" class="w-full bg-[#B47AEA] text-white py-3 px-6 mb-12 rounded-md hover:bg-purple-600 focus:outline-none">
                       Send message
               </button>
             </div>
@@ -35,7 +35,7 @@ const Contact = () => {
             </div>
             <div id="subscribe-email" className='flex justify-center'>
               <input type="email" placeholder='E-mail' className="w-96 m-4 px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none" />
-              <button type="submit" id='subscribe-btn' className="bg-[#B47AEA] px-12 py-2 m-4 rounded-md text-white font-semibold text-xl">Subscribe</button>
+              <button type="submit" id='subscribe-btn' className="bg-[#B47AEA] px-12 py-2 m-4 rounded-md text-white hover:bg-purple-600 focus:outline-none font-semibold text-xl">Subscribe</button>
             </div>
           </section>
 

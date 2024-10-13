@@ -4,12 +4,16 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <>
-      <nav className="bg-gray-800 p-4 flex justify-between items-center">
+      <nav className="bg-black p-4 flex justify-between items-center">
         <Link to="/">
-          <div className="text-white font-bold">Art-Toy โว้ย</div>
+        <div id="logo" className="flex items-center pl-8">
+          <img src="./images/dino.png" alt="" className="w-10 mx-auto mr-5"/>
+          <div className="text-[#B47AEA] text-2xl font-bold">T-Rex BlackHole</div>
+        </div>
         </Link>
+
         <div className="flex items-center">
-          <input type="text" placeholder="Search..." className="p-2 rounded" />
+          <input type="text" placeholder="Search..." className="w-96 m-4 px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none" />
           <Link to="/login">
             <button className="ml-4 bg-blue-500 text-white p-2 rounded">
               Login
