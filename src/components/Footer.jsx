@@ -14,7 +14,7 @@ const Footer = () => {
             appreciate unique designs, our curated selection is sure to inspire
             and ignite your creativity. Start your journey with us today."
           </p>
-          <button id="fllow-btn" className="bg-[#B47AEA] p-2 rounded-md font-semibold text-xl w-72 mt-10">
+          <button id="fllow-btn" className="bg-[#B47AEA] p-2 rounded-md font-semibold text-xl w-72 mt-10 hover:bg-purple-600 focus:outline-none">
             <i className="fa-solid fa-heart pr-5 text-[#FFA4D5] text-xl"></i>Follow on Shop</button>
         </div>
 
