@@ -15,4 +15,10 @@
   .nav-icon {
     @apply text-[#B47AEA] text-2xl active:text-[#5BDEE7]
   }
+  .container-toy {
+    @apply lg:w-2/12 lg:h-auto
+  }
+  .refer-img {
+    @apply transform transition-transform duration-300 lg:hover:scale-110
+  }
 }
