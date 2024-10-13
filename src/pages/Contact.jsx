@@ -3,29 +3,28 @@ import React from 'react'
 const Contact = () => {
   return (
     <>
+
       <div className="font-bold text-5xl text-center my-12">Contact</div>
-          <form className="flex flex-col justify-center space-y-4 w-1/2">
+      <section id="form" className="flex justify-center">
+                <form className="flex flex-col justify-center space-y-4 w-1/2">
 
-            <div id="name-email-input" className="flex flex-col justify-center md:flex-row md:space-x-4">
-              <div id="input-name" className="w-full md:w-1/2">
-                  <input id="name" type="text" placeholder="Name" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none"/>
-              </div>
+          <div id="name-email-input" className="flex justify-center md:flex-row md:space-x-4">
+                <input id="name" type="text" placeholder="Name" className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none"/>
+                <input id="email" type="email" placeholder="E-mail" className="w-full md:w-1/2 mt-4 md:mt-0 px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none"/>
+          </div>
 
-              <div id="input-email" className="w-full md:w-1/2 mt-4 md:mt-0">
-                  <input id="email" type="email" placeholder="E-mail" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none"/>
-              </div>
-            </div>
-
-            <div id="text-area" className="w-full">
-              <textarea name="" id="text-area" rows="4" placeholder="Message" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none" ></textarea>
-            </div>
-            <div id="btn-contact" className="flex w-full">
-              <button type="submit" class="w-full bg-[#B47AEA] text-white py-3 px-6 mb-12 rounded-md hover:bg-purple-600 focus:outline-none">
-                      Send message
-              </button>
-            </div>
+          <div id="text-area" className="w-full">
+            <textarea name="" id="text-area" rows="4" placeholder="Message" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none" ></textarea>
+          </div>
+          <div id="btn-contact" className="flex w-full">
+            <button type="submit" class="w-full bg-[#B47AEA] text-white py-3 px-6 mb-12 rounded-md hover:bg-purple-600 focus:outline-none">
+                    Send message
+            </button>
+          </div>
 
           </form>
+      </section>
+          
 
           <section id="subscribe" className="bg-[#F7F7F7] p-8">
             <div id="container-text" className='flex flex-col justify-center text-center'>
