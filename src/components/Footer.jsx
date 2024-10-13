@@ -6,7 +6,7 @@ const Footer = () => {
       <footer className="bg-black p-4 text-white text-center">
         <div id="footer-container" className="flex flex-col lg:flex-row items-center">
         <div id="footer-left" className="flex flex-col p-4 lg:w-6/12 lg:p-10">
-          <h1 className="font-bold text-2xl lg:text-4xl text-[#B47AEA] lg:text-left lg:mt-6">Art toy : Exclusive Designer Toys & Collectibles</h1>
+          <h1 className="font-bold text-xl lg:text-4xl text-[#B47AEA] lg:text-left lg:mt-6">Art toy : Exclusive Designer Toys & Collectibles</h1>
           <p className="text-justify mt-6">
             "Explore a world of exclusive designer toys and figurines from
             renowned brands such as Tokidoki, Medicom Toy, Toy2R, and our very
@@ -14,7 +14,7 @@ const Footer = () => {
             appreciate unique designs, our curated selection is sure to inspire
             and ignite your creativity. Start your journey with us today."
           </p>
-          <button id="fllow-btn" className="bg-[#B47AEA] p-2 rounded-md font-semibold text-xl w-72 mt-10 hover:bg-purple-600 focus:outline-none">
+          <button id="fllow-btn" className="bg-[#B47AEA] p-2 rounded-md font-semibold text-xl w-72 mt-10 lg:hover:bg-purple-600 focus:outline-none">
             <i className="fa-solid fa-heart pr-5 text-[#FFA4D5] text-xl"></i>Follow on Shop</button>
         </div>
 
