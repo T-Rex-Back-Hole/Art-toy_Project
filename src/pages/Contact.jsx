@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
 
 const Contact = () => {
   return (
     <>
-
       <div className="font-bold text-5xl text-center my-12">Contact</div>
       <section id="form" className="flex flex-col justify-center lg:flex-row lg:justify-center">
                 <form className="flex flex-col px-4 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0">
@@ -21,10 +20,8 @@ const Contact = () => {
                     Send message
             </button>
           </div>
-
-          </form>
+        </form>
       </section>
-          
 
           <section id="subscribe" className="bg-[#F7F7F7] p-8">
             <div id="container-text" className='flex flex-col justify-center text-center'>
@@ -70,8 +67,7 @@ const Contact = () => {
       
       
     </>
-    
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;
