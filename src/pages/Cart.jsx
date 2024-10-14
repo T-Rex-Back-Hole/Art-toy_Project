@@ -25,7 +25,7 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <Link to="/">
+                    <Link to="/detail-model">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Art toy/dd.png"
@@ -98,7 +98,7 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <Link to="/">
+                    <Link to="/detail-model">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Hero/06.png"
@@ -171,7 +171,7 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <Link to="/">
+                    <Link to="/detail-model">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Art toy/aaa.png"
@@ -244,7 +244,7 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <Link to="/">
+                    <Link to="/detail-model">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Art toy/ee.png"
@@ -317,7 +317,7 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <Link to="/">
+                    <Link to="/detail-model">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Art toy/aa.png"
@@ -390,7 +390,7 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <Link to="/">
+                    <Link to="/detail-model">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Hero/07.png"
