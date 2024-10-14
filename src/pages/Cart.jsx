@@ -4,9 +4,9 @@ const Cart = () => {
   return (
     <>
       <section className="bg-white mt-3 antialiased lg:flex lg:justify-center mx-auto">
-        <div className="max-w-screen-xl lg:w-2/4 px-4 2xl:px-0 space-y-2 lg:mr-2">
+        <div className="max-w-screen-xl lg:w-2/4 px-4 2xl:px-0 space-y-2 lg:mr-2 mb-10">
             <div className="w-full flex-none lg:max-w-2xl xl:max-w-4xl">
-              <h2 className="flex justify-center items-center mb-3 font-bold text-3xl">
+              <h2 className="flex justify-center items-center my-5 lg:my-8 font-bold text-3xl text-shadow">
                 MY CART
               </h2>
               <div className="space-y-2">
@@ -14,7 +14,7 @@ const Cart = () => {
                 <div className="flex justify-between items-center rounded-lg border py-2 border-gray-200 bg-white shadow-md">
                   <div className="flex items-center">
                     <input type="checkbox" className="ml-2" />
-                    <h1 className="mb-1 font-semibold ml-2">Select All</h1>
+                    <h1 className="font-semibold ml-2">Select All</h1>
                   </div>
                   <i className="fa-solid fa-trash text-red-600 mr-8"></i>
                 </div>
@@ -461,7 +461,7 @@ const Cart = () => {
             </div>
           </div>
           
-          <div className="mt-4 max-w-4xl lg:max-w-80 flex-1 space-y-4 sticky bottom-0 lg:static lg:mt-[3rem]">
+          <div className="mt-4 max-w-4xl lg:max-w-80 flex-1 space-y-4 sticky bottom-0 lg:static lg:mt-[6.25rem]">
             <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-md  sm:p-6">
               <p className="text-xl font-semibold text-gray-900">
                 Order summary
