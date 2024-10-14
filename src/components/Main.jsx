@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 const Main = () => {
   return (
@@ -14,13 +15,15 @@ const Main = () => {
           <img
             src="./images/qq.png"
             alt="" id="refer-img"
-            className="container-toy w-40 pb-5 lg:w-2/12 lg:pb-0 refer-img "
+            className="w-1/2 lg:container-toy lg:inline refer-img"
           />
+          
           <img
             src="./images/ddd.png"
             alt="" id="refer-img"
             className="container-toy hidden lg:inline refer-img"
           />
+
           <img
             src="./images/uu.png"
             alt="" id="refer-img"
@@ -61,7 +64,7 @@ const Main = () => {
             className="flex flex-col justify-center lg:w-2/5 bg-[#B47AEA] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
             <img src="./images/cc.png" alt="" className="" />
-            <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
+            <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-18 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
               ART TOY
             </button>
           </div>
@@ -70,7 +73,7 @@ const Main = () => {
             className="flex flex-col justify-center lg:w-2/5 bg-[#5BDEE7] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
             <img src="./images/dead564.png" alt="" className="" />
-            <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
+            <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-18 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
               HERO
             </button>
           </div>
