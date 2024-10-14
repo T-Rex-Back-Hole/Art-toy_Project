@@ -15,17 +15,17 @@ const Navbar = () => {
         <div id="menu-icon" className="flex justify-between my-2 lg:my-0 lg:justify-between lg:items-center">
           <div id="search">
             <input type="text" placeholder="Search..." className="hidden lg:w-64 lg:inline m-4 px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none" />
-            <i className="fa-solid fa-magnifying-glass nav-icon cursor-pointer px-4"></i>
+            <i className="fa-solid fa-magnifying-glass nav-icon cursor-pointer px-4 lg:hover:text-purple-600"></i>
           </div>
           
           <Link to="/login">
-            <i className="fa-solid fa-user nav-icon px-4"></i>
+            <i className="fa-solid fa-user nav-icon px-4 lg:hover:text-purple-600"></i>
           </Link>
           <Link to="/contact">
-            <i className="fa-solid fa-phone nav-icon px-4"></i>
+            <i className="fa-solid fa-phone nav-icon px-4 lg:hover:text-purple-600"></i>
           </Link>
           <Link to="/cart">
-            <i className="fa-solid fa-cart-shopping nav-icon px-4"></i>
+            <i className="fa-solid fa-cart-shopping nav-icon px-4 lg:hover:text-purple-600"></i>
           </Link>
         </div>
       </nav>

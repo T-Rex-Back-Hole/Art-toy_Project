@@ -34,11 +34,11 @@ const Main = () => {
 
           <i
             id="arrow-r"
-            className="absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600"
+            className="absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
           ></i>
           <i
             id="arrow-r"
-            className="absolute fa-solid fa-circle-chevron-left text-3xl left-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600"
+            className="absolute fa-solid fa-circle-chevron-left text-3xl left-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
           ></i>
         </div>
         <div id="refer-btn" className="flex justify-center my-8">
@@ -166,28 +166,28 @@ const Main = () => {
         <h1 className="text-center text-white text-4xl font-bold mb-6 lg:text-5xl lg:mb-12">Art toy: Q&A</h1>
         <div id="container-qa" className="flex flex-col justify-center lg:px-12">
 
-            <div id="box-qa1" className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center">
+            <div id="box-qa" className="box-qa">
                 <p className="text-sm lg:text-xl">What is our Art Toy store all about?</p>
                 <div id="qa-btn" className="">
-                    <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"></i>
+                    <i id="qa-btni" className="fa-solid fa-circle-plus qa-btni"></i>
                 </div>
             </div>
-            <div id="box-qa2" className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center">
+            <div id="box-qa" className="box-qa">
                 <p className="text-sm lg:text-xl">Where do Art Toys originate from?</p>
                 <div id="qa-btn" className="">
-                    <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"></i>
+                    <i id="qa-btni" className="fa-solid fa-circle-plus qa-btni"></i>
                 </div>
             </div>
-            <div id="box-qa3" className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center">
+            <div id="box-qa" className="box-qa">
                 <p className="text-sm lg:text-xl">What Art Toys different from regular?</p>
                 <div id="qa-btn" className="">
-                    <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"></i>
+                    <i id="qa-btni" className="fa-solid fa-circle-plus qa-btni"></i>
                 </div>
             </div>
-            <div id="box-qa4" className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center">
+            <div id="box-qa" className="box-qa">
                 <p className="text-sm lg:text-xl">What types of Art Toys do we offer?</p>
                 <div id="qa-btn" className="">
-                    <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"></i>
+                    <i id="qa-btni" className="fa-solid fa-circle-plus qa-btni"></i>
                 </div>
             </div>
         </div>

@@ -23,4 +23,10 @@
   .refer-img {
     @apply transform transition-transform duration-300 lg:hover:scale-110
   }
+  .box-qa {
+    @apply flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center
+  }
+  .qa-btni {
+    @apply absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600
+  }
 }
