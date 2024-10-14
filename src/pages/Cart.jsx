@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from 'react-router-dom';
+
 
 const Cart = () => {
   return (
@@ -23,13 +25,13 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <a href="#">
+                    <Link to="/">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Art toy/dd.png"
                         alt="Art Toy Character"
                       />
-                    </a>
+                    </Link >
                   </div>
                   <div className="ml-4 flex-auto">
                     <i className="fa-solid fa-trash text-red-600 mr-8 absolute right-0"></i>
@@ -59,9 +61,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M1 1h16"
                         />
                       </svg>
@@ -82,9 +84,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M9 1v16M1 9h16"
                         />
                       </svg>
@@ -96,13 +98,13 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <a href="#">
+                    <Link to="/">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Hero/06.png"
                         alt="Art Toy Character"
                       />
-                    </a>
+                    </Link >
                   </div>
                   <div className="ml-4 flex-auto">
                     <i className="fa-solid fa-trash text-red-600 mr-8 absolute right-0"></i>
@@ -132,9 +134,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M1 1h16"
                         />
                       </svg>
@@ -155,9 +157,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M9 1v16M1 9h16"
                         />
                       </svg>
@@ -169,13 +171,13 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <a href="#">
+                    <Link to="/">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Art toy/aaa.png"
                         alt="Art Toy Character"
                       />
-                    </a>
+                    </Link >
                   </div>
                   <div className="ml-4 flex-auto">
                     <i className="fa-solid fa-trash text-red-600 mr-8 absolute right-0"></i>
@@ -205,9 +207,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M1 1h16"
                         />
                       </svg>
@@ -228,9 +230,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M9 1v16M1 9h16"
                         />
                       </svg>
@@ -242,13 +244,13 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <a href="#">
+                    <Link to="/">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Art toy/ee.png"
                         alt="Art Toy Character"
                       />
-                    </a>
+                    </Link >
                   </div>
                   <div className="ml-4 flex-auto">
                     <i className="fa-solid fa-trash text-red-600 mr-8 absolute right-0"></i>
@@ -278,9 +280,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M1 1h16"
                         />
                       </svg>
@@ -301,9 +303,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M9 1v16M1 9h16"
                         />
                       </svg>
@@ -315,13 +317,13 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <a href="#">
+                    <Link to="/">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Art toy/aa.png"
                         alt="Art Toy Character"
                       />
-                    </a>
+                    </Link >
                   </div>
                   <div className="ml-4 flex-auto">
                     <i className="fa-solid fa-trash text-red-600 mr-8 absolute right-0"></i>
@@ -351,9 +353,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M1 1h16"
                         />
                       </svg>
@@ -374,9 +376,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M9 1v16M1 9h16"
                         />
                       </svg>
@@ -388,13 +390,13 @@ const Cart = () => {
                 <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                   <input type="checkbox" className="mx-2" />
                   <div className="border-2 rounded-lg border-black w-auto h-auto">
-                    <a href="#">
+                    <Link to="/">
                       <img
                         className="h-22 w-24 rounded-lg"
                         src="/images/Hero/07.png"
                         alt="Art Toy Character"
                       />
-                    </a>
+                    </Link >
                   </div>
                   <div className="ml-4 flex-auto">
                     <i className="fa-solid fa-trash text-red-600 mr-8 absolute right-0"></i>
@@ -424,9 +426,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M1 1h16"
                         />
                       </svg>
@@ -447,9 +449,9 @@ const Cart = () => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
                           d="M9 1v16M1 9h16"
                         />
                       </svg>
@@ -494,7 +496,7 @@ const Cart = () => {
               </div>
 
               <button className="flex w-full  items-center justify-center rounded-lg bg-[#5BDEE7] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#3ef2ff] focus:outline-none focus:ring-4 focus:ring-[#38c5cf] border ">
-                <a href="#">BUY NOW!!</a>
+                <Link to="/">BUY NOW!!</Link >
               </button>
             </div>
           </div>
