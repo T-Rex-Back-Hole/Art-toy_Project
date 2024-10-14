@@ -54,11 +54,11 @@ const Main = () => {
         </h1>
         <div
           id="container-category"
-          className="flex flex-col lg:flex-row justify-center"
+          className="flex flex-col lg:flex-row justify-center mx-auto"
         >
           <div
             id="box-left"
-            className="flex flex-col justify-center lg:w-1/2 bg-[#B47AEA] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
+            className="flex flex-col justify-center lg:w-2/5 bg-[#B47AEA] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
             <img src="./images/cc.png" alt="" className="" />
             <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
@@ -67,7 +67,7 @@ const Main = () => {
           </div>
           <div
             id="box-right"
-            className="flex flex-col justify-center lg:w-1/2 bg-[#5BDEE7] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
+            className="flex flex-col justify-center lg:w-2/5 bg-[#5BDEE7] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
             <img src="./images/dead564.png" alt="" className="" />
             <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
@@ -167,25 +167,25 @@ const Main = () => {
         <div id="container-qa" className="flex flex-col justify-center lg:px-12">
 
             <div id="box-qa1" className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4">
-                <p className="lg:text-lg">What is our Art Toy store all about?</p>
+                <p className="text-sm lg:text-xl">What is our Art Toy store all about?</p>
                 <div id="qa-btn" className="">
                     <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600"></i>
                 </div>
             </div>
             <div id="box-qa2" className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4">
-                <p className="lg:text-lg">Where do Art Toys originate from?</p>
+                <p className="text-sm lg:text-xl">Where do Art Toys originate from?</p>
                 <div id="qa-btn" className="">
                     <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600"></i>
                 </div>
             </div>
             <div id="box-qa3" className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4">
-                <p className="lg:text-lg">What Art Toys different from regular?</p>
+                <p className="text-sm lg:text-xl">What Art Toys different from regular?</p>
                 <div id="qa-btn" className="">
                     <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600"></i>
                 </div>
             </div>
             <div id="box-qa4" className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4">
-                <p className="lg:text-lg">What types of Art Toys do we offer?</p>
+                <p className="text-sm lg:text-xl">What types of Art Toys do we offer?</p>
                 <div id="qa-btn" className="">
                     <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600"></i>
                 </div>
@@ -197,8 +197,8 @@ const Main = () => {
       <section id="subscribe" className="bg-[#F7F7F7] p-8">
             <div id="container-text" className='flex flex-col justify-center text-center'>
               <h3 className="text-[#FFA4D5] text-2xl font-semibold">Subscribe!</h3>
-              <h1 className="text-[#B47AEA] font-bold text-4xl">News Letter</h1>
-              <p className="text-[#B47AEA]">Subscribe to our newsletter and receive all the news and exclusive deals from T-Rex!</p>
+              <h1 className="text-[#B47AEA] font-bold text-3xl">News Letter</h1>
+              <p className="text-[#B47AEA] text-sm lg:text-base">Subscribe to our newsletter and receive all the news and exclusive deals from T-Rex!</p>
             </div>
             <div id="subscribe-email" className='flex flex-col lg:flex-row lg:justify-center'>
               <input type="email" placeholder='E-mail' className="h-10 mt-4 placeholder:pl-3 rounded-full w-full lg:w-96 lg:h-12 lg:m-4 lg:px-4 lg:py-2 border border-gray-300 lg:rounded-md lg:placeholder:pl-0 focus:ring-1 focus:outline-none" />
@@ -209,22 +209,22 @@ const Main = () => {
           <section id="icon-service">
             <div id="container-service" className='p-2 grid grid-cols-2 lg:flex lg:flex-row lg:justify-evenly lg:p-10'>
 
-              <div id="service-box1" className='text-center p-10'>
+              <div id="service-box1" className='text-center p-8 lg:p-10'>
                   <i className='text-[#B47AEA] fa-solid fa-lock text-4xl'></i>
-                  <p>Payment</p>
+                  <p className="">Payment</p>
                   <p>100% secured</p>
               </div>
-              <div id="service-box2" className='text-center p-10'>
+              <div id="service-box2" className='text-center p-8 lg:p-10'>
                   <i className='text-[#B47AEA] fa-solid fa-rocket text-4xl'></i>
                   <p>Payment</p>
                   <p>100% secured</p>
               </div>
-              <div id="service-box3" className='text-center p-10'>
+              <div id="service-box3" className='text-center p-8 lg:p-10'>
                   <i className='text-[#B47AEA] fa-solid fa-gift text-4xl'></i>
                   <p>Payment</p>
                   <p>100% secured</p>
               </div>
-              <div id="service-box4" className='text-center p-10'>
+              <div id="service-box4" className='text-center p-8 lg:p-10'>
                   <i className='text-[#B47AEA] fa-solid fa-comments text-4xl'></i>
                   <p>Payment</p>
                   <p>100% secured</p>
