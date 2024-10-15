@@ -10,29 +10,37 @@ const Main = () => {
         </h1>
         <div
           id="container-toy"
-          className="relative flex justify-center lg:flex lg:justify-around"
+          className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
         >
-          <div className="container-toy w-40  lg:w-2/12 refer-img">
-            <img src="./images/qq.png" alt="" id="refer-img" className="" />
-          </div>
-          <img
-            src="./images/ddd.png"
-            alt=""
-            id="refer-img"
-            className="container-toy hidden lg:inline refer-img"
-          />
-          <img
-            src="./images/uu.png"
-            alt=""
-            id="refer-img"
-            className="container-toy hidden lg:inline refer-img"
-          />
-          <img
-            src="./images/ii.png"
-            alt=""
-            id="refer-img"
-            className="container-toy hidden lg:inline refer-img"
-          />
+          <Link
+            to="/detail-model"
+            className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
+          >
+            <img
+              src="./images/qq.png"
+              alt=""
+              id="refer-img"
+              className="lg:pt-5"
+            />
+          </Link>
+          <Link
+            to="/detail-model"
+            className="container-toy hidden refer-img lg:flex xl:w-64"
+          >
+            <img src="./images/ddd.png" alt="" id="refer-img" />
+          </Link>
+          <Link
+            to="/detail-model"
+            className="container-toy hidden lg:flex refer-img xl:w-64"
+          >
+            <img src="./images/uu.png" alt="" id="refer-img" />
+          </Link>
+          <Link
+            to="/detail-model"
+            className="container-toy hidden lg:flex refer-img xl:w-64"
+          >
+            <img src="./images/ii.png" alt="" id="refer-img" />
+          </Link>
 
           <i
             id="arrow-r"
@@ -58,28 +66,25 @@ const Main = () => {
           id="container-category"
           className="flex flex-col lg:flex-row justify-center mx-auto lg:w-3/4"
         >
-          <div
-            id="box-left"
+          <Link
+            to="/art-toy"
             className="flex flex-col justify-center lg:w-2/5 bg-[#B47AEA] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
-            <Link to="/art-toy">
-              <img src="./images/cc.png" alt="" className="" />
-              <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
-                ART TOY
-              </button>
-            </Link>
-          </div>
-          <div
-            id="box-right"
+            <img src="./images/cc.png" alt="" className="" />
+            <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
+              ART TOY
+            </button>
+          </Link>
+
+          <Link
+            to="/hero"
             className="flex flex-col justify-center lg:w-2/5 bg-[#5BDEE7] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
-            <Link to="/hero">
-              <img src="./images/dead564.png" alt="" className="" />
-              <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
-                HERO
-              </button>
-            </Link>
-          </div>
+            <img src="./images/dead564.png" alt="" className="" />
+            <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
+              HERO
+            </button>
+          </Link>
         </div>
       </section>
 
