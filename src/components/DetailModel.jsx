@@ -44,7 +44,7 @@ const DetailModel = () => {
             <span className="font-semibold lg:text-xl">Description: </span>Introducing Boba
             Beats, a cool and laid-back character who's all about chill vibes
             and sweet moments. Sporting oversized headphones and sipping on his
-            favorite bubble tea, Boba Beats{" "}
+            favorite bubble tea, Boba Beats
           </p>
         </div>
         {/* Button qty */}
