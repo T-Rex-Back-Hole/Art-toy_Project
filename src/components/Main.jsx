@@ -17,7 +17,7 @@ const Main = () => {
             className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
           >
             <img
-              src="./images/qq.png"
+              src="./images/ll.png"
               alt=""
               id="refer-img"
               className="lg:pt-5"
