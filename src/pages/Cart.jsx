@@ -23,10 +23,10 @@ const Cart = () => {
               {/* Card items Cart */}
               <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                 <input type="checkbox" className="mx-2" />
-                <div className="border-2 rounded-lg border-black w-auto h-auto">
+                <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center">
                   <Link to="/detail-model">
                     <img
-                      className="h-22 w-24 rounded-lg"
+                      className="rounded-lg refer-img"
                       src="/images/Art toy/dd.png"
                       alt="Art Toy Character"
                     />
@@ -96,10 +96,10 @@ const Cart = () => {
               {/* Card items Cart */}
               <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                 <input type="checkbox" className="mx-2" />
-                <div className="border-2 rounded-lg border-black w-auto h-auto">
+                <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center">
                   <Link to="/detail-model">
                     <img
-                      className="h-22 w-24 rounded-lg"
+                      className="rounded-lg refer-img"
                       src="/images/Hero/06.png"
                       alt="Art Toy Character"
                     />
@@ -169,10 +169,10 @@ const Cart = () => {
               {/* Card items Cart */}
               <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                 <input type="checkbox" className="mx-2" />
-                <div className="border-2 rounded-lg border-black w-auto h-auto">
+                <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center">
                   <Link to="/detail-model">
                     <img
-                      className="h-22 w-24 rounded-lg"
+                      className="rounded-lg refer-img"
                       src="/images/Art toy/aaa.png"
                       alt="Art Toy Character"
                     />
@@ -242,10 +242,10 @@ const Cart = () => {
               {/* Card items Cart */}
               <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                 <input type="checkbox" className="mx-2" />
-                <div className="border-2 rounded-lg border-black w-auto h-auto">
+                <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center">
                   <Link to="/detail-model">
                     <img
-                      className="h-22 w-24 rounded-lg"
+                      className="rounded-lg refer-img"
                       src="/images/Art toy/ee.png"
                       alt="Art Toy Character"
                     />
@@ -315,10 +315,10 @@ const Cart = () => {
               {/* Card items Cart */}
               <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                 <input type="checkbox" className="mx-2" />
-                <div className="border-2 rounded-lg border-black w-auto h-auto">
+                <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center">
                   <Link to="/detail-model">
                     <img
-                      className="h-22 w-24 rounded-lg"
+                      className="rounded-lg refer-img"
                       src="/images/Art toy/aa.png"
                       alt="Art Toy Character"
                     />
@@ -388,10 +388,10 @@ const Cart = () => {
               {/* Card items Cart */}
               <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
                 <input type="checkbox" className="mx-2" />
-                <div className="border-2 rounded-lg border-black w-auto h-auto">
+                <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center">
                   <Link to="/detail-model">
                     <img
-                      className="h-22 w-24 rounded-lg"
+                      className="rounded-lg refer-img"
                       src="/images/Hero/07.png"
                       alt="Art Toy Character"
                     />
