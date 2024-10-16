@@ -13,7 +13,7 @@ const Main = () => {
           className="relative flex justify-center lg:flex lg:justify-around"
         >
           <img
-            src="./images/qq.png"
+            src="./images/63.png"
             alt="" id="refer-img"
             className="w-1/2 lg:container-toy lg:inline refer-img"
           />
