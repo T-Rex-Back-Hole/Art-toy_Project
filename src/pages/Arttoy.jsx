@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Arttoy = () => {
   return (
@@ -21,7 +22,10 @@ const Arttoy = () => {
         id="container-Arttoy"
         className=" grid grid-cols-2 gap-6   md:grid-cols-3 lg:grid-cols-4 mx-6 my-6 "
       >
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/rr.png"
@@ -31,9 +35,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/aaa.png"
@@ -43,9 +50,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/gg.png"
@@ -55,9 +65,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/ii.png"
@@ -67,9 +80,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/ww.png"
@@ -79,9 +95,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/qq.png"
@@ -91,9 +110,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/dd.png"
@@ -103,9 +125,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/pp.png"
@@ -115,9 +140,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/ee.png"
@@ -127,9 +155,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/yy.png"
@@ -139,9 +170,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/tt.png"
@@ -151,9 +185,12 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
 
-        <div className="shadow-lg flex flex-col  justify-end items-center cursor-pointer">
+        <Link
+          to="/detail-model"
+          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
+        >
           <div>
             <img
               src="./images/Art toy/ss.png"
@@ -163,7 +200,7 @@ const Arttoy = () => {
           </div>
           <h2 className="text-lg font-bold">Art Toy : Name</h2>
           <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </div>
+        </Link>
       </div>
     </>
   );
