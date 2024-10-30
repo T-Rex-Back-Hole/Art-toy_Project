@@ -1,7 +1,7 @@
 import React from "react";
 import Register from "./Register";
 import { Link } from "react-router-dom";
-import Account from "./Account"
+import Account from "./Account";
 
 const Login = () => {
   return (
@@ -39,7 +39,10 @@ const Login = () => {
       <div id="go-to-register" className="flex justify-center gap-4">
         <p className="text-gray-400">Don't have an account?</p>
         <Link to="/register">
-          <button className="font-bold lg:mb-3 text-[#B47AEA]"> Sign up </button>
+          <button className="font-bold lg:mb-3 text-[#B47AEA]">
+            {" "}
+            Sign up{" "}
+          </button>
         </Link>
       </div>
       <div
@@ -48,14 +51,14 @@ const Login = () => {
       >
         <button
           id="facebook-login"
-          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full"
+          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
         >
-          <i class="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4"></i>
+          <i class="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4 "></i>
           Facebook
         </button>
         <button
           id="google-login"
-          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full"
+          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
         >
           <i class="fa-brands fa-google text-red-600 mr-2 lg:mr-4"></i>
           Google

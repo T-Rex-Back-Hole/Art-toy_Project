@@ -56,14 +56,14 @@ const Register = () => {
         >
           <button
             id="facebook-login"
-            class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full"
+            class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
           >
             <i class="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4"></i>
             Facebook
           </button>
           <button
             id="google-login"
-            class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full"
+            class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
           >
             <i class="fa-brands fa-google text-red-600 mr-2 lg:mr-4"></i>
             Google
