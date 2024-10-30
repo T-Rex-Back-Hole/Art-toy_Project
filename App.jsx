@@ -7,6 +7,8 @@ import Contact from "./src/pages/Contact";
 import Cart from "./src/pages/Cart";
 import Footer from "./src/components/Footer";
 import DetailModel from "./src/components/DetailModel";
+import Arttoy from "./src/pages/Arttoy";
+import Heroes from "./src/pages/Heroes";
 import Register from "./src/pages/Register";
 
 const App = () => {
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/detail-model" element={<DetailModel />} />
+        <Route path="/art-toy" element={<Arttoy />} />
+        <Route path="/hero" element={<Heroes />} />
         <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />

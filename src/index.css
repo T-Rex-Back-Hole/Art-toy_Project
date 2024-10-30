@@ -26,7 +26,7 @@
     @apply lg:w-2/12 lg:h-auto
   }
   .refer-img {
-    @apply transform transition-transform duration-300 lg:hover:scale-110
+    @apply transform transition-transform duration-300 lg:hover:scale-110 lg:h-auto
   }
   .box-qa {
     @apply flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center
