@@ -41,7 +41,6 @@ const Main = () => {
           >
             <img src="./images/ii.png" alt="" id="refer-img" />
           </Link>
-
           <i
             id="arrow-r"
             className="absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
@@ -104,7 +103,7 @@ const Main = () => {
           </div>
           <div
             id="box-right"
-            className="flex flex-col justify-center text-center m-6 shadow-lg p-6 rounded-xl lg:shadow-none lg:m-0 lg:w-1/2 lg:p-12"
+            className="flex flex-col justify-center text-center m-6 shadow-lg p-10 rounded-xl lg:shadow-none lg:m-0 lg:w-1/2 lg:p-12"
           >
             <div id="right-img" className="flex justify-center">
               <img src="./images/toy1.png" alt="" className="w-1/2" />

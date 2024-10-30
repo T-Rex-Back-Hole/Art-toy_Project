@@ -9,6 +9,7 @@ import Footer from "./src/components/Footer";
 import DetailModel from "./src/components/DetailModel";
 import Arttoy from "./src/pages/Arttoy";
 import Heroes from "./src/pages/Heroes";
+import Register from "./src/pages/Register";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/detail-model" element={<DetailModel />} />
         <Route path="/art-toy" element={<Arttoy />} />
         <Route path="/hero" element={<Heroes />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
     </Router>
