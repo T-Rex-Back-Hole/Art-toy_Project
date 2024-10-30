@@ -7,6 +7,7 @@ import Contact from "./src/pages/Contact";
 import Cart from "./src/pages/Cart";
 import Footer from "./src/components/Footer";
 import DetailModel from "./src/components/DetailModel";
+import Register from "./src/pages/Register";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/detail-model" element={<DetailModel />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
     </Router>
