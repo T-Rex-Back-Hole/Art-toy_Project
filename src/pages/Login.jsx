@@ -23,15 +23,16 @@ const Login = () => {
             placeholder="Password"
             className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
-
-          <div id="btn-login" className="flex w-full">
-            <button
-              type="submit"
-              class="w-full rounded-full mt-4 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:rounded-md lg:hover:bg-purple-600 focus:outline-none"
-            >
-              Login
-            </button>
-          </div>
+          <Link to="/personal-info">
+            <div id="btn-login" className="flex w-full">
+              <button
+                type="submit"
+                class="w-full rounded-full mt-4 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:rounded-md lg:hover:bg-purple-600 focus:outline-none"
+              >
+                Login
+              </button>
+            </div>
+          </Link>
         </form>
       </section>
       <div id="go-to-register" className="text-center">

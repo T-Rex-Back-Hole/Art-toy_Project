@@ -10,6 +10,7 @@ import DetailModel from "./src/components/DetailModel";
 import Arttoy from "./src/pages/Arttoy";
 import Heroes from "./src/pages/Heroes";
 import Register from "./src/pages/Register";
+import PersonalInformation from "./src/pages/Personal-info";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/art-toy" element={<Arttoy />} />
         <Route path="/hero" element={<Heroes />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/personal-info" element={<PersonalInformation />} />
       </Routes>
       <Footer />
     </Router>
