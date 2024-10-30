@@ -34,4 +34,7 @@
   .qa-btni {
     @apply absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600
   }
+  .acc-btn {
+    @apply rounded-full w-3/4 bg-[#B47AEA] text-white text-lg p-2 lg:w-1/2 lg:text-xl lg:px-6 lg:py-2 lg:hover:bg-purple-600
+  }
 }

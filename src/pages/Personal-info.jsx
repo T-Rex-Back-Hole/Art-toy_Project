@@ -9,12 +9,13 @@ const PersonalInformation = () => {
           id="left-container"
           className="w-1/4 flex flex-col items-center p-2 bg-F7F7F7 lg:w-1/3"
         >
-          <img
+          {/* <img
             id="personal-pic"
             src="./images/banner2.png"
             alt=""
             className="rounded-full h-20 w-20"
-          ></img>
+          ></img> */}
+          <i class="fa-solid fa-circle-user text-6xl lg:text-9xl text-gray-400"></i>
           <div id="name" className="font-bold text-center mt-2">
             Pook Thatchai
           </div>
