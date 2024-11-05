@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Arttoy = () => {
+  
   return (
     <>
     <h1 className="font-bold text-3xl text-center my-10 md:text-5xl">
