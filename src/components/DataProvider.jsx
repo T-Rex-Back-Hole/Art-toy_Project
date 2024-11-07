@@ -47,32 +47,9 @@ export const DataProvider = ({ children }) => {
   }
 
   return (
-<<<<<<< HEAD:src/components/Data.jsx
-    <div className="grid grid-cols-1 lg:grid-cols-4  ">
-      {heroData.map((hero) => (
-        <div key={hero.id} className="bg-gray-50 m-4 p-4 rounded-lg shadow-md">
-          <div className="w-4/5 justify-self-center">
-            <img
-              src={hero.image}
-              alt={hero.name}
-              className="w-auto h-32 object-contain  justify-self-center"
-            />
-          </div>
 
-          <div className="mt-4">
-            <p>Name : {hero.name}</p>
-            <p>Price : $ {formatMoney(hero.price)}</p>
-            <p>Materials : {hero.materials}</p>
-            <p>Product Type : {hero.product_type}</p>
-            <p>Category : {hero.category}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-=======
     <DataContext.Provider value={{ artToyData, heroData }}>
       {children}
     </DataContext.Provider>
->>>>>>> main:src/components/DataProvider.jsx
   );
 };
