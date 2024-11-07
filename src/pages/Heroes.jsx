@@ -29,20 +29,29 @@ const Hero = () => {
   }
 
   return (
-    <section id="hero" className="mx-5 lg:mx-20 my-10">
-      <h2 className="text-4xl font-bold mb-6 text-center mt-10">
-        Hero Products
-      </h2>
+
+    <section id="hero" className="mx-5 lg:mx-20">
+
+      <h2 className="text-4xl font-bold mb-6 text-center mt-10">Hero Products</h2>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {heroData.length > 0 ? (
           heroData.map((hero) => (
-            <div
-              key={hero.id}
-              className="border p-5 rounded-lg shadow-md text-center"
-            >
+
+            <div key={hero.id} className="flex flex-col text-center border p-5 rounded-lg shadow-md">
+
               <h3 className="text-xl font-semibold">{hero.name}</h3>
+              <img
+                src={hero.image}
+                alt={hero.name}
+
+                className="w-auto h-96 object-contain mb-4 justify-self-center"
+
+              />
+              <p className="text-lg text-purple-600">{formatMoney(hero.price)} ฿</p>
+              <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
               <Link
-                to={`/detail/${hero.id}`}
+                to={`/hero/detail/${hero.id}`}
                 className="text-blue-500 mt-4 inline-block hover:underline"
               >
                 <img

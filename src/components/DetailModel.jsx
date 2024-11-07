@@ -15,10 +15,13 @@ const DetailModel = () => {
           acc[product.id] = product;
           return acc;
         }, {});
+
         const selectedProduct = productLookup[id];
         setProduct(selectedProduct);
       }
     };
+
+
     findProduct();
   }, [id, products, loading]);
 
@@ -38,17 +41,19 @@ const DetailModel = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
+
   if (error) {
     return <div>Error: {error}</div>;
   }
+
   if (!product) {
     return <div>Product not found</div>;
   }
 
+
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
-  
   return (
     <section id="detailModel" className="mx-5 lg:mx-20">
       {/* Model */}
