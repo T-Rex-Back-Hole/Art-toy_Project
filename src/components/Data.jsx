@@ -54,7 +54,7 @@ export const Data = () => {
             <img
               src={hero.image}
               alt={hero.name}
-              className="w-32 h-32 object-contain"
+              className="w-auto h-32 object-contain  justify-self-center"
             />
           </div>
 
