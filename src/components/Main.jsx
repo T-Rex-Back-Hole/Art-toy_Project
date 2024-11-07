@@ -15,7 +15,7 @@ const Main = () => {
           id="container-toy"
           className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
         >
-          {products.map((product, index) => (
+          {products.map((product,index) => (
             <Link
               key={products.id}
               to="/detail"
