@@ -24,9 +24,16 @@ const Hero = () => {
     return <p>{error}</p>;
   }
 
+  function formatMoney(money) {
+    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
+
   return (
+
     <section id="hero" className="mx-5 lg:mx-20">
-      <h2 className="text-center text-3xl font-bold mb-6">Hero Products</h2>
+
+      <h2 className="text-4xl font-bold mb-6 text-center mt-10">Hero Products</h2>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {heroData.length > 0 ? (
           heroData.map((hero) => (
@@ -38,16 +45,27 @@ const Hero = () => {
               <img
                 src={hero.image}
                 alt={hero.name}
-                className="w-auto h-60 object-contain mb-4"
+
+                className="w-auto h-96 object-contain mb-4 justify-self-center"
+
               />
-              <p className="text-lg text-purple-600">{hero.price} ฿</p>
+              <p className="text-lg text-purple-600">{formatMoney(hero.price)} ฿</p>
               <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
               <Link
                 to={`/hero/detail/${hero.id}`}
                 className="text-blue-500 mt-4 inline-block hover:underline"
               >
-                View Details
+                <img
+                  src={hero.image}
+                  alt={hero.name}
+                  className="w-auto h-96 object-contain my-4 justify-self-center refer-img"
+                />
               </Link>
+
+              <p className="text-lg text-purple-600">
+                {formatMoney(hero.price)} ฿
+              </p>
+              <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
             </div>
           ))
         ) : (
