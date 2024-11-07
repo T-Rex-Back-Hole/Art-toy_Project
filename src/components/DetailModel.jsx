@@ -21,6 +21,7 @@ const DetailModel = () => {
       }
     };
 
+
     findProduct();
   }, [id, products, loading]);
 
@@ -49,10 +50,14 @@ const DetailModel = () => {
     return <div>Product not found</div>;
   }
 
+
+  function formatMoney(money) {
+    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
   return (
     <section id="detailModel" className="mx-5 lg:mx-20">
       {/* Model */}
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center my-20">
         <i
           id="arrow-l"
           className="fa-solid fa-circle-chevron-left text-3xl opacity-60 text-[#B47AEA] lg:text-5xl cursor-pointer hover:text-purple-500"
@@ -60,41 +65,38 @@ const DetailModel = () => {
         <img
           src={product.image}
           alt={product.name}
-          className="w-80 lg:w-1/4 sm:mx-10"
+          className="w-auto h-96 object-contain lg:w-1/4 sm:mx-10"
         />
         <i
           id="arrow-r"
           className="fa-solid fa-circle-chevron-right text-3xl opacity-60 text-[#B47AEA] lg:text-5xl cursor-pointer hover:text-purple-500"
         ></i>
       </div>
-
       {/* Detail */}
       <div className="space-y-5 lg:mt-20">
         <h1 className="text-xl font-bold md:text-2xl lg:text-4xl">
           {product.name}
         </h1>
         <h2 className="text-lg font-semibold text-[#5BDEE7] md:text-xl lg:text-3xl">
-          Price: {product.price} ฿
+          Price: {formatMoney(product.price)} ฿
         </h2>
         <p>
           <span className="font-semibold lg:text-xl">Description: </span>
           {product.description}
         </p>
       </div>
-
       {/* Availability */}
       <div className="flex justify-center my-3 mt-6 lg:justify-start">
         <h1 className="text-green-500 text-lg font-semibold">In Stock</h1>
       </div>
-
       {/* Quantity Selector */}
       <div className="flex justify-center lg:justify-start">
-        <div className="flex justify-center items-center w-32 rounded-full py-1 bg-[#B47AEA] gap-4 shadow-md">
+        <div className="flex justify-center items-center w-32 rounded-full px-3 py-2 bg-[#B47AEA] gap-4 shadow-md">
           <button
             onClick={decrementQuantity}
             type="button"
             id="decrement-button"
-            className="inline-flex h-full w-5 items-center justify-center"
+            className="inline-flex h-full w-auto items-center justify-center"
           >
             <svg
               className="h-2.5 w-2.5 text-white hover:text-gray-500"
@@ -112,12 +114,12 @@ const DetailModel = () => {
               />
             </svg>
           </button>
-          <span className="mx-3 text-white">{quantity}</span>
+          <span className="mx-auto text-white">{quantity}</span>
           <button
             onClick={incrementQuantity}
             type="button"
             id="increment-button"
-            className="inline-flex items-center justify-center w-5"
+            className="inline-flex items-center justify-center w-auto"
           >
             <svg
               className="h-2.5 w-2.5 text-white hover:text-gray-500"
@@ -137,12 +139,11 @@ const DetailModel = () => {
           </button>
         </div>
       </div>
-
       {/* Action Buttons */}
       <div className="flex justify-center items-center mt-16 mb-5">
         <button
           onClick={addToCart}
-          className="bg-[#FFA4D5] rounded-full text-white text-xl font-bold px-24 py-3 shadow-sm hover:bg-[#e9449e] md:text-2xl"
+          className="bg-[#FFA4D5] rounded-full text-white text-xl font-bold px-24 py-3 shadow-sm hover:bg-[#E9449E] md:text-2xl"
         >
           ADD TO CART
         </button>
@@ -150,7 +151,7 @@ const DetailModel = () => {
       <div className="flex justify-center items-center mb-5">
         <button
           onClick={buyNow}
-          className="bg-[#98f5fc] rounded-full text-white text-xl font-bold px-[6.72rem] py-3 shadow-sm hover:bg-[#42f2ff] md:text-2xl"
+          className="bg-[#98F5FC] rounded-full text-white text-xl font-bold px-[6.72rem] py-3 shadow-sm hover:bg-[#42F2FF] md:text-2xl"
         >
           BUY NOW!!
         </button>
@@ -158,5 +159,4 @@ const DetailModel = () => {
     </section>
   );
 };
-
 export default DetailModel;
