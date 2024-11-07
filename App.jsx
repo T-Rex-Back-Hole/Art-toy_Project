@@ -12,27 +12,28 @@ import Heroes from "./src/pages/Heroes";
 import Register from "./src/pages/Register";
 import PersonalInformation from "./src/pages/Personal-info";
 import Account from "./src/pages/Account";
-import { Data } from "./src/components/Data";
+import { DataProvider } from "./src/components/DataProvider";
 
 const App = () => {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/detail-model" element={<DetailModel />} />
-        <Route path="/art-toy" element={<Arttoy />} />
-        <Route path="/hero" element={<Heroes />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/data" element={<Data />} />
-        {/* <Route path="/personal-info" element={<PersonalInformation />} /> */}
-      </Routes>
-      <Footer />
-    </Router>
+    <DataProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/detail-model" element={<DetailModel />} />
+          <Route path="/art-toy" element={<Arttoy />} />
+          <Route path="/hero" element={<Heroes />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
+          {/* <Route path="/personal-info" element={<PersonalInformation />} /> */}
+        </Routes>
+        <Footer />
+      </Router>
+    </DataProvider>
   );
 };
 
