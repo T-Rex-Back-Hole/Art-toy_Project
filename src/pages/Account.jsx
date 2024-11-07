@@ -13,7 +13,7 @@ const Account = () => {
 
         <div
           id="top-container"
-          className="flex flex-col items-center mb-4 justify-center gap-2 container mx-auto lg:gap-6 lg:my-4 lg:flex-row"
+          className="flex flex-col items-center mb-4 justify-center gap-2 container lg:gap-6 lg:my-4 lg:flex-row mx-auto"
         >
           <button className="acc-btn ">Personal</button>
           <button className="acc-btn ">Address</button>
