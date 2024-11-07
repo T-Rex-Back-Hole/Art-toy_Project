@@ -12,6 +12,7 @@ import Heroes from "./src/pages/Heroes";
 import Register from "./src/pages/Register";
 import PersonalInformation from "./src/pages/Personal-info";
 import Account from "./src/pages/Account";
+import { Data } from "./src/components/Data";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/hero" element={<Heroes />} />
         <Route path="/register" element={<Register />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/data" element={<Data />} />
         {/* <Route path="/personal-info" element={<PersonalInformation />} /> */}
       </Routes>
       <Footer />

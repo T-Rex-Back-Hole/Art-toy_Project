@@ -6,7 +6,7 @@ const CartItem = ({ imgSrc, itemName, itemDesc, itemPrice }) => (
     <input type="checkbox" className="mx-2" />
     <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center">
       <Link to="/detail-model">
-        <img className="rounded-lg refer-img h-32 w-24" src={imgSrc} alt={itemName} />
+        <img className="rounded-lg refer-img h-28  w-24" src={imgSrc} alt={itemName} />
       </Link>
     </div>
     <div className="ml-4 flex-auto">
