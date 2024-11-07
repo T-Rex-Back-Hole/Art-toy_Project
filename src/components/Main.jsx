@@ -13,7 +13,7 @@ const Main = () => {
           className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
         >
           <Link
-            to="/detail-model"
+            to="/detail"
             className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
           >
             <img
@@ -24,19 +24,19 @@ const Main = () => {
             />
           </Link>
           <Link
-            to="/detail-model"
+            to="/detail"
             className="container-toy hidden refer-img lg:flex xl:w-64"
           >
             <img src="./images/ddd.png" alt="" id="refer-img" />
           </Link>
           <Link
-            to="/detail-model"
+            to="/detail"
             className="container-toy hidden lg:flex refer-img xl:w-64"
           >
             <img src="./images/uu.png" alt="" id="refer-img" />
           </Link>
           <Link
-            to="/detail-model"
+            to="/detail"
             className="container-toy hidden lg:flex refer-img xl:w-64"
           >
             <img src="./images/ii.png" alt="" id="refer-img" />
