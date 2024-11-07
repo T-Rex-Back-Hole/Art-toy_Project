@@ -21,7 +21,6 @@ const DetailModel = () => {
       }
     };
 
-
     findProduct();
   }, [id, products, loading]);
 
