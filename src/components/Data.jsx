@@ -7,11 +7,15 @@ export const Data = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  function formatMoney(money) {
+    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://672c3f511600dda5a9f7accc.mockapi.io/category"
+          "https://672a2e23976a834dd02275cf.mockapi.io/category"
         );
         const artToyProducts = response.data.filter(
           (product) => product.category === "Art Toy"
@@ -43,17 +47,24 @@ export const Data = () => {
   }
 
   return (
-    <div>
+    <div className="grid grid-cols-1 lg:grid-cols-4  ">
       {heroData.map((hero) => (
-        <div key={hero.id}>
-          <div>{hero.name}</div>
-          <div>{hero.price}</div>
-          <div>{hero.category}</div>
-          <img
-            src={hero.image}
-            alt={hero.name}
-            className="h-48 object-cover rounded-lg mb-4"
-          />
+        <div key={hero.id} className="bg-gray-50 m-4 p-4 rounded-lg shadow-md">
+          <div className="w-4/5 justify-self-center">
+            <img
+              src={hero.image}
+              alt={hero.name}
+              className="w-32 h-32 object-contain"
+            />
+          </div>
+
+          <div className="mt-4">
+            <p>Name : {hero.name}</p>
+            <p>Price : {formatMoney(hero.price)}</p>
+            <p>Materials : {hero.materials}</p>
+            <p>Product Type : {hero.product_type}</p>
+            <p>Category : {hero.category}</p>
+          </div>
         </div>
       ))}
     </div>
