@@ -20,10 +20,8 @@ const DetailModel = () => {
       }
     };
 
-
     findProduct();
   }, [id, products, loading]);
-
 
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => {
@@ -36,7 +34,6 @@ const DetailModel = () => {
     console.log(`Buying ${quantity} items now.`);
   };
 
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -48,7 +45,6 @@ const DetailModel = () => {
   if (!product) {
     return <div>Product not found</div>;
   }
-
 
   return (
     <section id="detailModel" className="mx-5 lg:mx-20">
