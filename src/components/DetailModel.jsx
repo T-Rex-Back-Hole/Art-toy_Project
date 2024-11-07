@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useData } from "./DataProvider";
+
 const DetailModel = () => {
   const { id } = useParams();
   const { products, loading, error } = useData();
@@ -20,16 +21,20 @@ const DetailModel = () => {
     };
     findProduct();
   }, [id, products, loading]);
+
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
+
   const addToCart = () => {
     console.log(`Added ${quantity} items to the cart.`);
   };
+
   const buyNow = () => {
     console.log(`Buying ${quantity} items now.`);
   };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -43,6 +48,7 @@ const DetailModel = () => {
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
+  
   return (
     <section id="detailModel" className="mx-5 lg:mx-20">
       {/* Model */}
