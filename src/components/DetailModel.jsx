@@ -20,6 +20,7 @@ const DetailModel = () => {
         setProduct(selectedProduct);
       }
     };
+
     findProduct();
   }, [id, products, loading]);
 
