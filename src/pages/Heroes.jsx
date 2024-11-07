@@ -40,16 +40,7 @@ const Hero = () => {
 
             <div key={hero.id} className="flex flex-col text-center border p-5 rounded-lg shadow-md">
 
-              <h3 className="text-xl font-semibold">{hero.name}</h3>
-              <img
-                src={hero.image}
-                alt={hero.name}
-
-                className="w-auto h-96 object-contain mb-4 justify-self-center"
-
-              />
-              <p className="text-lg text-purple-600">{formatMoney(hero.price)} ฿</p>
-              <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
+              
               <Link
                 to={`/hero/detail/${hero.id}`}
                 className="text-blue-500 mt-4 inline-block hover:underline"
