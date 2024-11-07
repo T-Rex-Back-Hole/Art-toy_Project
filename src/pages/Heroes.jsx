@@ -29,6 +29,7 @@ const Hero = () => {
   }
 
   return (
+
     <section id="hero" className="mx-5 lg:mx-20">
 
       <h2 className="text-4xl font-bold mb-6 text-center mt-10">Hero Products</h2>
@@ -53,8 +54,17 @@ const Hero = () => {
                 to={`/hero/detail/${hero.id}`}
                 className="text-blue-500 mt-4 inline-block hover:underline"
               >
-                View Details
+                <img
+                  src={hero.image}
+                  alt={hero.name}
+                  className="w-auto h-96 object-contain my-4 justify-self-center refer-img"
+                />
               </Link>
+
+              <p className="text-lg text-purple-600">
+                {formatMoney(hero.price)} ฿
+              </p>
+              <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
             </div>
           ))
         ) : (
