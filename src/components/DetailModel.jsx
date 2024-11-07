@@ -6,6 +6,7 @@ const DetailModel = () => {
   const { products, loading, error } = useData();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
     const findProduct = () => {
       if (!loading && products.length > 0) {
@@ -13,12 +14,17 @@ const DetailModel = () => {
           acc[product.id] = product;
           return acc;
         }, {});
+
         const selectedProduct = productLookup[id];
         setProduct(selectedProduct);
       }
     };
+
+
     findProduct();
   }, [id, products, loading]);
+
+
   const incrementQuantity = () => setQuantity(quantity + 1);
   const decrementQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
@@ -29,15 +35,21 @@ const DetailModel = () => {
   const buyNow = () => {
     console.log(`Buying ${quantity} items now.`);
   };
+
+
   if (loading) {
     return <div>Loading...</div>;
   }
+
   if (error) {
     return <div>Error: {error}</div>;
   }
+
   if (!product) {
     return <div>Product not found</div>;
   }
+
+
   return (
     <section id="detailModel" className="mx-5 lg:mx-20">
       {/* Model */}
