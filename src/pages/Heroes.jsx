@@ -1,9 +1,13 @@
-import React from 'react'
 
-const Heroes = () => {
+import React from 'react';
+import ToyList from '../components/ToyList';
+
+function Hero() {
   return (
-    <div>Heroes</div>
-  )
+    <>
+      <ToyList category="Hero" />
+    </>
+  );
 }
 
-export default Heroes
+export default Hero;

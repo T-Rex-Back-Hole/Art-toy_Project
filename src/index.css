@@ -26,12 +26,15 @@
     @apply lg:w-2/12 lg:h-auto
   }
   .refer-img {
-    @apply transform transition-transform duration-300 lg:hover:scale-110
+    @apply transform transition-transform duration-300 lg:hover:scale-110 lg:h-auto
   }
   .box-qa {
     @apply flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center
   }
   .qa-btni {
     @apply absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600
+  }
+  .acc-btn {
+    @apply rounded-full w-5/6 bg-[#B47AEA] text-white text-lg p-2 lg:w-1/2 lg:text-xl lg:px-6 lg:py-2 lg:hover:bg-purple-600
   }
 }

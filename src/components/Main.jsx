@@ -10,30 +10,37 @@ const Main = () => {
         </h1>
         <div
           id="container-toy"
-          className="relative flex justify-center lg:flex lg:justify-around"
+          className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
         >
-          <div className="container-toy w-40  lg:w-2/12 refer-img">
-            <img src="./images/qq.png" alt="" id="refer-img" className="" />
-          </div>
-          <img
-            src="./images/ddd.png"
-            alt=""
-            id="refer-img"
-            className="container-toy hidden lg:inline refer-img"
-          />
-          <img
-            src="./images/uu.png"
-            alt=""
-            id="refer-img"
-            className="container-toy hidden lg:inline refer-img"
-          />
-          <img
-            src="./images/ii.png"
-            alt=""
-            id="refer-img"
-            className="container-toy hidden lg:inline refer-img"
-          />
-
+          <Link
+            to="/detail-model"
+            className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
+          >
+            <img
+              src="./images/ll.png"
+              alt=""
+              id="refer-img"
+              className="lg:pt-5"
+            />
+          </Link>
+          <Link
+            to="/detail-model"
+            className="container-toy hidden refer-img lg:flex xl:w-64"
+          >
+            <img src="./images/ddd.png" alt="" id="refer-img" />
+          </Link>
+          <Link
+            to="/detail-model"
+            className="container-toy hidden lg:flex refer-img xl:w-64"
+          >
+            <img src="./images/uu.png" alt="" id="refer-img" />
+          </Link>
+          <Link
+            to="/detail-model"
+            className="container-toy hidden lg:flex refer-img xl:w-64"
+          >
+            <img src="./images/ii.png" alt="" id="refer-img" />
+          </Link>
           <i
             id="arrow-r"
             className="absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
@@ -50,36 +57,33 @@ const Main = () => {
         </div>
       </section>
 
-      <section id="category" className=" justify-center">
+      <section id="category" className="">
         <h1 className="text-center text-4xl font-bold my-6 lg:text-5xl lg:mt-12">
           Category
         </h1>
         <div
           id="container-category"
-          className="flex flex-col lg:flex-row justify-center mx-auto lg:w-3/4"
+          className="flex flex-col lg:flex-row justify-center mx-auto lg:w-3/4 md:items-center"
         >
-          <div
-            id="box-left"
-            className="flex flex-col justify-center lg:w-2/5 bg-[#B47AEA] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
+          <Link
+            to="/art-toy"
+            className="flex flex-col justify-center md:w-3/4 lg:w-2/5 bg-[#B47AEA] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
-            <Link to="/art-toy">
-              <img src="./images/cc.png" alt="" className="" />
-              <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
-                ART TOY
-              </button>
-            </Link>
-          </div>
-          <div
-            id="box-right"
-            className="flex flex-col justify-center lg:w-2/5 bg-[#5BDEE7] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
+            <img src="./images/cc.png" alt="" className="" />
+            <button className="w-full bg-white text-[#B47AEA] text-2xl font-bold rounded-full py-2 px-10 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
+              ART TOY
+            </button>
+          </Link>
+
+          <Link
+            to="/hero"
+            className="flex flex-col justify-center lg:w-2/5 md:w-3/4 bg-[#5BDEE7] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
-            <Link to="/hero">
-              <img src="./images/dead564.png" alt="" className="" />
-              <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:px-24 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
-                HERO
-              </button>
-            </Link>
-          </div>
+            <img src="./images/dead564.png" alt="" className="" />
+            <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
+              HERO
+            </button>
+          </Link>
         </div>
       </section>
 
@@ -99,7 +103,7 @@ const Main = () => {
           </div>
           <div
             id="box-right"
-            className="flex flex-col justify-center text-center m-6 shadow-lg p-6 rounded-xl lg:shadow-none lg:m-0 lg:w-1/2 lg:p-12"
+            className="flex flex-col justify-center text-center m-6 shadow-lg p-10 rounded-xl lg:shadow-none lg:m-0 lg:w-1/2 lg:p-12"
           >
             <div id="right-img" className="flex justify-center">
               <img src="./images/toy1.png" alt="" className="w-1/2" />
