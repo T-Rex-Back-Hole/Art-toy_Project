@@ -10,7 +10,6 @@ import DetailModel from "./src/components/DetailModel";
 import Arttoy from "./src/pages/Arttoy";
 import Heroes from "./src/pages/Heroes";
 import Register from "./src/pages/Register";
-import PersonalInformation from "./src/pages/Personal-info";
 import Account from "./src/pages/Account";
 import { DataProvider } from "./src/components/DataProvider";
 
@@ -29,7 +28,6 @@ const App = () => {
           <Route path="/detail/:id" element={<DetailModel />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
-          {/* <Route path="/personal-info" element={<PersonalInformation />} /> */}
         </Routes>
         <Footer />
       </Router>

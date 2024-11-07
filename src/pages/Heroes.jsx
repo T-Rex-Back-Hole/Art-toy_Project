@@ -37,10 +37,12 @@ const Hero = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {heroData.length > 0 ? (
           heroData.map((hero) => (
+
             <div
               key={hero.id}
               className="flex flex-col text-center border p-5 rounded-lg shadow-md"
             >
+
               <Link
                 to={`/detail/${hero.id}`}
                 className="text-blue-500 mt-4 inline-block hover:underline"
