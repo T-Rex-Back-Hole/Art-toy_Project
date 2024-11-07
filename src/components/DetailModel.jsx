@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useData } from "./DataProvider";
 
 const DetailModel = () => {
-  // การตั้งค่า state สำหรับจำนวนสินค้า
+  const { id } = useParams();
+  const { products } = useData();
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const selectedProduct = products.find((product) => product.id === id);
+    setProduct(selectedProduct);
+  }, [id, products]);
+
+  if (!product) {
+    return <p>Product not found</p>;
+  }
+
   const [quantity, setQuantity] = useState(1);
 
-  // ฟังก์ชันเพิ่มจำนวนสินค้า
   const incrementQuantity = () => setQuantity(quantity + 1);
-
-  // ฟังก์ชันลดจำนวนสินค้า
   const decrementQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
 
-  // ฟังก์ชันการคลิกปุ่ม "ADD TO CART"
   const addToCart = () => {
     console.log(`Added ${quantity} items to the cart.`);
   };
 
-  //  ฟังก์ชันการคลิกปุ่ม "BUY NOW"
   const buyNow = () => {
     console.log(`Buying ${quantity} items now.`);
   };
@@ -31,8 +40,8 @@ const DetailModel = () => {
           className="fa-solid fa-circle-chevron-left text-3xl opacity-60 text-[#B47AEA] lg:text-5xl cursor-pointer hover:text-purple-500"
         ></i>
         <img
-          src="/images/Art toy/oo.png"
-          alt="Art Toy"
+          src={product.image}
+          alt={product.name}
           className="w-80 lg:w-1/4 sm:mx-10"
         />
         <i
@@ -44,16 +53,14 @@ const DetailModel = () => {
       {/* Detail */}
       <div className="space-y-5 lg:mt-20">
         <h1 className="text-xl font-bold md:text-2xl lg:text-4xl">
-          Art Toy: Boba Beats
+          {product.name}
         </h1>
         <h2 className="text-lg font-semibold text-[#5BDEE7] md:text-xl lg:text-3xl">
-          Price: 2,500 ฿
+          Price: {product.price} ฿
         </h2>
         <p>
           <span className="font-semibold lg:text-xl">Description: </span>
-          Introducing Boba Beats, a cool and laid-back character who's all about
-          chill vibes and sweet moments. Sporting oversized headphones and
-          sipping on his favorite bubble tea, Boba Beats...
+          {product.description}
         </p>
       </div>
 
