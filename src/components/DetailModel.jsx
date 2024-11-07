@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 
 const DetailModel = () => {
+  // การตั้งค่า state สำหรับจำนวนสินค้า
+  const [quantity, setQuantity] = useState(1);
+
+  // ฟังก์ชันเพิ่มจำนวนสินค้า
+  const incrementQuantity = () => setQuantity(quantity + 1);
+
+  // ฟังก์ชันลดจำนวนสินค้า
+  const decrementQuantity = () => {
+    if (quantity > 1) setQuantity(quantity - 1);
+  };
+
+  // ฟังก์ชันการคลิกปุ่ม "ADD TO CART"
+  const addToCart = () => {
+    console.log(`Added ${quantity} items to the cart.`);
+  };
+
+  //  ฟังก์ชันการคลิกปุ่ม "BUY NOW"
+  const buyNow = () => {
+    console.log(`Buying ${quantity} items now.`);
+  };
+
   return (
     <section id="detailModel" className="mx-5 lg:mx-20">
       {/* Model */}
@@ -18,15 +39,6 @@ const DetailModel = () => {
           id="arrow-r"
           className="fa-solid fa-circle-chevron-right text-3xl opacity-60 text-[#B47AEA] lg:text-5xl cursor-pointer hover:text-purple-500"
         ></i>
-      </div>
-
-      {/* Slides */}
-      <div className="flex justify-center gap-2 my-5">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <button key={index} type="button" className="">
-            <span className="w-2.5 h-2.5 bg-gray-500 rounded-full flex items-center justify-center"></span>
-          </button>
-        ))}
       </div>
 
       {/* Detail */}
@@ -54,6 +66,7 @@ const DetailModel = () => {
       <div className="flex justify-center lg:justify-start">
         <div className="flex justify-center items-center w-32 rounded-full py-1 bg-[#B47AEA] gap-4 shadow-md">
           <button
+            onClick={decrementQuantity}
             type="button"
             id="decrement-button"
             className="inline-flex h-full w-5 items-center justify-center"
@@ -74,8 +87,9 @@ const DetailModel = () => {
               />
             </svg>
           </button>
-          <span className="mx-3 text-white">1</span>
+          <span className="mx-3 text-white">{quantity}</span>
           <button
+            onClick={incrementQuantity}
             type="button"
             id="increment-button"
             className="inline-flex items-center justify-center w-5"
@@ -101,12 +115,18 @@ const DetailModel = () => {
 
       {/* Action Buttons */}
       <div className="flex justify-center items-center mt-16 mb-5">
-        <button className="bg-[#FFA4D5] rounded-full text-white text-xl font-bold px-24 py-3 shadow-sm hover:bg-[#e9449e] md:text-2xl">
+        <button
+          onClick={addToCart}
+          className="bg-[#FFA4D5] rounded-full text-white text-xl font-bold px-24 py-3 shadow-sm hover:bg-[#e9449e] md:text-2xl"
+        >
           ADD TO CART
         </button>
       </div>
       <div className="flex justify-center items-center mb-5">
-        <button className="bg-[#98f5fc] rounded-full text-white text-xl font-bold px-[6.72rem] py-3 shadow-sm hover:bg-[#42f2ff] md:text-2xl">
+        <button
+          onClick={buyNow}
+          className="bg-[#98f5fc] rounded-full text-white text-xl font-bold px-[6.72rem] py-3 shadow-sm hover:bg-[#42f2ff] md:text-2xl"
+        >
           BUY NOW!!
         </button>
       </div>

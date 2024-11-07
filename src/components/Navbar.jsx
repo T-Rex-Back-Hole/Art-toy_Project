@@ -24,7 +24,7 @@ const Navbar = () => {
           <Link to="/contact">
             <i className="fa-solid fa-phone nav-icon px-4 lg:hover:text-purple-600"></i>
           </Link>
-          <Link to="/data">
+          <Link to="/cart">
             <i className="fa-solid fa-cart-shopping nav-icon px-4 lg:hover:text-purple-600"></i>
           </Link>
         </div>

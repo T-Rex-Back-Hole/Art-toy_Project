@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-export const Data = () => {
+const DataContext = createContext();
+
+export const useData = () => useContext(DataContext);
+
+export const DataProvider = ({ children }) => {
   const [artToyData, setArtToyData] = useState([]);
   const [heroData, setHeroData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  function formatMoney(money) {
-    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://672a2e23976a834dd02275cf.mockapi.io/category"
+          "https://672c3f511600dda5a9f7accc.mockapi.io/category"
         );
         const artToyProducts = response.data.filter(
           (product) => product.category === "Art Toy"
@@ -47,6 +47,7 @@ export const Data = () => {
   }
 
   return (
+<<<<<<< HEAD:src/components/Data.jsx
     <div className="grid grid-cols-1 lg:grid-cols-4  ">
       {heroData.map((hero) => (
         <div key={hero.id} className="bg-gray-50 m-4 p-4 rounded-lg shadow-md">
@@ -68,5 +69,10 @@ export const Data = () => {
         </div>
       ))}
     </div>
+=======
+    <DataContext.Provider value={{ artToyData, heroData }}>
+      {children}
+    </DataContext.Provider>
+>>>>>>> main:src/components/DataProvider.jsx
   );
 };
