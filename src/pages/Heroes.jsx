@@ -46,10 +46,26 @@ const Hero = () => {
                 View Details
               </Link>
             </div>
+         
           ))
         ) : (
           <p>No Hero products available</p>
         )}
+        <div className="border p-5 rounded-lg shadow-md">
+          <h3 className="text-xl font-semibold">Name</h3>
+          <img src={hero.image} className="w-auto h-60 object-contain mb-4" />
+          <p className="text-lg text-purple-600">3000 ฿</p>
+          <p className="text-sm text-gray-700 mt-2">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti
+            dolorum corporis aut. Eos fugit id vel enim blanditiis harum dolore?
+          </p>
+          <Link
+            to={`/detail/${hero.id}`}
+            className="text-blue-500 mt-4 inline-block hover:underline"
+          >
+            View Details
+          </Link>
+        </div>
       </div>
     </section>
   );
