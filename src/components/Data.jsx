@@ -60,7 +60,7 @@ export const Data = () => {
 
           <div className="mt-4">
             <p>Name : {hero.name}</p>
-            <p>Price : {formatMoney(hero.price)}</p>
+            <p>Price : $ {formatMoney(hero.price)}</p>
             <p>Materials : {hero.materials}</p>
             <p>Product Type : {hero.product_type}</p>
             <p>Category : {hero.category}</p>
