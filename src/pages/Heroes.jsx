@@ -30,12 +30,16 @@ const Hero = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {heroData.length > 0 ? (
           heroData.map((hero) => (
+
             <div key={hero.id} className="flex flex-col text-center border p-5 rounded-lg shadow-md">
+
               <h3 className="text-xl font-semibold">{hero.name}</h3>
               <img
                 src={hero.image}
                 alt={hero.name}
+
                 className="w-auto h-60 object-contain mb-4"
+
               />
               <p className="text-lg text-purple-600">{hero.price} ฿</p>
               <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
