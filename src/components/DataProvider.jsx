@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://672c3f511600dda5a9f7accc.mockapi.io/category"
+        "https://672a2e23976a834dd02275cf.mockapi.io/category"
       );
       setProducts(response.data);
       setLoading(false);
