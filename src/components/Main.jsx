@@ -3,6 +3,24 @@ import { Link } from "react-router-dom";
 import { useData } from "./DataProvider";
 
 const Main = () => {
+
+  const { products } = useData();
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const itemsPerPage = 4;
+  const totalItems = products.length;
+
+  const goNext = () => {
+    if (currentIndex < totalItems - itemsPerPage) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const goPrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
   const [openQuestion, setOpenQuestion] = useState(null);
 
   const questions = [
@@ -42,27 +60,37 @@ const Main = () => {
           id="container-toy"
           className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
         >
-          {products.map((product,index) => (
-            <Link
-              key={products.id}
-              to="/detail"
-              className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                id="refer-img"
-                className="lg:pt-5"
-              />
-            </Link>
-          ))}
+          {products
+            .slice(currentIndex, currentIndex + itemsPerPage)
+            .map((product) => (
+              <Link
+                key={product.id}
+                to="/detail"
+                className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  id="refer-img"
+                  className="lg:pt-5"
+                />
+              </Link>
+            ))}
           <i
-            id="arrow-r"
-            className="absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
+            onClick={goPrev}
+            className={`absolute fa-solid fa-circle-chevron-left text-3xl left-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer ${
+              currentIndex === 0
+                ? "opacity-30 cursor-not-allowed"
+                : "active:text-purple-600 lg:hover:text-purple-600"
+            }`}
           ></i>
           <i
-            id="arrow-r"
-            className="absolute fa-solid fa-circle-chevron-left text-3xl left-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
+            onClick={goNext}
+            className={`absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer ${
+              currentIndex === totalItems - itemsPerPage
+                ? "opacity-30 cursor-not-allowed"
+                : "active:text-purple-600 lg:hover:text-purple-600"
+            }`}
           ></i>
         </div>
 
