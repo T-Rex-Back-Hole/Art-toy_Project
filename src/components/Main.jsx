@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useData } from "./DataProvider";
 
 const Main = () => {
   const [openQuestion, setOpenQuestion] = useState(null);
@@ -41,35 +42,20 @@ const Main = () => {
           id="container-toy"
           className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
         >
-          <Link
-            to="/detail"
-            className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
-          >
-            <img
-              src="./images/ll.png"
-              alt=""
-              id="refer-img"
-              className="lg:pt-5"
-            />
-          </Link>
-          <Link
-            to="/detail"
-            className="container-toy hidden refer-img lg:flex xl:w-64"
-          >
-            <img src="./images/ddd.png" alt="" id="refer-img" />
-          </Link>
-          <Link
-            to="/detail"
-            className="container-toy hidden lg:flex refer-img xl:w-64"
-          >
-            <img src="./images/uu.png" alt="" id="refer-img" />
-          </Link>
-          <Link
-            to="/detail"
-            className="container-toy hidden lg:flex refer-img xl:w-64"
-          >
-            <img src="./images/ii.png" alt="" id="refer-img" />
-          </Link>
+          {products.map((product,index) => (
+            <Link
+              key={products.id}
+              to="/detail"
+              className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                id="refer-img"
+                className="lg:pt-5"
+              />
+            </Link>
+          ))}
           <i
             id="arrow-r"
             className="absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
@@ -79,6 +65,7 @@ const Main = () => {
             className="absolute fa-solid fa-circle-chevron-left text-3xl left-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
           ></i>
         </div>
+
         <div id="refer-btn" className="flex justify-center my-8">
           <button className="bg-[#B47AEA] text-white px-10 py-2 rounded-full justify-center lg:rounded-md lg:hover:bg-purple-600 lg:cursor-pointer">
             All our news

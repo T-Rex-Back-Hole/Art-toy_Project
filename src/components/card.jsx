@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Card = ({ imageSrc, name, price }) => {
   return (
     <Link
-      to="/detail-model"
+      to="/detail"
       className="shadow-lg flex flex-col justify-end items-center cursor-pointer"
     >
       <div>
