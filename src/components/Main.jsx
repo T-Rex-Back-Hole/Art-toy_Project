@@ -238,66 +238,19 @@ const Main = () => {
                 </span>
               </div>
               <div
-                className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                className={`overflow-hidden transition-all duration-700 ease-in-out ${
                   openQuestion === index
                     ? "max-h-40 opacity-100"
                     : "max-h-0 opacity-0"
                 } bg-gray-100 rounded-lg mt-2`}
               >
-                <div className="p-4 text-gray-700 text-sm lg:text-base">{question.answer}</div>
+                <div className="p-4 text-gray-700 text-sm lg:text-base">
+                  {question.answer}
+                </div>
               </div>
             </div>
           ))}
         </div>
-        {/* <div
-          id="container-qa"
-          className="flex flex-col justify-center lg:px-12"
-        >
-          <div
-            id="box-qa1"
-            className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4"
-          >
-            <p className="text-sm lg:text-xl">
-              What is our Art Toy store all about?
-            </p>
-            <div id="qa-btn" className="">
-              <i className="fa-solid fa-circle-plus qa-btn"></i>
-            </div>
-          </div>
-          <div
-            id="box-qa2"
-            className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4"
-          >
-            <p className="text-sm lg:text-xl">
-              Where do Art Toys originate from?
-            </p>
-            <div id="qa-btn" className="">
-              <i className="fa-solid fa-circle-plus qa-btn"></i>
-            </div>
-          </div>
-          <div
-            id="box-qa3"
-            className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4"
-          >
-            <p className="text-sm lg:text-xl">
-              What Art Toys different from regular?
-            </p>
-            <div id="qa-btn" className="">
-              <i className="fa-solid fa-circle-plus qa-btn"></i>
-            </div>
-          </div>
-          <div
-            id="box-qa4"
-            className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4"
-          >
-            <p className="text-sm lg:text-xl">
-              What types of Art Toys do we offer?
-            </p>
-            <div id="qa-btn" className="">
-              <i className="fa-solid fa-circle-plus qa-btn"></i>
-            </div>
-          </div>
-        </div> */}
       </section>
 
       {/* Subscribe --------------------------------------------------------------------------------------------------- */}
