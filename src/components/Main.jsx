@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useData } from "./DataProvider";
 
 const Main = () => {
-
   const { products } = useData();
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,6 +20,7 @@ const Main = () => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
     }
+  };
   const [openQuestion, setOpenQuestion] = useState(null);
 
   const questions = [
