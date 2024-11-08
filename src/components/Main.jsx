@@ -58,7 +58,7 @@ const Main = () => {
         </h1>
         <div
           id="container-toy"
-          className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
+          className="relative  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center md:mx-10 lg:mx-0"
         >
           {products
             .slice(currentIndex, currentIndex + itemsPerPage)
@@ -66,13 +66,13 @@ const Main = () => {
               <Link
                 key={product.id}
                 to="/detail"
-                className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
+                className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex "
               >
                 <img
                   src={product.image}
                   alt={product.name}
                   id="refer-img"
-                  className="lg:pt-5"
+                  className="lg:pt-5 w-auto h-96 object-contain"
                 />
               </Link>
             ))}
