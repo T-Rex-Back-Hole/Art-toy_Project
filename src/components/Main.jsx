@@ -6,7 +6,7 @@ const Main = () => {
   const { products } = useData();
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(4); // Default to 4 for larger screens
+  const [itemsPerPage, setItemsPerPage] = useState(4);
 
   const totalItems = products.length;
 
@@ -22,7 +22,6 @@ const Main = () => {
     }
   };
 
-  // Update itemsPerPage based on screen width
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
@@ -32,13 +31,10 @@ const Main = () => {
       }
     };
 
-    // Set the initial value
     handleResize();
 
-    // Add event listener to handle resize
     window.addEventListener("resize", handleResize);
 
-    // Cleanup on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -78,7 +74,7 @@ const Main = () => {
         </h1>
         <div
           id="container-toy"
-          className="relative  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-items-center md:mx-10 lg:mx-0"
+          className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
         >
           {products
             .slice(currentIndex, currentIndex + itemsPerPage)
@@ -86,13 +82,13 @@ const Main = () => {
               <Link
                 key={product.id}
                 to="/detail"
-                className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex "
+                className="w-auto refer-img lg:flex"
               >
                 <img
                   src={product.image}
                   alt={product.name}
                   id="refer-img"
-                  className="lg:pt-5 w-auto h-96 object-contain"
+                  className="lg:pt-5 h-96 object-contain"
                 />
               </Link>
             ))}
@@ -114,11 +110,7 @@ const Main = () => {
           ></i>
         </div>
 
-        <div id="refer-btn" className="flex justify-center my-8">
-          <button className="bg-[#B47AEA] text-white px-10 py-2 rounded-full justify-center lg:rounded-md lg:hover:bg-purple-600 lg:cursor-pointer">
-            All our news
-          </button>
-        </div>
+        
       </section>
 
       <section id="category" className="">
