@@ -6,7 +6,7 @@ const Main = () => {
   const { products } = useData();
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(4); // Default to 4 for larger screens
+  const [itemsPerPage, setItemsPerPage] = useState(4);
 
   const totalItems = products.length;
 
@@ -22,7 +22,6 @@ const Main = () => {
     }
   };
 
-  // Update itemsPerPage based on screen width
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
@@ -32,13 +31,10 @@ const Main = () => {
       }
     };
 
-    // Set the initial value
     handleResize();
 
-    // Add event listener to handle resize
     window.addEventListener("resize", handleResize);
 
-    // Cleanup on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -86,13 +82,13 @@ const Main = () => {
               <Link
                 key={product.id}
                 to="/detail"
-                className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
+                className=" refer-img  border object-contain flex justify-center"
               >
                 <img
                   src={product.image}
                   alt={product.name}
                   id="refer-img"
-                  className="lg:pt-5 w-auto h-96 object-contain"
+                  className="lg:pt-5 h-96 w-auto"
                 />
               </Link>
             ))}
