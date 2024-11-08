@@ -81,7 +81,7 @@ const Main = () => {
             .map((product) => (
               <Link
                 key={product.id}
-                to="/detail"
+                to={`/detail/${product.id}`}
                 className="w-auto refer-img lg:flex"
               >
                 <img
