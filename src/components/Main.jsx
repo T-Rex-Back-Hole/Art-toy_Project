@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "./DataProvider";
 
@@ -6,8 +6,8 @@ const Main = () => {
   const { products } = useData();
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(4); // Default to 4 for larger screens
 
-  const itemsPerPage = 4;
   const totalItems = products.length;
 
   const goNext = () => {
@@ -21,6 +21,27 @@ const Main = () => {
       setCurrentIndex(currentIndex - 1);
     }
   };
+
+  // Update itemsPerPage based on screen width
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setItemsPerPage(1);
+      } else {
+        setItemsPerPage(4);
+      }
+    };
+
+    // Set the initial value
+    handleResize();
+
+    // Add event listener to handle resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup on component unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [openQuestion, setOpenQuestion] = useState(null);
 
   const questions = [
@@ -49,7 +70,6 @@ const Main = () => {
   const toggleAnswer = (questionIndex) => {
     setOpenQuestion(openQuestion === questionIndex ? null : questionIndex);
   };
-
   return (
     <>
       <section id="refer">
