@@ -82,13 +82,13 @@ const Main = () => {
               <Link
                 key={product.id}
                 to="/detail"
-                className=" refer-img  border object-contain flex justify-center"
+                className="w-auto refer-img lg:flex"
               >
                 <img
                   src={product.image}
                   alt={product.name}
                   id="refer-img"
-                  className="lg:pt-5 h-96 w-auto"
+                  className="lg:pt-5 h-96 object-contain"
                 />
               </Link>
             ))}
@@ -110,11 +110,7 @@ const Main = () => {
           ></i>
         </div>
 
-        <div id="refer-btn" className="flex justify-center my-8">
-          <button className="bg-[#B47AEA] text-white px-10 py-2 rounded-full justify-center lg:rounded-md lg:hover:bg-purple-600 lg:cursor-pointer">
-            All our news
-          </button>
-        </div>
+        
       </section>
 
       <section id="category" className="">
