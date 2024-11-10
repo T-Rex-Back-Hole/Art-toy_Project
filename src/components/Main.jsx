@@ -1,7 +1,71 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useData } from "./DataProvider";
 
 const Main = () => {
+  const { products } = useData();
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+
+  const totalItems = products.length;
+
+  const goNext = () => {
+    if (currentIndex < totalItems - itemsPerPage) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const goPrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setItemsPerPage(1);
+      } else {
+        setItemsPerPage(4);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const [openQuestion, setOpenQuestion] = useState(null);
+
+  const questions = [
+    {
+      question: "What is our Art Toy store all about?",
+      answer:
+        "Our Art Toy store is all about providing unique, artist-designed collectible toys...",
+    },
+    {
+      question: "Where do Art Toys originate from?",
+      answer:
+        "Art Toys originated from the urban and street art scene, gaining popularity...",
+    },
+    {
+      question: "What makes Art Toys different from regular toys?",
+      answer:
+        "Art Toys are different from regular toys because they focus on artistic expression...",
+    },
+    {
+      question: "What types of Art Toys do we offer?",
+      answer:
+        "We offer various types of Art Toys, including vinyl figures, resin models...",
+    },
+  ];
+
+  const toggleAnswer = (questionIndex) => {
+    setOpenQuestion(openQuestion === questionIndex ? null : questionIndex);
+  };
   return (
     <>
       <section id="refer">
@@ -12,49 +76,41 @@ const Main = () => {
           id="container-toy"
           className="relative flex justify-center lg:flex lg:justify-evenly md:mx-10 lg:mx-0"
         >
-          <Link
-            to="/detail-model"
-            className="container-toy w-44 xl:w-[16.5rem] refer-img lg:flex"
-          >
-            <img
-              src="./images/ll.png"
-              alt=""
-              id="refer-img"
-              className="lg:pt-5"
-            />
-          </Link>
-          <Link
-            to="/detail-model"
-            className="container-toy hidden refer-img lg:flex xl:w-64"
-          >
-            <img src="./images/ddd.png" alt="" id="refer-img" />
-          </Link>
-          <Link
-            to="/detail-model"
-            className="container-toy hidden lg:flex refer-img xl:w-64"
-          >
-            <img src="./images/uu.png" alt="" id="refer-img" />
-          </Link>
-          <Link
-            to="/detail-model"
-            className="container-toy hidden lg:flex refer-img xl:w-64"
-          >
-            <img src="./images/ii.png" alt="" id="refer-img" />
-          </Link>
+          {products
+            .slice(currentIndex, currentIndex + itemsPerPage)
+            .map((product) => (
+              <Link
+                key={product.id}
+                to={`/detail/${product.id}`}
+                className="w-auto refer-img lg:flex"
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  id="refer-img"
+                  className="lg:pt-5 h-96 object-contain"
+                />
+              </Link>
+            ))}
           <i
-            id="arrow-r"
-            className="absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
+            onClick={goPrev}
+            className={`absolute fa-solid fa-circle-chevron-left text-3xl left-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer ${
+              currentIndex === 0
+                ? "opacity-30 cursor-not-allowed"
+                : "active:text-purple-600 lg:hover:text-purple-600"
+            }`}
           ></i>
           <i
-            id="arrow-r"
-            className="absolute fa-solid fa-circle-chevron-left text-3xl left-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600"
+            onClick={goNext}
+            className={`absolute fa-solid fa-circle-chevron-right text-3xl right-5 bottom-2/4 opacity-60 text-[#B47AEA] lg:text-5xl lg:cursor-pointer ${
+              currentIndex === totalItems - itemsPerPage
+                ? "opacity-30 cursor-not-allowed"
+                : "active:text-purple-600 lg:hover:text-purple-600"
+            }`}
           ></i>
         </div>
-        <div id="refer-btn" className="flex justify-center my-8">
-          <button className="bg-[#B47AEA] text-white px-10 py-2 rounded-full justify-center lg:rounded-md lg:hover:bg-purple-600 lg:cursor-pointer">
-            All our news
-          </button>
-        </div>
+
+        
       </section>
 
       <section id="category" className="">
@@ -188,61 +244,43 @@ const Main = () => {
         </div>
       </section>
 
+      {/* Q&A ---------------------------------------------------------------------------------------------------------------*/}
       <section id="q-and-a" className="bg-[#B47AEA] p-6 lg:p-12">
         <h1 className="text-center text-white text-4xl font-bold mb-6 lg:text-5xl lg:mb-12">
           Art toy: Q&A
         </h1>
-        <div
-          id="container-qa"
-          className="flex flex-col justify-center lg:px-12"
-        >
-          <div
-            id="box-qa1"
-            className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4"
-          >
-            <p className="text-sm lg:text-xl">
-              What is our Art Toy store all about?
-            </p>
-            <div id="qa-btn" className="">
-              <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600"></i>
+
+        <div className="max-w-xl mx-auto">
+          {questions.map((question, index) => (
+            <div key={index} className="mb-2">
+              <div
+                className="bg-white p-4 rounded-lg flex justify-between items-center cursor-pointer"
+                onClick={() => toggleAnswer(index)}
+              >
+                <span className="text-gray-800 font-medium text-sm lg:text-base">
+                  {question.question}
+                </span>
+                <span className="text-purple-500 text-xl font-bold">
+                  {openQuestion === index ? "-" : "+"}
+                </span>
+              </div>
+              <div
+                className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                  openQuestion === index
+                    ? "max-h-40 opacity-100"
+                    : "max-h-0 opacity-0"
+                } bg-gray-100 rounded-lg mt-2`}
+              >
+                <div className="p-4 text-gray-700 text-sm lg:text-base">
+                  {question.answer}
+                </div>
+              </div>
             </div>
-          </div>
-          <div
-            id="box-qa2"
-            className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4"
-          >
-            <p className="text-sm lg:text-xl">
-              Where do Art Toys originate from?
-            </p>
-            <div id="qa-btn" className="">
-              <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600"></i>
-            </div>
-          </div>
-          <div
-            id="box-qa3"
-            className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4"
-          >
-            <p className="text-sm lg:text-xl">
-              What Art Toys different from regular?
-            </p>
-            <div id="qa-btn" className="">
-              <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600"></i>
-            </div>
-          </div>
-          <div
-            id="box-qa4"
-            className="flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4"
-          >
-            <p className="text-sm lg:text-xl">
-              What types of Art Toys do we offer?
-            </p>
-            <div id="qa-btn" className="">
-              <i className="fa-solid fa-circle-plus absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600"></i>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
+      {/* Subscribe --------------------------------------------------------------------------------------------------- */}
       <section id="subscribe" className="bg-[#F7F7F7] p-8">
         <div
           id="container-text"

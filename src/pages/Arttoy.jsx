@@ -1,209 +1,74 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useData } from "../components/DataProvider";
 
-const Arttoy = () => {
+function Arttoy() {
+  const { products, loading, error, fetchData } = useData();
+  const artToyData = products.filter(
+    (product) => product.category === "Art Toy"
+  );
+
+  useEffect(() => {
+    if (!products.length) {
+      fetchData();
+    }
+  }, [products, fetchData]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-xl text-gray-700">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  function formatMoney(money) {
+    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
+
   return (
     <>
-      <h1 className="font-bold text-3xl text-center my-10 md:text-5xl">
-        Art Toys
-      </h1>
-
-      <div className="flex flex-row justify-end items-center mt-16 mb-5 border-solid border-2 border-gray-200">
-        <button className="flex-initial bg-[#FFA4D5] rounded-md text-white text-xl font-bold px-8 py-3 shadow-sm shadow-gray-700 hover:bg-[#e9449e] md:text-2xl md:px-24">
-          Sort by
-        </button>
-
-        <button className="flex-initial bg-[#B47AEA] rounded-md text-white text-xl font-bold px-8 py-3 shadow-sm shadow-gray-700 hover:bg-purple-600 md:text-2xl md:px-24">
-          Filter
-        </button>
-      </div>
-
-      <div
-        id="container-Arttoy"
-        className=" grid grid-cols-2 gap-6   md:grid-cols-3 lg:grid-cols-4 mx-6 my-6 "
-      >
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/rr.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/aaa.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/gg.png"
-              alt=""
-              className="w-full  transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/ii.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/ww.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/qq.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/dd.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/pp.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/ee.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/yy.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/tt.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-
-        <Link
-          to="/detail-model"
-          className="shadow-lg flex flex-col  justify-end items-center cursor-pointer"
-        >
-          <div>
-            <img
-              src="./images/Art toy/ss.png"
-              alt=""
-              className="w-full transition ease-linear duration-[1000ms] hover:transform hover:scale-[1.1]  "
-            />
-          </div>
-          <h2 className="text-lg font-bold">Art Toy : Name</h2>
-          <p className="text-lg bottom-4 text-primary">฿9,999</p>
-        </Link>
-      </div>
+      <section id="hero" className="mx-5 lg:mx-20 my-10">
+        <h2 className="text-4xl font-bold mb-6 text-center mt-10">
+          Art Toy Products
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {artToyData.length > 0 ? (
+            artToyData.map((arttoy) => (
+              <div
+                key={arttoy.id}
+                className="border p-5 rounded-lg shadow-md text-center"
+              >
+                <h3 className="text-xl font-semibold">{arttoy.name}</h3>
+                <Link
+                  to={`/detail/${arttoy.id}`}
+                  className="text-blue-500 mt-4 inline-block hover:underline"
+                >
+                  <img
+                    src={arttoy.image}
+                    alt={arttoy.name}
+                    className="w-auto h-96 object-contain my-4 justify-self-center refer-img"
+                  />
+                </Link>
+                <p className="text-lg text-purple-600">
+                  {formatMoney(arttoy.price)} ฿
+                </p>
+                <p className="text-sm text-gray-700 mt-2">
+                  {arttoy.description}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p>No Hero products available</p>
+          )}
+        </div>
+      </section>
     </>
   );
-};
+}
 
 export default Arttoy;
