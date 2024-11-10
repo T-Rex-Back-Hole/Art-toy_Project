@@ -10,7 +10,7 @@ import DetailModel from "./src/components/DetailModel";
 import Arttoy from "./src/pages/Arttoy";
 import Heroes from "./src/pages/Heroes";
 import Register from "./src/pages/Register";
-import PersonalInformation from "./src/pages/Personal";
+import PersonalInformation from "./src/pages/Personal-info";
 
 const App = () => {
   return (
