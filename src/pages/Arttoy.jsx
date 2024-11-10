@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../components/DataProvider";
+import ReactLoading from 'react-loading';
+
 
 function Arttoy() {
   const { products, loading, error, fetchData } = useData();
@@ -16,9 +18,9 @@ function Arttoy() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-xl text-gray-700">Loading...</p>
-      </div>
+      <div className="flex items-center justify-center min-h-screen">
+      <ReactLoading type="spinningBubbles" color="black" height={'10%'} width={'10%'} />
+    </div>
     );
   }
 

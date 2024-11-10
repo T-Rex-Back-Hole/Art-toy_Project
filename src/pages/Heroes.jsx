@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../components/DataProvider";
+import ReactLoading from 'react-loading';
 
 const Hero = () => {
   const { products, loading, error, fetchData } = useData();
@@ -14,8 +15,8 @@ const Hero = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-xl text-gray-700">Loading...</p>
+      <div className="flex items-center justify-center min-h-screen">
+        <ReactLoading type="spinningBubbles" color="black" height={'10%'} width={'10%'} />
       </div>
     );
   }
@@ -58,12 +59,15 @@ const Hero = () => {
                 {formatMoney(hero.price)} ฿
               </p>
               <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
+
             </div>
+
           ))
         ) : (
           <p>No Hero products available</p>
         )}
       </div>
+      
     </section>
   );
 };
