@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const CartItem = ({ imgSrc, itemName, itemDesc, itemPrice }) => (
@@ -6,7 +6,11 @@ const CartItem = ({ imgSrc, itemName, itemDesc, itemPrice }) => (
     <input type="checkbox" className="mx-2" />
     <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center justify-center">
       <Link to="/detail-model">
-        <img className="rounded-lg refer-img h-28 w-auto object-contain" src={imgSrc} alt={itemName} />
+        <img
+          className="rounded-lg refer-img h-28 w-auto object-contain"
+          src={imgSrc}
+          alt={itemName}
+        />
       </Link>
     </div>
     <div className="ml-4 flex-auto">
@@ -66,6 +70,15 @@ const CartItem = ({ imgSrc, itemName, itemDesc, itemPrice }) => (
 );
 
 const Cart = () => {
+  const [quantity, setQuantity] = useState(1);
+
+  const incrementQuantity = () => setQuantity(quantity + 1);
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
   const cartItems = [
     {
       imgSrc: "/images/Art toy/dd.png",
