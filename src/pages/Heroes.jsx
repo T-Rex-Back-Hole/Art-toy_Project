@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../components/DataProvider";
+import ReactLoading from "react-loading";
 
 const Hero = () => {
   const { products, loading, error, fetchData } = useData();
+  const [quantity, setQuantity] = useState(1);
+
   const heroData = products.filter((product) => product.category === "Hero");
 
   useEffect(() => {
@@ -14,8 +17,13 @@ const Hero = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-xl text-gray-700">Loading...</p>
+      <div className="flex items-center justify-center min-h-screen">
+        <ReactLoading
+          type="spinningBubbles"
+          color="black"
+          height={"10%"}
+          width={"10%"}
+        />
       </div>
     );
   }
@@ -23,6 +31,12 @@ const Hero = () => {
   if (error) {
     return <p>{error}</p>;
   }
+
+  const increQuantity = () => setQuantity(quantity + 1);
+  const decreQuantity = () => {
+    if (quantity > 1) setQuantity(quantity - 1);
+  };
+
 
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -37,12 +51,10 @@ const Hero = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {heroData.length > 0 ? (
           heroData.map((hero) => (
-
             <div
               key={hero.id}
               className="flex flex-col text-center border p-5 rounded-lg shadow-md"
             >
-
               <Link
                 to={`/detail/${hero.id}`}
                 className="text-blue-500 mt-4 inline-block hover:underline"
@@ -57,7 +69,26 @@ const Hero = () => {
               <p className="text-lg text-purple-600">
                 {formatMoney(hero.price)} ฿
               </p>
-              <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
+              {/* <p className="text-sm text-gray-700 mt-2">{hero.description}</p> */}
+              <div
+                id="btn-box"
+                className="flex flex-col justify-center gap-y-2"
+              >
+                <div
+                  id="quantity-box"
+                  className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
+                >
+                  <button onClick={decreQuantity}>-</button>
+                  <span>{quantity}</span>
+                  <button onClick={increQuantity}>+</button>
+                </div>
+                <button className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-purple-600">
+                  ADD TO CART
+                </button>
+                <button className="bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF]">
+                  BUY NOW!!
+                </button>
+              </div>
             </div>
           ))
         ) : (
