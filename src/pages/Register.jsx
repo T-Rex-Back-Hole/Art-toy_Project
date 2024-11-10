@@ -10,58 +10,62 @@ const Register = () => {
         className="flex flex-col justify-center lg:flex-row lg:justify-center"
       >
         <form className="flex flex-col px-4 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0">
-          <p className="text-base my-0 px-3">Please fill below information</p>
+          <p className="text-base my-2 px-3 lg:my-0">
+            Please fill below information
+          </p>
+
           <input
             id="first-name"
             type="email"
             placeholder="First name"
-            className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+            className="w-full rounded-full px-4 py-2 border mb-4 border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
           <input
             id="last-name"
             type="text"
             placeholder="Last Name"
-            className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+            className="w-full rounded-full px-4 py-2 mb-4 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
           <input
             id="email"
             type="email"
             placeholder="E-mail"
-            className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+            className="w-full rounded-full px-4 py-2 mb-4 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
           <input
             id="password"
             type="text"
             placeholder="Password"
-            className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+            className="w-full rounded-full px-4 py-2 mb-4 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
 
           <div id="btn-create-account" className="flex w-full">
             <button
               type="submit"
-              class="w-full rounded-full mt-4 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:rounded-md lg:hover:bg-purple-600 focus:outline-none"
+              class="w-full rounded-full mt-2 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:rounded-md lg:hover:bg-purple-600 focus:outline-none"
             >
               Create account
             </button>
           </div>
         </form>
       </section>
+
       <div
         id="login-by"
-        className="flex flex-row lg:justify-center lg:flex-row lg:space-x-4 mb-10"
+        className="flex container justify-center gap-10 lg:gap-0 lg:w-1/2 lg:mx-auto lg:justify-between lg:space-x-28 mb-10"
       >
         <button
           id="facebook-login"
-          class="rounded-full w-1/2 lg:w-1/6 mt-4 md:mt-0 px-4 py-2 border border-gray-300 lg:rounded-md"
+          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
         >
-          <img></img>
+          <i class="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4"></i>
           Facebook
         </button>
         <button
           id="google-login"
-          class="rounded-full w-1/2 lg:w-1/6 mt-4 md:mt-0 px-4 py-2 border border-gray-300 lg:rounded-md "
+          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
         >
-          <img></img>
+          <i class="fa-brands fa-google text-red-600 mr-2 lg:mr-4"></i>
           Google
         </button>
       </div>
