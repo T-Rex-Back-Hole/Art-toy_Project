@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import ReactLoading from 'react-loading';
 import Register from "./Register";
-import { Link } from "react-router-dom";
-import Account from "./Account";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    try {
+      // จำลองการเรียก API
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      navigate("/personal-info");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="font-bold text-5xl text-center my-12">Log in</div>
@@ -11,29 +31,38 @@ const Login = () => {
         id="form"
         className="flex flex-col justify-center lg:flex-row lg:justify-center"
       >
-        <form className="flex flex-col px-4 gap-y-4 lg:gap-y-0 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0">
+        <form onSubmit={handleSubmit} className="flex flex-col px-4 gap-y-4 lg:gap-y-0 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0">
           <input
             id="email"
             type="email"
             placeholder="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
           <input
             id="password"
-            type="text"
+            type="password"
             placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
-          <Link to="/account">
-            <div id="btn-login" className="flex w-full">
-              <button
-                type="submit"
-                class="w-full rounded-full mt-2 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:rounded-md lg:hover:bg-purple-600 focus:outline-none"
-              >
-                Login
-              </button>
-            </div>
-          </Link>
+          <div id="btn-login" className="flex w-full">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full rounded-full mt-2 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:rounded-md lg:hover:bg-purple-600 focus:outline-none"
+            >
+              {isLoading ? (
+                <div className="flex justify-center">
+                  <ReactLoading type="spin" height={24} width={24} color="#ffffff" />
+                </div>
+              ) : (
+                'Login'
+              )}
+            </button>
+          </div>
         </form>
       </section>
       <div id="go-to-register" className="flex justify-center gap-4">

@@ -18,8 +18,11 @@ const Hero = () => {
       <section id="slider-container">
         <div id="slider" className="relative w-full">
           <div className="w-full duration-500">
-            <img src="https://i.postimg.cc/d1dm57mF/banner1.png" alt="" className="w-full" />
-
+            <img
+              src="https://i.postimg.cc/d1dm57mF/banner1.png"
+              alt=""
+              className="w-full"
+            />
           </div>
 
           <div
