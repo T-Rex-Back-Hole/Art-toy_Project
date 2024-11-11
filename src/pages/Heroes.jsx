@@ -8,7 +8,6 @@ const Hero = () => {
 
   const [quantities, setQuantities] = useState({});
 
-
   const heroData = products.filter((product) => product.category === "Hero");
 
   useEffect(() => {
@@ -35,10 +34,8 @@ const Hero = () => {
   }
 
   function addTocart(product) {
-
     const quantity = quantities[product.id] || 1;
     if (quantity > 0) {
-
       const newItem = {
         ...product,
         quantity: qty,
@@ -53,12 +50,10 @@ const Hero = () => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
       [id]: (prevQuantities[id] || 1) + 1,
-
     }));
   };
 
   const decreQuantity = (id) => {
-
     setQuantities((prevQuantities) => {
       const newQuantity = (prevQuantities[id] || 1) - 1;
       return {
@@ -66,10 +61,8 @@ const Hero = () => {
         [id]: newQuantity > 0 ? newQuantity : 1,
       };
     });
-
   };
 
-  
   // const increQuantity = () => setQuantity(quantity + 1);
   // const decreQuantity = () => {
   //   if (quantity > 1) setQuantity(quantity - 1);
@@ -119,7 +112,6 @@ const Hero = () => {
                   <span>{quantities[hero.id] || 1}</span>{" "}
                   {/* ใช้ quantity ตาม hero.id */}
                   <button onClick={() => increQuantity(hero.id)}>+</button>
-
                 </div>
                 <button
                   className="addtocart-btn"
