@@ -4,7 +4,7 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 const Hero = () => {
-  const { products, loading, error, fetchData, addToCart } = useData();
+  const { products, loading, error, addToCart } = useData();
   const [quantity, setQuantity] = useState(1);
   const [heroItem, setHeroItem] = useState([]);
 
@@ -27,7 +27,7 @@ const Hero = () => {
     return <p>{error}</p>;
   }
 
-  function addTocart(product) {
+  function addToCart(product) {
     if (quantity > 0) {
       const newItem = {
         ...product,
@@ -37,7 +37,7 @@ const Hero = () => {
       addToCart(newItem);
     }
   }
-  
+
   const increQuantity = () => setQuantity(quantity + 1);
   const decreQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
@@ -87,12 +87,13 @@ const Hero = () => {
                   <span>{quantity}</span>
                   <button onClick={increQuantity}>+</button>
                 </div>
-                <button className="addtocart-btn" onClick={() => addTocart(hero)}>
+                <button
+                  className="addtocart-btn"
+                  onClick={() => addToCart(hero)}
+                >
                   ADD TO CART
                 </button>
-                <button className="buynow-btn">
-                  BUY NOW!!
-                </button>
+                <button className="buynow-btn">BUY NOW!!</button>
               </div>
             </div>
           ))
