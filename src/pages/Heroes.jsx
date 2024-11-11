@@ -5,7 +5,9 @@ import ReactLoading from "react-loading";
 
 const Hero = () => {
   const { products, loading, error, fetchData, addToCart } = useData();
-  const [quantity, setQuantity] = useState({});
+
+  const [quantities, setQuantities] = useState({});
+
 
   const heroData = products.filter((product) => product.category === "Hero");
 
@@ -33,8 +35,10 @@ const Hero = () => {
   }
 
   function addTocart(product) {
-    const qty = quantity[product.id] || 1;
-    if (qty > 0) {
+
+    const quantity = quantities[product.id] || 1;
+    if (quantity > 0) {
+
       const newItem = {
         ...product,
         quantity: qty,
@@ -46,17 +50,23 @@ const Hero = () => {
   }
 
   const increQuantity = (id) => {
-    setQuantity((prevQuantity) => ({
-      ...prevQuantity,
-      [id]: (prevQuantity[id] || 1) + 1,
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [id]: (prevQuantities[id] || 1) + 1,
+
     }));
   };
 
   const decreQuantity = (id) => {
-    setQuantity((prevQuantity) => ({
-      ...prevQuantity,
-      [id]: prevQuantity[id] > 1 ? prevQuantity[id] - 1 : 1,
-    }));
+
+    setQuantities((prevQuantities) => {
+      const newQuantity = (prevQuantities[id] || 1) - 1;
+      return {
+        ...prevQuantities,
+        [id]: newQuantity > 0 ? newQuantity : 1,
+      };
+    });
+
   };
 
   
@@ -96,7 +106,7 @@ const Hero = () => {
               <p className="text-lg text-purple-600">
                 {formatMoney(hero.price)} ฿
               </p>
-              {/* <p className="text-sm text-gray-700 mt-2">{hero.description}</p> */}
+
               <div
                 id="btn-box"
                 className="flex flex-col justify-center gap-y-2"
@@ -105,16 +115,19 @@ const Hero = () => {
                   id="quantity-box"
                   className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
                 >
-                  <button onClick={decreQuantity}>-</button>
-                  <span>{quantity[hero.id] || 1}</span>
-                  <button onClick={increQuantity}>+</button>
+                  <button onClick={() => decreQuantity(hero.id)}>-</button>
+                  <span>{quantities[hero.id] || 1}</span>{" "}
+                  {/* ใช้ quantity ตาม hero.id */}
+                  <button onClick={() => increQuantity(hero.id)}>+</button>
+
                 </div>
-                <button className="addtocart-btn" onClick={() => addTocart(hero)}>
+                <button
+                  className="addtocart-btn"
+                  onClick={() => addTocart(hero)}
+                >
                   ADD TO CART
                 </button>
-                <button className="buynow-btn">
-                  BUY NOW!!
-                </button>
+                <button className="buynow-btn">BUY NOW!!</button>
               </div>
             </div>
           ))
