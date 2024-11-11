@@ -10,25 +10,28 @@ import DetailModel from "./src/components/DetailModel";
 import Arttoy from "./src/pages/Arttoy";
 import Heroes from "./src/pages/Heroes";
 import Register from "./src/pages/Register";
-import PersonalInformation from "./src/pages/Personal-info";
+import Account from "./src/pages/Account";
+import { DataProvider } from "./src/components/DataProvider";
 
 const App = () => {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/detail-model" element={<DetailModel />} />
-        <Route path="/art-toy" element={<Arttoy />} />
-        <Route path="/hero" element={<Heroes />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/personal" element={<PersonalInformation />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <DataProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/art-toy" element={<Arttoy />} />
+          <Route path="/hero" element={<Heroes />} />
+          <Route path="/detail/:id" element={<DetailModel />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/account" element={<Account />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </DataProvider>
   );
 };
 
