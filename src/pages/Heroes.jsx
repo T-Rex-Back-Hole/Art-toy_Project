@@ -4,8 +4,9 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 const Hero = () => {
-  const { products, loading, error, addToCart } = useData();
+  const { products, loading, error, fetchData, addToCart } = useData();
   const [quantity, setQuantity] = useState(1);
+  const [heroItem, setHeroItem] = useState([]);
 
   const heroData = products.filter((product) => product.category === "Hero");
 
@@ -26,14 +27,25 @@ const Hero = () => {
     return <p>{error}</p>;
   }
 
-  const incrementQuantity = () => setQuantity(quantity + 1);
-  const decrementQuantity = () => {
+  function addTocart(product) {
+    if (quantity > 0) {
+      const newItem = {
+        ...product,
+        quantity: quantity,
+      };
+      console.log("Adding item to cart:", newItem);
+      addToCart(newItem);
+    }
+  }
+  
+  const increQuantity = () => setQuantity(quantity + 1);
+  const decreQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
 
-  const handleAddToCart = (product) => {
-    addToCart({ ...product, quantity });
-  };
+  function formatMoney(money) {
+    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
 
   return (
     <section id="hero" className="mx-5 lg:mx-20">
@@ -59,18 +71,29 @@ const Hero = () => {
                 />
               </Link>
 
-              <p className="text-lg text-purple-600">{hero.price} ฿</p>
-              <div className="flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full">
-                <button onClick={decrementQuantity}>-</button>
-                <span>{quantity}</span>
-                <button onClick={incrementQuantity}>+</button>
-              </div>
-              <button
-                className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full"
-                onClick={() => handleAddToCart(hero)}
+              <p className="text-lg text-purple-600">
+                {formatMoney(hero.price)} ฿
+              </p>
+              {/* <p className="text-sm text-gray-700 mt-2">{hero.description}</p> */}
+              <div
+                id="btn-box"
+                className="flex flex-col justify-center gap-y-2"
               >
-                ADD TO CART
-              </button>
+                <div
+                  id="quantity-box"
+                  className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
+                >
+                  <button onClick={decreQuantity}>-</button>
+                  <span>{quantity}</span>
+                  <button onClick={increQuantity}>+</button>
+                </div>
+                <button className="addtocart-btn" onClick={() => addTocart(hero)}>
+                  ADD TO CART
+                </button>
+                <button className="buynow-btn">
+                  BUY NOW!!
+                </button>
+              </div>
             </div>
           ))
         ) : (
