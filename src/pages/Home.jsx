@@ -3,9 +3,15 @@ import Hero from "../components/Hero";
 import Main from "../components/Main";
 
 const Home = () => {
+  const images = [
+    "https://i.postimg.cc/d1dm57mF/banner1.png",
+    "https://i.postimg.cc/br90jKBF/banner2.png",
+    "https://i.postimg.cc/d3YRpq4y/banner3.png",
+  ];
+
   return (
     <>
-      <Hero />
+      <Hero images={images} />
       <Main />
     </>
   );
