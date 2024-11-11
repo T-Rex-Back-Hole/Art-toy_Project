@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CartItem = ({ item, removeItem, updateQuantity }) => {
+const CartItem = ({ item, removeItem, updateQuantity, isChecked, onSelectItem }) => {
   return (
     <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
-      <input type="checkbox" className="mx-2" />
+      <input
+        type="checkbox"
+        className="mx-2"
+        checked={isChecked}
+        onChange={onSelectItem} // เรียกใช้ onSelectItem เมื่อมีการเปลี่ยนแปลงสถานะการเลือก
+      />
       <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center justify-center">
         <Link to={`/detail/${item.id}`}>
           <img
