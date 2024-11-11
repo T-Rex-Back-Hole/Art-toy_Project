@@ -4,7 +4,7 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 const Hero = () => {
-  const { products, loading, error, fetchData, addToCart } = useData();
+  const { products, loading, error,  addToCart } = useData();
   const [quantities, setQuantities] = useState({});
 
   const heroData = products.filter((product) => product.category === "Hero");
@@ -54,9 +54,9 @@ const Hero = () => {
     });
   };
 
-  function formatMoney(money) {
-    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  }
+  const handleAddToCart = (product) => {
+    addToCart({ ...product, quantity });
+  };
 
   return (
     <section id="hero" className="mx-5 lg:mx-20">
@@ -82,7 +82,6 @@ const Hero = () => {
                 />
               </Link>
 
-
               <p className="text-lg text-purple-600">
                 {formatMoney(hero.price)} ฿
               </p>
@@ -97,7 +96,6 @@ const Hero = () => {
                 >
                   <button onClick={() => decreQuantity(hero.id)}>-</button>
                   <span>{quantities[hero.id] || 1}</span>{" "}
-                  {/* ใช้ quantity ตาม hero.id */}
                   <button onClick={() => increQuantity(hero.id)}>+</button>
                 </div>
                 <button
@@ -108,6 +106,12 @@ const Hero = () => {
                 </button>
                 <button className="buynow-btn">BUY NOW!!</button>
               </div>
+              <button
+                className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full"
+                onClick={() => handleAddToCart(hero)}
+              >
+                ADD TO CART
+              </button>
             </div>
           ))
         ) : (
