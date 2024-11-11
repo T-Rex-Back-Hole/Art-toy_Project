@@ -41,6 +41,7 @@ const Hero = () => {
         quantity: quantity,
       };
       addToCart(newItem);
+      setQuantities({})
     }
   }
 
