@@ -40,6 +40,7 @@ const Hero = () => {
         quantity: quantity,
       };
       addToCart(newItem);
+      setQuantities({})
     }
   }
 
@@ -61,10 +62,7 @@ const Hero = () => {
     });
   };
 
-  // function formatMoney(money) {
-  //   return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  // }
-
+ 
   return (
     <section id="hero" className="mx-5 lg:mx-20">
       <h2 className="text-4xl font-bold mb-6 text-center mt-10">

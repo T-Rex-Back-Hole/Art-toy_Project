@@ -4,7 +4,8 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 function Arttoy() {
-  const { products, loading, error, fetchData, addToCart, formatMoney } = useData();
+  const { products, loading, error, fetchData, addToCart, formatMoney } =
+    useData();
   const [quantities, setQuantities] = useState({}); // เก็บปริมาณสินค้าแยกตาม id
 
   const artToyData = products.filter(
@@ -41,8 +42,9 @@ function Arttoy() {
         ...product,
         quantity: quantity,
       };
-      console.log("Adding item to cart:", newItem);
       addToCart(newItem);
+      
+      setQuantities({});
     }
   }
 
@@ -63,9 +65,7 @@ function Arttoy() {
       };
     });
   };
-  // function formatMoney(money) {
-  //   return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  // }
+ 
 
   return (
     <>
