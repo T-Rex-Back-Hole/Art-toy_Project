@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../DataProvider";
 import CartItem from "./CartItem";
 
 const Cart = () => {
   const { cart, removeItem, updateQuantity, calculateTotal } = useData();
+  const [selectedItems, setSelectedItems] = useState([]); // state สำหรับเก็บรายการสินค้าที่เลือก
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      // เลือกสินค้าทั้งหมด
+      setSelectedItems(cart.map((item) => item.id));
+    } else {
+      // ยกเลิกการเลือกสินค้าทั้งหมด
+      setSelectedItems([]);
+    }
+  };
+
+  const handleSelectItem = (id) => {
+    setSelectedItems(
+      (prevSelected) =>
+        prevSelected.includes(id)
+          ? prevSelected.filter((itemId) => itemId !== id) // ยกเลิกการเลือก
+          : [...prevSelected, id] // เพิ่มในรายการที่เลือก
+    );
+  };
+
+  const handleDeleteSelected = () => {
+    selectedItems.forEach((id) => removeItem(id)); // ลบรายการที่ถูกเลือกทั้งหมด
+    setSelectedItems([]); // รีเซ็ตรายการที่เลือกหลังจากลบ
+  };
+
+  const isChecked = (id) => selectedItems.includes(id);
 
   return (
     <section className="bg-white mt-3 antialiased lg:flex lg:justify-center mx-auto">
@@ -16,10 +43,20 @@ const Cart = () => {
           <div className="space-y-2">
             <div className="flex justify-between items-center rounded-lg border py-2 border-gray-200 bg-white shadow-md">
               <div className="flex items-center">
-                <input type="checkbox" className="ml-2" />
+                <input
+                  type="checkbox"
+                  className="ml-2"
+                  onChange={handleSelectAll}
+                  checked={
+                    selectedItems.length === cart.length && cart.length > 0
+                  }
+                />
                 <h1 className="font-semibold ml-2">Select All</h1>
               </div>
-              <i className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer mr-8"></i>
+              <i
+                className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer mr-8"
+                onClick={handleDeleteSelected} // เรียกใช้ฟังก์ชันลบรายการที่เลือก
+              ></i>
             </div>
 
             {cart.map((item) => (
@@ -28,6 +65,8 @@ const Cart = () => {
                 item={item}
                 removeItem={removeItem}
                 updateQuantity={updateQuantity}
+                isChecked={isChecked(item.id)} // ส่งสถานะ checked ไปยัง CartItem
+                onSelectItem={() => handleSelectItem(item.id)} // ฟังก์ชันจัดการการเลือก
               />
             ))}
           </div>
