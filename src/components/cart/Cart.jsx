@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useData } from "../DataProvider";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-  const { cart, removeItem, updateQuantity, calculateTotal } = useData();
-  const [selectedItems, setSelectedItems] = useState([]); // state สำหรับเก็บรายการสินค้าที่เลือก
+  const { cart, calculateTotal, removeItem, updateQuantity, formatMoney } = useData();
+  const { total, totalItems } = calculateTotal();
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       // เลือกสินค้าทั้งหมด
       setSelectedItems(cart.map((item) => item.id));
     } else {
-      // ยกเลิกการเลือกสินค้าทั้งหมด
+      // ยกเลิกการเลือกทั้งหมด
       setSelectedItems([]);
     }
   };
@@ -20,14 +20,9 @@ const Cart = () => {
   const handleSelectItem = (id) => {
     setSelectedItems((prevSelected) =>
       prevSelected.includes(id)
-        ? prevSelected.filter((itemId) => itemId !== id) // ยกเลิกการเลือก
-        : [...prevSelected, id] // เพิ่มในรายการที่เลือก
+        ? prevSelected.filter((itemId) => itemId !== id)
+        : [...prevSelected, id]
     );
-  };
-
-  const handleDeleteSelected = () => {
-    selectedItems.forEach((id) => removeItem(id)); // ลบรายการที่ถูกเลือกทั้งหมด
-    setSelectedItems([]); // รีเซ็ตรายการที่เลือกหลังจากลบ
   };
 
   const isChecked = (id) => selectedItems.includes(id);
@@ -52,7 +47,7 @@ const Cart = () => {
               </div>
               <i
                 className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer mr-8"
-                onClick={handleDeleteSelected} // เรียกใช้ฟังก์ชันลบรายการที่เลือก
+                onClick={() => selectedItems.forEach((id) => removeItem(id))}
               ></i>
             </div>
 
@@ -62,8 +57,8 @@ const Cart = () => {
                 item={item}
                 removeItem={removeItem}
                 updateQuantity={updateQuantity}
-                isChecked={isChecked(item.id)} // ส่งสถานะ checked ไปยัง CartItem
-                onSelectItem={() => handleSelectItem(item.id)} // ฟังก์ชันจัดการการเลือก
+                isChecked={isChecked(item.id)}
+                onSelectItem={() => handleSelectItem(item.id)}
               />
             ))}
           </div>
@@ -77,10 +72,10 @@ const Cart = () => {
             <div className="space-y-2">
               <dl className="flex items-center justify-between gap-4">
                 <dt className="text-base font-normal text-gray-500">
-                  Subtotal ({cart.length} items)
+                  Subtotal ({totalItems} items)
                 </dt>
                 <dd className="text-base font-medium text-gray-900">
-                  ฿ {calculateTotal()}
+                  ฿ {formatMoney(total)}
                 </dd>
               </dl>
               <dl className="flex items-center justify-between gap-4">
@@ -93,16 +88,14 @@ const Cart = () => {
             <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
               <dt className="text-base font-bold text-gray-900">Total</dt>
               <dd className="text-base font-bold text-green-600">
-                ฿ {calculateTotal()}
+                ฿ {formatMoney(total)}
               </dd>
             </dl>
           </div>
 
-          <Link to="/">
-            <button className="flex w-full items-center justify-center rounded-lg bg-[#5BDEE7] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#3ef2ff] focus:outline-none focus:ring-4 focus:ring-[#38c5cf] border">
-              BUY NOW!!
-            </button>
-          </Link>
+          <button className="flex w-full items-center justify-center rounded-lg bg-[#5BDEE7] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#3ef2ff] focus:outline-none focus:ring-4 focus:ring-[#38c5cf] border">
+            BUY NOW!!
+          </button>
         </div>
       </div>
     </section>

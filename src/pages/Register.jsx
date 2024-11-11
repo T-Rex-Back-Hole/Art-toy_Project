@@ -8,7 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState([]);
-  const [formUser, setFormUser] = useState("");
+  const [formUser, setFormUser] = useState(initialfromUser);
 
   const navigate = useNavigate();
   const initialfromUser = {
