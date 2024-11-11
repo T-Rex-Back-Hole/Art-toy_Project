@@ -1,41 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const Hero = () => {
-  const sliders = [
-    {
-      url: "https://i.postimg.cc/d1dm57mF/banner1.png",
-    },
-    {
-      url: "https://i.postimg.cc/br90jKBF/banner2.png",
-    },
-    {
-      url: "https://i.postimg.cc/d3YRpq4y/banner3.png",
-    },
-  ];
+const Hero = ({ images }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
 
   return (
-    <>
-      <section id="slider-container">
-        <div id="slider" className="relative w-full">
-          <div className="w-full duration-500">
-            <img
-              src="https://i.postimg.cc/d1dm57mF/banner1.png"
-              alt=""
-              className="w-full"
-            />
-          </div>
-
-          <div
-            id="slider-nav"
-            className="flex absolute gap-x-2 lg:gap-x-4 bottom-4 left-2/4 translate-x-[-50%] z-10"
-          >
-            <a href="#slide-1" className="nav-bullet"></a>
-            <a href="#slide-2" className="nav-bullet"></a>
-            <a href="#slide-3" className="nav-bullet"></a>
-          </div>
-        </div>
-      </section>
-    </>
+    <section className="hero">
+      <div className="">
+        <img
+          src={images[currentImageIndex]}
+          alt={`Slide ${currentImageIndex + 1}`}
+          className="w-full h-auto"
+        />
+      </div>
+    </section>
   );
 };
 
