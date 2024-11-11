@@ -27,11 +27,9 @@ const Hero = () => {
       </div>
     );
   }
-
   if (error) {
     return <p>{error}</p>;
   }
-
   function addTocart(product) {
     const quantity = quantities[product.id] || 1;
     if (quantity > 0) {
