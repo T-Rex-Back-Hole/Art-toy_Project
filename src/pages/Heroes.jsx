@@ -6,6 +6,7 @@ import ReactLoading from "react-loading";
 const Hero = () => {
   const { products, loading, error, fetchData } = useData();
   const [quantity, setQuantity] = useState(1);
+  const [heroItem, setHeroItem] = useState([]);
 
   const heroData = products.filter((product) => product.category === "Hero");
 
@@ -32,11 +33,28 @@ const Hero = () => {
     return <p>{error}</p>;
   }
 
+  function addTocart(e) {
+    e.preventDefault();
+    if (quantity > 0) {
+      const newItem = {
+        id: products.id,
+        name: products.name,
+        price: products.price,
+        image: products.image,
+      };
+      // addItem(newItem);
+      console.log(newItem)
+    }
+  }
+
+  const addItem = (newItem) => {
+    setHeroItem((item) => [...item, newItem]);
+  };
+
   const increQuantity = () => setQuantity(quantity + 1);
   const decreQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
-
 
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -82,10 +100,10 @@ const Hero = () => {
                   <span>{quantity}</span>
                   <button onClick={increQuantity}>+</button>
                 </div>
-                <button className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-purple-600">
+                <button className="addtocart-btn" onClick={addTocart}>
                   ADD TO CART
                 </button>
-                <button className="bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF]">
+                <button className="buynow-btn">
                   BUY NOW!!
                 </button>
               </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const CartItem = ({ imgSrc, itemName, itemDesc, itemPrice }) => (
   <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
-    <input type="checkbox" className="mx-2" />
+    <input type="checkbox" className="mx-4" />
     <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center justify-center">
       <Link to="/detail-model">
         <img className="rounded-lg refer-img h-28 w-auto object-contain" src={imgSrc} alt={itemName} />
