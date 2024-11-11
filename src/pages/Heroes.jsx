@@ -4,7 +4,8 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 const Hero = () => {
-  const { products, loading, error, fetchData, addToCart, formatMoney } = useData();
+  const { products, loading, error, fetchData, addToCart, formatMoney } =
+    useData();
   const [quantities, setQuantities] = useState({}); // เก็บปริมาณสินค้าแยกตาม id
 
   const heroData = products.filter((product) => product.category === "Hero");
@@ -62,7 +63,6 @@ const Hero = () => {
     });
   };
 
- 
   return (
     <section id="hero" className="mx-5 lg:mx-20">
       <h2 className="text-4xl font-bold mb-6 text-center mt-10">

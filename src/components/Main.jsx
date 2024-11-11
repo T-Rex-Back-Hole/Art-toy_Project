@@ -2,6 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "./DataProvider";
 
+import imageArtToy from "../../images/Art toy/cc.png";
+import imageHero from "../../images/dead564.png";
+import image2 from "../../images/arr1.webp";
+import image3 from "../../images/toy1.png";
+import image4 from "../../images/news2.webp";
+import image5 from "../../images/news1.webp";
+import brander1 from "../../images/brand1.png";
+import brander2 from "../../images/brand2.png";
+import brander3 from "../../images/brand3.png";
+import brander4 from "../../images/brand4.png";
+import brander5 from "../../images/brand5.png";
+import brander6 from "../../images/brand6.png";
+
 const Main = () => {
   const { products } = useData();
 
@@ -109,8 +122,6 @@ const Main = () => {
             }`}
           ></i>
         </div>
-
-        
       </section>
 
       <section id="category" className="">
@@ -125,7 +136,7 @@ const Main = () => {
             to="/art-toy"
             className="flex flex-col justify-center md:w-3/4 lg:w-2/5 bg-[#B47AEA] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
-            <img src="./images/cc.png" alt="" className="" />
+            <img src={imageArtToy} alt="" className="" />
             <button className="w-full bg-white text-[#B47AEA] text-2xl font-bold rounded-full py-2 px-10 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
               ART TOY
             </button>
@@ -135,7 +146,7 @@ const Main = () => {
             to="/hero"
             className="flex flex-col justify-center lg:w-2/5 md:w-3/4 bg-[#5BDEE7] p-8 m-6 lg:p-6 lg:m-6 rounded-xl"
           >
-            <img src="./images/dead564.png" alt="" className="" />
+            <img src={imageHero} alt="" className="" />
             <button className="bg-white text-[#B47AEA] text-xl font-bold rounded-full py-2 px-10 lg:h-20 lg:text-3xl lg:rounded-md lg:hover:bg-purple-600 lg:hover:text-white lg:cursor-pointer">
               HERO
             </button>
@@ -155,14 +166,14 @@ const Main = () => {
             id="box-left"
             className="hidden lg:w-1/2 lg:flex lg:flex-col lg:justify-center"
           >
-            <img src="./images/arr1.webp" alt="" className="" />
+            <img src={image2} alt="" className="" />
           </div>
           <div
             id="box-right"
             className="flex flex-col justify-center text-center m-6 shadow-lg p-10 rounded-xl lg:shadow-none lg:m-0 lg:w-1/2 lg:p-12"
           >
             <div id="right-img" className="flex justify-center">
-              <img src="./images/toy1.png" alt="" className="w-1/2" />
+              <img src={image3} alt="" className="w-1/2" />
             </div>
             <p>
               PixelBot Joy - is a vibrant robot that blends contemporary design
@@ -185,7 +196,7 @@ const Main = () => {
             id="box-newsleft"
             className="hidden lg:inline lg:w-1/2 lg:px-2 lg:mx-3"
           >
-            <img src="./images/news2.webp" alt="" />
+            <img src={image4} alt="" />
             <h2 className="text-xl font-bold my-6 lg:text-2xl lg:mt-12">
               Introducing BoomBot: The Futuristic Art Toy Taking
             </h2>
@@ -204,7 +215,7 @@ const Main = () => {
           </div>
 
           <div id="box-newsright" className="mx-6 lg:w-1/2 lg:px-2">
-            <img src="./images/news1.webp" alt="" />
+            <img src={image5} alt="" />
             <h2 className="text-xl font-bold my-6 lg:text-2xl lg:mt-12">
               Art Toy Spotlight: The Rise of CircleBear – A New Era of Playful
               Design
@@ -235,12 +246,12 @@ const Main = () => {
           id="brand-logo"
           className="grid grid-cols-3 gap-4 mx-6 lg:grid-cols-6 lg:my-6"
         >
-          <img src="./images/brand1.png" alt="" className="" />
-          <img src="./images/brand2.png" alt="" className="" />
-          <img src="./images/brand3.png" alt="" className="" />
-          <img src="./images/brand4.png" alt="" className="" />
-          <img src="./images/brand5.png" alt="" className="" />
-          <img src="./images/brand6.png" alt="" className="" />
+          <img src={brander1} alt="" className="" />
+          <img src={brander2} alt="" className="" />
+          <img src={brander3} alt="" className="" />
+          <img src={brander4} alt="" className="" />
+          <img src={brander5} alt="" className="" />
+          <img src={brander6} alt="" className="" />
         </div>
       </section>
 

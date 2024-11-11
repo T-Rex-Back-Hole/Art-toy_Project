@@ -41,7 +41,9 @@ const Cart = () => {
                   type="checkbox"
                   className="ml-2"
                   onChange={handleSelectAll}
-                  checked={selectedItems.length === cart.length && cart.length > 0}
+                  checked={
+                    selectedItems.length === cart.length && cart.length > 0
+                  }
                 />
                 <h1 className="font-semibold ml-2">Select All</h1>
               </div>

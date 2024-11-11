@@ -65,7 +65,6 @@ function Arttoy() {
       };
     });
   };
- 
 
   return (
     <>
