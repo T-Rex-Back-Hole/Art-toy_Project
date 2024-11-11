@@ -5,7 +5,7 @@ import ReactLoading from "react-loading";
 
 const Hero = () => {
   const { products, loading, error, fetchData, addToCart } = useData();
-  const [quantities, setQuantities] = useState({});
+  const [quantities, setQuantities] = useState({}); // เก็บปริมาณสินค้าแยกตาม id
 
   const heroData = products.filter((product) => product.category === "Hero");
 
@@ -27,11 +27,13 @@ const Hero = () => {
       </div>
     );
   }
+
   if (error) {
     return <p>{error}</p>;
   }
+
   function addTocart(product) {
-    const quantity = quantities[product.id] || 1;
+    const quantity = quantities[product.id] || 1; // ใช้ค่า quantity ตาม id ของสินค้า
     if (quantity > 0) {
       const newItem = {
         ...product,
@@ -41,6 +43,8 @@ const Hero = () => {
       addToCart(newItem);
     }
   }
+
+  // เพิ่มหรือลดปริมาณสินค้า
   const increQuantity = (id) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
