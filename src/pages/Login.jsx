@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 import Register from "./Register";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -12,10 +12,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       // จำลองการเรียก API
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       navigate("/personal-info");
     } catch (error) {
       console.error(error);
@@ -31,7 +31,10 @@ const Login = () => {
         id="form"
         className="flex flex-col justify-center lg:flex-row lg:justify-center"
       >
-        <form onSubmit={handleSubmit} className="flex flex-col px-4 gap-y-4 lg:gap-y-0 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col px-4 gap-y-4 lg:gap-y-0 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0"
+        >
           <input
             id="email"
             type="email"
@@ -56,10 +59,15 @@ const Login = () => {
             >
               {isLoading ? (
                 <div className="flex justify-center">
-                  <ReactLoading type="spin" height={24} width={24} color="#ffffff" />
+                  <ReactLoading
+                    type="spin"
+                    height={24}
+                    width={24}
+                    color="#ffffff"
+                  />
                 </div>
               ) : (
-                'Login'
+                "Login"
               )}
             </button>
           </div>
