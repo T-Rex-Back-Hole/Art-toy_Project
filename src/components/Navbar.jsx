@@ -10,11 +10,16 @@ const Navbar = () => {
       <Link to="/">
         <div id="logo" className="flex items-center">
           <img src="./images/dino.png" alt="" className="w-10 mx-auto mr-5" />
-          <span className="text-[#B47AEA] text-2xl font-bold">T-Rex BlackHole</span>
+          <span className="text-[#B47AEA] text-2xl font-bold">
+            T-Rex BlackHole
+          </span>
         </div>
       </Link>
 
-      <div id="menu-icon" className="flex justify-between my-2 lg:my-0 lg:justify-between lg:items-center">
+      <div
+        id="menu-icon"
+        className="flex justify-between my-2 lg:my-0 lg:justify-between lg:items-center"
+      >
         <div id="search">
           <input
             type="text"
