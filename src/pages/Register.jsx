@@ -1,43 +1,134 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordStrong, setIsPasswordStrong] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState([]);
+  const [formUser, setFormUser] = useState("");
+
+  const navigate = useNavigate();
+  const initialfromUser = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setUser([...user, formUser]);
+    if (email && password) {
+      navigate("/login");
+    } else {
+      alert("Information is incomplete");
+    }
+  };
+  const handleChange = (event) => {
+    const name = event.target.value;
+    const value = event.target.value;
+    setFormUser({ ...formUser, [name]: value });
+  };
+
+  useEffect(() => {
+    if (email) {
+      const emailRegX = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/;
+      const isValidEmail = emailRegX.test(email);
+      setIsEmailValid(isValidEmail);
+    }
+  }, [email]);
+
+  useEffect(() => {
+    if (password) {
+      const minLength = password.length >= 8;
+      const hasLowercase = /[a-z]/.test(password);
+      const hasUppercase = /[A-Z]/.test(password);
+      const hasNumber = /[0-9]/.test(password);
+      const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+      setIsPasswordStrong(
+        minLength && hasLowercase && hasUppercase && hasNumber && hasSymbol
+      );
+    }
+  }, [password]);
+
   return (
     <>
       <div className="font-bold text-5xl text-center my-12">Sign up</div>
 
       <section
         id="form"
+        onSubmit={handleSubmit}
         className="flex flex-col justify-center lg:flex-row lg:justify-center"
       >
-        <form className="flex flex-col px-4 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0">
+        <form
+          className="flex flex-col px-4 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0"
+          onSubmit={handleSubmit}
+        >
           <p className="text-base my-2 px-3 lg:my-0">
             Please fill below information
           </p>
-
-          <input
-            id="first-name"
-            type="email"
-            placeholder="First name"
-            className="w-full rounded-full px-4 py-2 border mb-4 border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
-          />
-          <input
-            id="last-name"
-            type="text"
-            placeholder="Last Name"
-            className="w-full rounded-full px-4 py-2 mb-4 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
-          />
-          <input
-            id="email"
-            type="email"
-            placeholder="E-mail"
-            className="w-full rounded-full px-4 py-2 mb-4 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
-          />
-          <input
-            id="password"
-            type="text"
-            placeholder="Password"
-            className="w-full rounded-full px-4 py-2 mb-4 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
-          />
+          <label>
+            First Name:
+            <input
+              id="firstName"
+              type="text"
+              value={formUser.firstName}
+              placeholder="First name"
+              onChange={handleChange}
+              className="w-full rounded-full px-4 py-2 border mb-1 border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+            />
+          </label>
+          <label>
+            Last Name:
+            <input
+              id="lastName"
+              type="text"
+              value={formUser.lastName}
+              placeholder="Last Name"
+              onChange={handleChange}
+              className="w-full rounded-full px-4 py-2 mb-1 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+            />
+          </label>
+          <label>
+            E-mail:{" "}
+            <input
+              id="email"
+              type="email"
+              value={formUser.email}
+              placeholder="E-mail"
+              onChange={(event) => {
+                setEmail(event.target.value);
+                handleChange();
+              }}
+              className="w-full rounded-full px-4 py-2 mb-1 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+            />
+            {!isEmailValid && (
+              <p className="text-red-600">Email is incorrect</p>
+            )}
+          </label>
+          <label>
+            Password:{" "}
+            <input
+              id="password"
+              type="password"
+              placeholder="Password"
+              value={formUser.password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                handleChange();
+              }}
+              className="w-full rounded-full px-4 py-2 mb-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+            />
+            {!isPasswordStrong && (
+              <p className="text-red-600">
+                Your password must be at least 8 characters including a
+                lowercase letter, an uppercase letter, and a number
+              </p>
+            )}
+          </label>
 
           <div id="btn-create-account" className="flex w-full">
             <button
@@ -49,27 +140,26 @@ const Register = () => {
           </div>
         </form>
       </section>
-      
-        <div
-          id="login-by"
-          className="flex container justify-center gap-10 lg:gap-0 lg:w-1/2 lg:mx-auto lg:justify-between lg:space-x-28 mb-10"
+
+      <div
+        id="login-by"
+        className="flex container justify-center gap-10 lg:gap-0 lg:w-1/2 lg:mx-auto lg:justify-between lg:space-x-28 mb-10"
+      >
+        <button
+          id="facebook-login"
+          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
         >
-          <button
-            id="facebook-login"
-            class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
-          >
-            <i class="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4"></i>
-            Facebook
-          </button>
-          <button
-            id="google-login"
-            class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
-          >
-            <i class="fa-brands fa-google text-red-600 mr-2 lg:mr-4"></i>
-            Google
-          </button>
-        </div>
-      
+          <i class="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4"></i>
+          Facebook
+        </button>
+        <button
+          id="google-login"
+          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
+        >
+          <i class="fa-brands fa-google text-red-600 mr-2 lg:mr-4"></i>
+          Google
+        </button>
+      </div>
 
       <section id="subscribe" className="bg-[#F7F7F7] p-8">
         <div

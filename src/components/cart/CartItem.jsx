@@ -1,14 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useData } from "../DataProvider";
+
+
 
 const CartItem = ({ item, removeItem, updateQuantity, isChecked, onSelectItem }) => {
+
+  const { formatMoney } = useData();
+  
   return (
     <div className="flex items-start bg-white border border-gray-200 rounded-lg shadow-md py-4 pr-4 relative">
       <input
         type="checkbox"
         className="mx-2"
         checked={isChecked}
-        onChange={onSelectItem} // เรียกใช้ onSelectItem เมื่อมีการเปลี่ยนแปลงสถานะการเลือก
+        onChange={onSelectItem}
       />
       <div className="border-2 rounded-lg border-black h-36 w-24 flex items-center justify-center">
         <Link to={`/detail/${item.id}`}>
@@ -29,7 +35,7 @@ const CartItem = ({ item, removeItem, updateQuantity, isChecked, onSelectItem })
           Description: <span className="text-xs">{item.description}</span>
         </p>
         <p className="text-lg absolute bottom-4 font-semibold text-primary text-[#5BDEE7]">
-          ฿{item.price}
+          ฿{formatMoney(item.price)}
         </p>
       </div>
       <div className="flex justify-center items-center border w-24 rounded-full py-1 bg-[#B47AEA] absolute bottom-4 right-6">
