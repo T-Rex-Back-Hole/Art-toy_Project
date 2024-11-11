@@ -4,10 +4,16 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 const Hero = () => {
-  const { products, loading, error,  addToCart } = useData();
+  const { products, loading, error, fetchData, addToCart } = useData();
   const [quantities, setQuantities] = useState({});
 
   const heroData = products.filter((product) => product.category === "Hero");
+
+  useEffect(() => {
+    if (!products.length) {
+      fetchData();
+    }
+  }, [products, fetchData]);
 
   if (loading) {
     return (
@@ -54,9 +60,9 @@ const Hero = () => {
     });
   };
 
-  const handleAddToCart = (product) => {
-    addToCart({ ...product, quantity });
-  };
+  function formatMoney(money) {
+    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
 
   return (
     <section id="hero" className="mx-5 lg:mx-20">
@@ -78,7 +84,7 @@ const Hero = () => {
                 <img
                   src={hero.image}
                   alt={hero.name}
-                  className="w-auto h-96 object-contain my-4"
+                  className="w-auto h-96 object-contain my-4 justify-self-center refer-img"
                 />
               </Link>
 
@@ -96,6 +102,7 @@ const Hero = () => {
                 >
                   <button onClick={() => decreQuantity(hero.id)}>-</button>
                   <span>{quantities[hero.id] || 1}</span>{" "}
+                  {/* ใช้ quantity ตาม hero.id */}
                   <button onClick={() => increQuantity(hero.id)}>+</button>
                 </div>
                 <button
@@ -106,12 +113,6 @@ const Hero = () => {
                 </button>
                 <button className="buynow-btn">BUY NOW!!</button>
               </div>
-              <button
-                className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full"
-                onClick={() => handleAddToCart(hero)}
-              >
-                ADD TO CART
-              </button>
             </div>
           ))
         ) : (
