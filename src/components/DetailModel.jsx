@@ -8,7 +8,6 @@ const DetailModel = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
-  // Fetch product details based on product ID
   useEffect(() => {
     const findProduct = () => {
       if (!loading && products.length > 0) {
@@ -69,19 +68,13 @@ const DetailModel = () => {
     <section id="detailModel" className="mx-5 lg:mx-20">
       {/* Image Carousel */}
       <div className="flex justify-center items-center my-20">
-        <i
-          className="fa-solid fa-circle-chevron-left text-3xl opacity-60 text-[#B47AEA] lg:text-5xl cursor-pointer hover:text-purple-500"
-          // Add functionality for image navigation here
-        ></i>
+        <i className="fa-solid fa-circle-chevron-left text-3xl opacity-60 text-[#B47AEA] lg:text-5xl cursor-pointer hover:text-purple-500"></i>
         <img
           src={product.image}
           alt={product.name}
           className="w-auto h-96 object-contain lg:w-1/4 sm:mx-10"
         />
-        <i
-          className="fa-solid fa-circle-chevron-right text-3xl opacity-60 text-[#B47AEA] lg:text-5xl cursor-pointer hover:text-purple-500"
-          // Add functionality for image navigation here
-        ></i>
+        <i className="fa-solid fa-circle-chevron-right text-3xl opacity-60 text-[#B47AEA] lg:text-5xl cursor-pointer hover:text-purple-500"></i>
       </div>
 
       {/* Product Details */}

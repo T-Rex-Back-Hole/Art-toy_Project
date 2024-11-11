@@ -25,20 +25,21 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  const addToCart = (productToAdd) => {
-    const existingProductIndex = cart.findIndex(
-      (item) => item.id === productToAdd.id
-    );
-
-    if (existingProductIndex > -1) {
-      const updatedCart = [...cart];
-      updatedCart[existingProductIndex].quantity += productToAdd.quantity;
-      setCart(updatedCart);
-    } else {
-      setCart((prevCart) => [...prevCart, productToAdd]);
-    }
+  const addToCart = (product) => {
+    setCart((prevCart) => {
+      const existingItemIndex = prevCart.findIndex(
+        (item) => item.id === product.id
+      );
+      if (existingItemIndex > -1) {
+        const updatedCart = [...prevCart];
+        updatedCart[existingItemIndex].quantity += product.quantity;
+        return updatedCart;
+      }
+      return [...prevCart, product];
+    });
   };
 
+  // Update quantity of an item
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
     setCart((prevCart) =>
@@ -48,10 +49,12 @@ export const DataProvider = ({ children }) => {
     );
   };
 
+  // Remove item from cart
   const removeItem = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
 
+  // Calculate total price of cart items
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
