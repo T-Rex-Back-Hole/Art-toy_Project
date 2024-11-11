@@ -42,8 +42,9 @@ function Arttoy() {
         ...product,
         quantity: quantity,
       };
-      console.log("Adding item to cart:", newItem);
       addToCart(newItem);
+      
+      setQuantities({});
     }
   }
 

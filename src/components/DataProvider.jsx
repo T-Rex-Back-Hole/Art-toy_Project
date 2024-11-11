@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const DataContext = createContext();
@@ -27,7 +29,10 @@ export const DataProvider = ({ children }) => {
   };
 
   const updateCartItemCount = () => {
-    const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+    const totalQuantity = cart.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
     setCartItemCount(totalQuantity);
   };
 
@@ -39,10 +44,23 @@ export const DataProvider = ({ children }) => {
       if (existingItemIndex > -1) {
         const updatedCart = [...prevCart];
         updatedCart[existingItemIndex].quantity += product.quantity;
+
         return updatedCart;
       }
+
       return [...prevCart, product];
     });
+
+    toast.success("Product added!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      theme: "dark",
+    });
+
     updateCartItemCount();
   };
 
@@ -63,7 +81,10 @@ export const DataProvider = ({ children }) => {
 
   const calculateTotal = () => {
     const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const total = cart.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
     return { total, totalItems };
   };
 
