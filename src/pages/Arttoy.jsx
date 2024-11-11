@@ -5,7 +5,7 @@ import ReactLoading from "react-loading";
 
 function Arttoy() {
   const { products, loading, error, fetchData, addToCart } = useData();
-  const [quantities, setQuantities] = useState({});
+  const [quantities, setQuantities] = useState({}); // เก็บปริมาณสินค้าแยกตาม id
 
   const artToyData = products.filter(
     (product) => product.category === "Art Toy"
@@ -35,7 +35,7 @@ function Arttoy() {
   }
 
   function addTocart(product) {
-    const quantity = quantities[product.id] || 1;
+    const quantity = quantities[product.id] || 1; // ใช้ค่า quantity ตาม id ของสินค้า
     if (quantity > 0) {
       const newItem = {
         ...product,
@@ -46,6 +46,7 @@ function Arttoy() {
     }
   }
 
+  // เพิ่มหรือลดปริมาณสินค้า
   const increQuantity = (id) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -62,7 +63,6 @@ function Arttoy() {
       };
     });
   };
-
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
@@ -105,19 +105,17 @@ function Arttoy() {
                     id="quantity-box"
                     className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
                   >
-                    <button onClick={decreQuantity(arttoy.id)}>-</button>
-                    <span>{quantity[arttoy.id] || 1}</span>
-                    <button onClick={increQuantity(arttoy.id)}>+</button>
+                    <button onClick={() => decreQuantity(arttoy.id)}>-</button>
+                    <span>{quantities[arttoy.id] || 1}</span>
+                    <button onClick={() => increQuantity(arttoy.id)}>+</button>
                   </div>
                   <button
+                    className="addtocart-btn"
                     onClick={() => addTocart(arttoy)}
-                    className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-purple-600"
                   >
                     ADD TO CART
                   </button>
-                  <button className="bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF]">
-                    BUY NOW!!
-                  </button>
+                  <button className="buynow-btn">BUY NOW!!</button>
                 </div>
               </div>
             ))
