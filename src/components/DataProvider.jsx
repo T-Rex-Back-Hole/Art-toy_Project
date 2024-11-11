@@ -10,6 +10,7 @@ export const DataProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   const fetchData = async () => {
     setLoading(true);
@@ -25,6 +26,11 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const updateCartItemCount = () => {
+    const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+    setCartItemCount(totalQuantity);
+  };
+
   const addToCart = (product) => {
     setCart((prevCart) => {
       const existingItemIndex = prevCart.findIndex(
@@ -37,9 +43,9 @@ export const DataProvider = ({ children }) => {
       }
       return [...prevCart, product];
     });
+    updateCartItemCount();
   };
 
-  // Update quantity of an item
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
     setCart((prevCart) =>
@@ -47,21 +53,31 @@ export const DataProvider = ({ children }) => {
         item.id === id ? { ...item, quantity: newQuantity } : item
       )
     );
+    updateCartItemCount();
   };
 
-  // Remove item from cart
   const removeItem = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+    updateCartItemCount();
   };
 
-  // Calculate total price of cart items
   const calculateTotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return { total, totalItems };
   };
+
+  function formatMoney(money) {
+    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  }
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    updateCartItemCount();
+  }, [cart]);
 
   return (
     <DataContext.Provider
@@ -75,6 +91,8 @@ export const DataProvider = ({ children }) => {
         updateQuantity,
         removeItem,
         calculateTotal,
+        cartItemCount,
+        formatMoney,
       }}
     >
       {children}

@@ -4,7 +4,7 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 const Hero = () => {
-  const { products, loading, error, fetchData, addToCart } = useData();
+  const { products, loading, error, fetchData, addToCart, formatMoney } = useData();
   const [quantities, setQuantities] = useState({}); // เก็บปริมาณสินค้าแยกตาม id
 
   const heroData = products.filter((product) => product.category === "Hero");
@@ -39,7 +39,6 @@ const Hero = () => {
         ...product,
         quantity: quantity,
       };
-      console.log("Adding item to cart:", newItem);
       addToCart(newItem);
     }
   }
@@ -62,9 +61,9 @@ const Hero = () => {
     });
   };
 
-  function formatMoney(money) {
-    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  }
+  // function formatMoney(money) {
+  //   return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  // }
 
   return (
     <section id="hero" className="mx-5 lg:mx-20">
