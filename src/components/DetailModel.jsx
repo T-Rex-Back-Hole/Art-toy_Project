@@ -54,6 +54,7 @@ const DetailModel = () => {
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
+
   return (
     <section id="detailModel" className="mx-5 lg:mx-20">
       {/* Model */}
@@ -159,4 +160,5 @@ const DetailModel = () => {
     </section>
   );
 };
+
 export default DetailModel;

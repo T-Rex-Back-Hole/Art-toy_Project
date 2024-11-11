@@ -1,14 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-
 const DataContext = createContext();
 
 export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,37 +24,19 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  //Function add cart
-  const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItemIndex = prevCart.findIndex(
-        (item) => item.id === product.id
-      );
-      if (existingItemIndex !== -1) {
-        const updateCart = [...prevCart];
-        updateCart[existingItemIndex].quantity += 1;
-        return updateCart;
-      } else {
-        return [...prevCart, { ...product, quantity: 1 }];
-      }
-    });
-  };
-
-  // Function Update qty in cart
-  const updatedQuantities = (productId, quantity) => {
+  const updateQuantity = (id, newQuantity) => {
+    if (newQuantity < 1) return;
     setCart((prevCart) =>
       prevCart.map((item) =>
-        item.id === productId ? { ...item, quantity } : item
+        item.id === id ? { ...item, quantity: newQuantity } : item
       )
     );
   };
 
-  // Function Delete item
   const removeItem = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
 
-  // calculateTotal to cart
   const calculateTotal = () => {
     return cart.reduce(
       (total, item) => total + item.itemPrice * item.quantity,
@@ -77,7 +57,7 @@ export const DataProvider = ({ children }) => {
         error,
         fetchData,
         addToCart,
-        updatedQuantities,
+        updateQuantity,
         removeItem,
         calculateTotal,
       }}
