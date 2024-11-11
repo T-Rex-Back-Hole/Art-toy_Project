@@ -4,7 +4,7 @@ import { useData } from "./DataProvider";
 
 const DetailModel = () => {
   const { id } = useParams();
-  const { products, loading, error } = useData();
+  const { products, loading, error, addToCart } = useData();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -29,8 +29,10 @@ const DetailModel = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
 
-  const addToCart = () => {
-    console.log(`Added ${quantity} items to the cart.`);
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart({ ...product, quantity });
+    }
   };
 
   const buyNow = () => {
@@ -49,10 +51,10 @@ const DetailModel = () => {
     return <div>Product not found</div>;
   }
 
-
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
+
   return (
     <section id="detailModel" className="mx-5 lg:mx-20">
       {/* Model */}
@@ -141,7 +143,7 @@ const DetailModel = () => {
       {/* Action Buttons */}
       <div className="flex justify-center items-center mt-16 mb-5">
         <button
-          onClick={addToCart}
+          onClick={handleAddToCart}
           className="bg-[#FFA4D5] rounded-full text-white text-xl font-bold px-24 py-3 shadow-sm hover:bg-[#E9449E] md:text-2xl"
         >
           ADD TO CART
@@ -158,4 +160,5 @@ const DetailModel = () => {
     </section>
   );
 };
+
 export default DetailModel;

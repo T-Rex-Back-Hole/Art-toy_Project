@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-
 const DataContext = createContext();
 
 export const useData = () => useContext(DataContext);
@@ -24,12 +23,45 @@ export const DataProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  const updateQuantity = (id, newQuantity) => {
+    if (newQuantity < 1) return;
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const removeItem = (productId) => {
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  };
+
+  const calculateTotal = () => {
+    return cart.reduce(
+      (total, item) => total + item.itemPrice * item.quantity,
+      0
+    );
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <DataContext.Provider value={{ products, loading, error, fetchData }}>
+    <DataContext.Provider
+      value={{
+        products,
+        cart,
+        loading,
+        error,
+        fetchData,
+        addToCart,
+        updateQuantity,
+        removeItem,
+        calculateTotal,
+      }}
+    >
       {children}
     </DataContext.Provider>
   );
