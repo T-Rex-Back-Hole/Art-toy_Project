@@ -5,8 +5,7 @@ import ReactLoading from "react-loading";
 
 const Hero = () => {
   const { products, loading, error, fetchData, addToCart } = useData();
-
-  const [quantities, setQuantities] = useState({});
+  const [quantities, setQuantities] = useState({}); // เก็บปริมาณสินค้าแยกตาม id
 
   const heroData = products.filter((product) => product.category === "Hero");
 
@@ -34,18 +33,18 @@ const Hero = () => {
   }
 
   function addTocart(product) {
-    const quantity = quantities[product.id] || 1;
+    const quantity = quantities[product.id] || 1; // ใช้ค่า quantity ตาม id ของสินค้า
     if (quantity > 0) {
       const newItem = {
         ...product,
-        quantity: qty,
+        quantity: quantity,
       };
       console.log("Adding item to cart:", newItem);
       addToCart(newItem);
-      setQuantity({ ...quantity, [product.id]: 1 }); // รีเซ็ต quantity ของสินค้านั้นเป็น 1 หลังจากเพิ่มลงตะกร้า
     }
   }
 
+  // เพิ่มหรือลดปริมาณสินค้า
   const increQuantity = (id) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -62,11 +61,6 @@ const Hero = () => {
       };
     });
   };
-
-  // const increQuantity = () => setQuantity(quantity + 1);
-  // const decreQuantity = () => {
-  //   if (quantity > 1) setQuantity(quantity - 1);
-  // };
 
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
