@@ -4,7 +4,7 @@ import Home from "./src/pages/Home";
 import Navbar from "./src/components/Navbar";
 import Login from "./src/pages/Login";
 import Contact from "./src/pages/Contact";
-import Cart from "./src/pages/Cart";
+import Cart from "./src/components/cart/Cart";
 import Footer from "./src/components/Footer";
 import DetailModel from "./src/components/DetailModel";
 import Arttoy from "./src/pages/Arttoy";

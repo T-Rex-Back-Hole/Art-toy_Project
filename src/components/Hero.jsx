@@ -1,68 +1,41 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useData } from "../components/DataProvider";
+import React, { useState } from "react";
 
 const Hero = () => {
-  const { products, loading, error, fetchData } = useData();
-  const heroData = products.filter((product) => product.category === "Hero");
-
-  useEffect(() => {
-    if (!products.length) {
-      fetchData();
-    }
-  }, [products, fetchData]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-xl text-gray-700">Loading...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  function formatMoney(money) {
-    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  }
+  const sliders = [
+    {
+      url: "https://i.postimg.cc/d1dm57mF/banner1.png",
+    },
+    {
+      url: "https://i.postimg.cc/br90jKBF/banner2.png",
+    },
+    {
+      url: "https://i.postimg.cc/d3YRpq4y/banner3.png",
+    },
+  ];
 
   return (
-    <section id="hero" className="mx-5 lg:mx-20">
-      <h2 className="text-4xl font-bold mb-6 text-center mt-10">
-        Hero Products
-      </h2>
+    <>
+      <section id="slider-container">
+        <div id="slider" className="relative w-full">
+          <div className="w-full duration-500">
+            <img
+              src="https://i.postimg.cc/d1dm57mF/banner1.png"
+              alt=""
+              className="w-full"
+            />
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {heroData.length > 0 ? (
-          heroData.map((hero) => (
-            <div
-              key={hero.id}
-              className="flex flex-col text-center border p-5 rounded-lg shadow-md"
-            >
-              <Link
-                to={`/detail/${hero.id}`}
-                className="text-blue-500 mt-4 inline-block hover:underline"
-              >
-                <img
-                  src={hero.image}
-                  alt={hero.name}
-                  className="w-auto h-96 object-contain my-4 justify-self-center refer-img"
-                />
-              </Link>
-
-              <p className="text-lg text-purple-600">
-                {formatMoney(hero.price)} ฿
-              </p>
-              <p className="text-sm text-gray-700 mt-2">{hero.description}</p>
-            </div>
-          ))
-        ) : (
-          <p>No Hero products available</p>
-        )}
-      </div>
-    </section>
+          <div
+            id="slider-nav"
+            className="flex absolute gap-x-2 lg:gap-x-4 bottom-4 left-2/4 translate-x-[-50%] z-10"
+          >
+            <a href="#slide-1" className="nav-bullet"></a>
+            <a href="#slide-2" className="nav-bullet"></a>
+            <a href="#slide-3" className="nav-bullet"></a>
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 

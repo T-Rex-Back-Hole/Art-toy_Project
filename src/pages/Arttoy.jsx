@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../components/DataProvider";
+import ReactLoading from "react-loading";
 
 function Arttoy() {
-  const { products, loading, error, fetchData } = useData();
+  const { products, loading, error, fetchData, addToCart } = useData();
+  const [quantities, setQuantities] = useState({}); // เก็บปริมาณสินค้าแยกตาม id
+
   const artToyData = products.filter(
     (product) => product.category === "Art Toy"
   );
@@ -16,8 +19,13 @@ function Arttoy() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-xl text-gray-700">Loading...</p>
+      <div className="flex items-center justify-center min-h-screen">
+        <ReactLoading
+          type="spinningBubbles"
+          color="black"
+          height={"10%"}
+          width={"10%"}
+        />
       </div>
     );
   }
@@ -26,6 +34,35 @@ function Arttoy() {
     return <p>{error}</p>;
   }
 
+  function addTocart(product) {
+    const quantity = quantities[product.id] || 1; // ใช้ค่า quantity ตาม id ของสินค้า
+    if (quantity > 0) {
+      const newItem = {
+        ...product,
+        quantity: quantity,
+      };
+      console.log("Adding item to cart:", newItem);
+      addToCart(newItem);
+    }
+  }
+
+  // เพิ่มหรือลดปริมาณสินค้า
+  const increQuantity = (id) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [id]: (prevQuantities[id] || 1) + 1,
+    }));
+  };
+
+  const decreQuantity = (id) => {
+    setQuantities((prevQuantities) => {
+      const newQuantity = (prevQuantities[id] || 1) - 1;
+      return {
+        ...prevQuantities,
+        [id]: newQuantity > 0 ? newQuantity : 1,
+      };
+    });
+  };
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
@@ -57,9 +94,29 @@ function Arttoy() {
                 <p className="text-lg text-purple-600">
                   {formatMoney(arttoy.price)} ฿
                 </p>
-                <p className="text-sm text-gray-700 mt-2">
+                {/* <p className="text-sm text-gray-700 mt-2">
                   {arttoy.description}
-                </p>
+                </p> */}
+                <div
+                  id="btn-box"
+                  className="flex flex-col justify-center gap-y-2"
+                >
+                  <div
+                    id="quantity-box"
+                    className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
+                  >
+                    <button onClick={() => decreQuantity(arttoy.id)}>-</button>
+                    <span>{quantities[arttoy.id] || 1}</span>
+                    <button onClick={() => increQuantity(arttoy.id)}>+</button>
+                  </div>
+                  <button
+                    className="addtocart-btn"
+                    onClick={() => addTocart(arttoy)}
+                  >
+                    ADD TO CART
+                  </button>
+                  <button className="buynow-btn">BUY NOW!!</button>
+                </div>
               </div>
             ))
           ) : (
