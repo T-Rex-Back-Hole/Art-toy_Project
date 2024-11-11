@@ -4,16 +4,10 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 const Hero = () => {
-  const { products, loading, error, fetchData } = useData();
+  const { products, loading, error, addToCart } = useData();
   const [quantity, setQuantity] = useState(1);
 
   const heroData = products.filter((product) => product.category === "Hero");
-
-  useEffect(() => {
-    if (!products.length) {
-      fetchData();
-    }
-  }, [products, fetchData]);
 
   if (loading) {
     return (
@@ -32,15 +26,14 @@ const Hero = () => {
     return <p>{error}</p>;
   }
 
-  const increQuantity = () => setQuantity(quantity + 1);
-  const decreQuantity = () => {
+  const incrementQuantity = () => setQuantity(quantity + 1);
+  const decrementQuantity = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
 
-
-  function formatMoney(money) {
-    return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  }
+  const handleAddToCart = (product) => {
+    addToCart({ ...product, quantity });
+  };
 
   return (
     <section id="hero" className="mx-5 lg:mx-20">
@@ -62,33 +55,22 @@ const Hero = () => {
                 <img
                   src={hero.image}
                   alt={hero.name}
-                  className="w-auto h-96 object-contain my-4 justify-self-center refer-img"
+                  className="w-auto h-96 object-contain my-4"
                 />
               </Link>
 
-              <p className="text-lg text-purple-600">
-                {formatMoney(hero.price)} ฿
-              </p>
-              {/* <p className="text-sm text-gray-700 mt-2">{hero.description}</p> */}
-              <div
-                id="btn-box"
-                className="flex flex-col justify-center gap-y-2"
-              >
-                <div
-                  id="quantity-box"
-                  className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
-                >
-                  <button onClick={decreQuantity}>-</button>
-                  <span>{quantity}</span>
-                  <button onClick={increQuantity}>+</button>
-                </div>
-                <button className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-purple-600">
-                  ADD TO CART
-                </button>
-                <button className="bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF]">
-                  BUY NOW!!
-                </button>
+              <p className="text-lg text-purple-600">{hero.price} ฿</p>
+              <div className="flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full">
+                <button onClick={decrementQuantity}>-</button>
+                <span>{quantity}</span>
+                <button onClick={incrementQuantity}>+</button>
               </div>
+              <button
+                className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full"
+                onClick={() => handleAddToCart(hero)}
+              >
+                ADD TO CART
+              </button>
             </div>
           ))
         ) : (
