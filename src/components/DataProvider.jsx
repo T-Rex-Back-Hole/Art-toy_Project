@@ -7,6 +7,7 @@ export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -24,6 +25,20 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const addToCart = (productToAdd) => {
+    const existingProductIndex = cart.findIndex(
+      (item) => item.id === productToAdd.id
+    );
+
+    if (existingProductIndex > -1) {
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].quantity += productToAdd.quantity;
+      setCart(updatedCart);
+    } else {
+      setCart((prevCart) => [...prevCart, productToAdd]);
+    }
+  };
+
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
     setCart((prevCart) =>
@@ -38,10 +53,7 @@ export const DataProvider = ({ children }) => {
   };
 
   const calculateTotal = () => {
-    return cart.reduce(
-      (total, item) => total + item.itemPrice * item.quantity,
-      0
-    );
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   useEffect(() => {
