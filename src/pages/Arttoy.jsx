@@ -4,8 +4,8 @@ import { useData } from "../components/DataProvider";
 import ReactLoading from "react-loading";
 
 function Arttoy() {
-  const { products, loading, error, fetchData } = useData();
-  const [quantity, setQuantity] = useState(1);
+  const { products, loading, error, fetchData, addToCart } = useData();
+  const [quantities, setQuantities] = useState({});
 
   const artToyData = products.filter(
     (product) => product.category === "Art Toy"
@@ -34,9 +34,33 @@ function Arttoy() {
     return <p>{error}</p>;
   }
 
-  const increQuantity = () => setQuantity(quantity + 1);
-  const decreQuantity = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
+  function addTocart(product) {
+    const quantity = quantities[product.id] || 1;
+    if (quantity > 0) {
+      const newItem = {
+        ...product,
+        quantity: quantity,
+      };
+      console.log("Adding item to cart:", newItem);
+      addToCart(newItem);
+    }
+  }
+
+  const increQuantity = (id) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [id]: (prevQuantities[id] || 1) + 1,
+    }));
+  };
+
+  const decreQuantity = (id) => {
+    setQuantities((prevQuantities) => {
+      const newQuantity = (prevQuantities[id] || 1) - 1;
+      return {
+        ...prevQuantities,
+        [id]: newQuantity > 0 ? newQuantity : 1,
+      };
+    });
   };
 
   function formatMoney(money) {
@@ -73,14 +97,27 @@ function Arttoy() {
                 {/* <p className="text-sm text-gray-700 mt-2">
                   {arttoy.description}
                 </p> */}
-                <div id="btn-box" className="flex flex-col justify-center gap-y-2">
-                  <div id="quantity-box" className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full">
-                    <button onClick={decreQuantity}>-</button>
-                    <span>{quantity}</span>
-                    <button onClick={increQuantity}>+</button>
+                <div
+                  id="btn-box"
+                  className="flex flex-col justify-center gap-y-2"
+                >
+                  <div
+                    id="quantity-box"
+                    className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
+                  >
+                    <button onClick={decreQuantity(arttoy.id)}>-</button>
+                    <span>{quantity[arttoy.id] || 1}</span>
+                    <button onClick={increQuantity(arttoy.id)}>+</button>
                   </div>
-                  <button className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-purple-600">ADD TO CART</button>
-                  <button className="bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF]">BUY NOW!!</button>
+                  <button
+                    onClick={() => addTocart(arttoy)}
+                    className="bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-purple-600"
+                  >
+                    ADD TO CART
+                  </button>
+                  <button className="bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF]">
+                    BUY NOW!!
+                  </button>
                 </div>
               </div>
             ))
