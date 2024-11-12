@@ -95,7 +95,7 @@ const Main = () => {
               <Link
                 key={product.id}
                 to={`/detail/${product.id}`}
-                className="w-auto refer-img lg:flex"
+                className="w-auto refer-img lg:flex animate-marquee"
               >
                 <img
                   src={product.image}
