@@ -23,18 +23,18 @@ const Main = () => {
           Art Toy reference
         </h1>
         <div className="overflow-hidden relative">
-          <div className="flex space-x-5 animate-marquee">
+          <div className="flex lg:space-x-5 animate-marquee-mobile sm:animate-marquee ">
             {/* แสดงสินค้าทั้งหมดและทำสำเนาเพื่อให้เลื่อนไหลแบบไม่หยุด */}
             {[...products, ...products, ...products].map((product, index) => (
               <Link
                 key={index}
                 to={`/detail/${product.id}`}
-                className="w-1/6 flex-shrink-0"
+                className="flex-shrink-0 w-full lg:w-1/6 "
               >
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="h-96 object-contain p-2 rounded-lg"
+                  className="h-96 object-contain p-2 rounded-lg lg:aspect-square sm:h-56 md:h-64 lg:h-80"
                 />
               </Link>
             ))}
