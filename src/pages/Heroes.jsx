@@ -41,7 +41,7 @@ const Hero = () => {
         quantity: quantity,
       };
       addToCart(newItem);
-      setQuantities({})
+      setQuantities({});
     }
   }
 
@@ -74,7 +74,7 @@ const Hero = () => {
           heroData.map((hero) => (
             <div
               key={hero.id}
-              className="flex flex-col text-center border p-5 rounded-lg shadow-md"
+              className="border p-6 rounded-lg shadow-md text-center"
             >
               <Link
                 to={`/detail/${hero.id}`}
@@ -86,15 +86,11 @@ const Hero = () => {
                   className="w-auto h-96 object-contain my-4 justify-self-center refer-img"
                 />
               </Link>
+              <div className="flex justify-between items-center my-4">
+                <p className="text-xl text-purple-600">
+                  {formatMoney(hero.price)} ฿
+                </p>
 
-              <p className="text-lg text-purple-600">
-                {formatMoney(hero.price)} ฿
-              </p>
-
-              <div
-                id="btn-box"
-                className="flex flex-col justify-center gap-y-2"
-              >
                 <div
                   id="quantity-box"
                   className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
@@ -104,6 +100,12 @@ const Hero = () => {
                   {/* ใช้ quantity ตาม hero.id */}
                   <button onClick={() => increQuantity(hero.id)}>+</button>
                 </div>
+              </div>
+
+              <div
+                id="btn-box"
+                className="flex flex-col justify-center gap-y-2"
+              >
                 <button
                   className="addtocart-btn"
                   onClick={() => addTocart(hero)}

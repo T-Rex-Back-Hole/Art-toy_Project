@@ -43,7 +43,7 @@ function Arttoy() {
         quantity: quantity,
       };
       addToCart(newItem);
-      
+
       setQuantities({});
     }
   }
@@ -77,7 +77,7 @@ function Arttoy() {
             artToyData.map((arttoy) => (
               <div
                 key={arttoy.id}
-                className="border p-5 rounded-lg shadow-md text-center"
+                className="border p-6 rounded-lg shadow-md text-center"
               >
                 <h3 className="text-xl font-semibold">{arttoy.name}</h3>
                 <Link
@@ -90,16 +90,11 @@ function Arttoy() {
                     className="w-auto h-96 object-contain my-4 justify-self-center refer-img"
                   />
                 </Link>
-                <p className="text-lg text-purple-600">
-                  {formatMoney(arttoy.price)} ฿
-                </p>
-                {/* <p className="text-sm text-gray-700 mt-2">
-                  {arttoy.description}
-                </p> */}
-                <div
-                  id="btn-box"
-                  className="flex flex-col justify-center gap-y-2"
-                >
+                <div className="flex justify-between items-center my-4">
+                  <p className="text-xl text-purple-600">
+                    {formatMoney(arttoy.price)} ฿
+                  </p>
+
                   <div
                     id="quantity-box"
                     className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
@@ -108,6 +103,12 @@ function Arttoy() {
                     <span>{quantities[arttoy.id] || 1}</span>
                     <button onClick={() => increQuantity(arttoy.id)}>+</button>
                   </div>
+                </div>
+
+                <div
+                  id="btn-box"
+                  className="flex flex-col justify-center gap-y-2"
+                >
                   <button
                     className="addtocart-btn"
                     onClick={() => addTocart(arttoy)}
