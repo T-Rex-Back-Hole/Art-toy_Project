@@ -1,11 +1,10 @@
-
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useData } from "../DataProvider";
-import CartItem from "./CartItem";
+import { useData } from "../context/DataProvider";
+import CartItem from "../cart/CartItem";
 
 const Cart = () => {
-  const { cart, calculateTotal, removeItem, updateQuantity, formatMoney } = useData();
+  const { cart, calculateTotal, removeItem, updateQuantity, formatMoney } =
+    useData();
   const { total, totalItems } = calculateTotal();
   const [selectedItems, setSelectedItems] = useState([]);
 
@@ -102,7 +101,6 @@ const Cart = () => {
           </button>
         </div>
       </div>
-
     </section>
   );
 };

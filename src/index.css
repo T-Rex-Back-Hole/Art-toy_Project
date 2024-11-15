@@ -1,10 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -14,36 +16,40 @@
   text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
 }
 
-
 @layer components {
   .footer-icon {
-    @apply text-[#B47AEA] text-2xl px-4 cursor-pointer
+    @apply text-[#B47AEA] text-2xl px-4 cursor-pointer;
   }
   .nav-icon {
-    @apply text-[#B47AEA] text-2xl active:text-[#5BDEE7]
+    @apply text-[#B47AEA] text-2xl active:text-[#5BDEE7];
   }
   .container-toy {
-    @apply lg:w-2/12 lg:h-auto
+    @apply lg:w-2/12 lg:h-auto;
   }
   .refer-img {
-    @apply transform transition-transform duration-300 lg:hover:scale-110 lg:h-auto
+    @apply transform transition-transform duration-300 lg:hover:scale-110 lg:h-auto;
   }
   .box-qa {
-    @apply flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center
+    @apply flex flex-col relative bg-white rounded-full p-3 lg:p-5 mb-4 lg:w-3/4 lg:self-center;
   }
   .qa-btn {
-    @apply absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600
+    @apply absolute text-[#B47AEA] text-2xl top-1/2 right-4 transform -translate-y-1/2 opacity-80 lg:text-5xl lg:cursor-pointer active:text-purple-600 lg:hover:text-purple-600;
   }
   .acc-btn {
-    @apply rounded-full w-5/6 bg-[#B47AEA] text-white text-lg p-2 lg:w-1/2 lg:text-xl lg:px-6 lg:py-2 lg:hover:bg-purple-600
+    @apply rounded-full w-5/6 bg-[#B47AEA] text-white text-lg p-2 lg:w-1/2 lg:text-xl lg:px-6 lg:py-2 lg:hover:bg-purple-600;
   }
   .nav-bullet {
-    @apply w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-white opacity-75 transition-opacity ease-in-out duration-200 hover:opacity-100
+    @apply w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-white opacity-75 transition-opacity ease-in-out duration-200 hover:opacity-100;
   }
-  .addtocart-btn{
-    @apply bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-purple-600
+  .addtocart-btn {
+    @apply bg-[#B47AEA] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-purple-600;
   }
-  .buynow-btn{
-    @apply bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF] w-full
+  .buynow-btn {
+    @apply bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF] w-full;
   }
+}
+
+/* หยุดการเคลื่อนไหวเมื่อ Hover ที่ div หรือสินค้า */
+.flex:hover {
+  animation-play-state: paused;
 }
