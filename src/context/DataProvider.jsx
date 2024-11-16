@@ -9,10 +9,12 @@ export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")) || []);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartItemCount, setCartItemCount] = useState(0);
+
+
 
   const fetchData = async () => {
     setLoading(true);
@@ -27,6 +29,10 @@ export const DataProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  useEffect(()=>{
+    localStorage.setItem("cart", JSON.stringify(cart))
+  }, [cart])
 
   const updateCartItemCount = () => {
     const totalQuantity = cart.reduce(
