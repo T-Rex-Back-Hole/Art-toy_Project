@@ -14,6 +14,10 @@ import Heroes from "./src/pages/Heroes";
 import Register from "./src/pages/Register";
 import Account from "./src/pages/Account";
 import { DataProvider } from "./src/context/DataProvider";
+import Checkout from "./src/cart/Checkout";
+import CompletePurchase from "./src/cart/CompletePurchase";
+import CreditCard from "./src/cart/CreditCard";
+import Transfer from "./src/cart/Transfer";
 
 const App = () => {
   return (
@@ -39,6 +43,10 @@ const App = () => {
           <Route path="/detail/:id" element={<DetailModel />} />
           <Route path="/register" element={<Register />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/complete" element={<CompletePurchase />} />
+          <Route path="/credit" element={<CreditCard />} />
+          <Route path="/transfer" element={<Transfer />} />
         </Routes>
         <Footer />
       </Router>
