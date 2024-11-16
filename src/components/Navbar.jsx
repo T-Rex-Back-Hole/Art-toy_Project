@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../components/DataProvider";
+import logo from "../../images/dino.png"
 
 const Navbar = () => {
   const { cartItemCount } = useData();
@@ -9,7 +10,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-black px-12 py-2 flex flex-col items-center lg:flex-row lg:justify-between">
       <Link to="/">
         <div id="logo" className="flex items-center">
-          <img src="./images/dino.png" alt="" className="w-10 mx-auto mr-5" />
+          <img src={logo} alt="" className="w-10 mx-auto mr-5" />
           <span className="text-[#B47AEA] text-2xl font-bold">
             T-Rex BlackHole
           </span>
