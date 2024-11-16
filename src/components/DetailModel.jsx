@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useData } from "./DataProvider";
+import { useData } from "../context/DataProvider";
 
 const DetailModel = () => {
   const { id } = useParams();
@@ -77,7 +77,10 @@ const DetailModel = () => {
         </div>
 
         {/* Product Details */}
-        <div id="right-box" className="flex flex-col justify-center h-full lg:w-1/2 p-4 lg:p-10 lg:shadow-lg lg:rounded-md">
+        <div
+          id="right-box"
+          className="flex flex-col justify-center h-full lg:w-1/2 p-4 lg:p-10 lg:shadow-lg lg:rounded-md"
+        >
           <div className="m-auto">
             <h1 className="text-2xl font-bold lg:text-3xl">{product.name}</h1>
             <h2 className="text-lg font-semibold text-[#5BDEE7] lg:text-2xl my-2">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useData } from "../components/DataProvider";
+import { useData } from "../context/DataProvider";
 import ReactLoading from "react-loading";
 
 const Hero = () => {

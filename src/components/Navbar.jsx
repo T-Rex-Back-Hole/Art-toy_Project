@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useData } from "../components/DataProvider";
-import logo from "../../images/dino.png"
+import { useData } from "../context/DataProvider";
+import logo from "../../images/dino.png";
 
 const Navbar = () => {
   const { cartItemCount } = useData();
