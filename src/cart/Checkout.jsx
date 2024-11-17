@@ -20,7 +20,7 @@ function Checkout() {
         Payment
       </h1>
 
-      <section id="payment" className="m-6">
+      <section id="payment" className="mx-6 my-6 lg:m-auto lg:w-3/4 lg:my-10">
         <div id="container" className="flex flex-col ">
           {/* Address ---------------------------------------------------------------------------------------------- */}
           <Link>
