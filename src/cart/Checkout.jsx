@@ -6,9 +6,20 @@ function Checkout() {
   const { formatMoney } = useData();
   return (
     <>
+      <header className="mt-6 px-4">
+        <Link
+          to="/cart"
+          className=" text-[#B47AEA] text-xl inline items-center"
+        >
+          <button className="px-4 font-semibold lg:text-2xl">
+            <i class="fa-solid fa-arrow-left mr-2 lg:text-2xl"></i> Back
+          </button>
+        </Link>
+      </header>
       <h1 className="text-center text-2xl font-semibold lg:text-4xl my-6">
         Payment
       </h1>
+
       <section id="payment" className="m-6">
         <div id="container" className="flex flex-col ">
           {/* Address ---------------------------------------------------------------------------------------------- */}
@@ -72,7 +83,7 @@ function Checkout() {
               <p>Shipping Fee</p>
               <p>$ {formatMoney(0)}</p>
             </div>
-            <hr className="mt-6"/>
+            <hr className="mt-6" />
           </div>
 
           <div id="checkout-btn" className="p-4 self-end">
