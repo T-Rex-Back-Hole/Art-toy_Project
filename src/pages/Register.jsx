@@ -138,12 +138,17 @@ const Register = () => {
           </label>
 
           <div id="btn-create-account" className="flex w-full">
-            <button
+            <motion.button
               type="submit"
               className="w-full rounded-md mt-2 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:hover:bg-purple-600 focus:outline-none transition duration-300 ease-in-out"
+              whileHover={{ 
+                scale: 1.05,
+                transition: { duration: 0.2 }
+              }}
+              whileTap={{ scale: 0.95 }}
             >
               Create account
-            </button>
+            </motion.button>
           </div>
         </form>
       </section>
@@ -152,20 +157,30 @@ const Register = () => {
         id="login-by"
         className="flex container justify-center gap-10 lg:gap-0 lg:w-1/2 lg:mx-auto lg:justify-between lg:space-x-28 mb-10"
       >
-        <button
+        <motion.button
           id="facebook-login"
-          className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-blue-600 transition duration-300 ease-in-out"
+          className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full bg-blue-500 lg:hover:bg-blue-600 transition duration-300 ease-in-out"
+          whileHover={{ 
+            scale: 1.05,
+            transition: { duration: 0.2 }
+          }}
+          whileTap={{ scale: 0.95 }}
         >
           <i className="fa-brands fa-facebook text-white mr-2 lg:mr-4"></i>
           Facebook
-        </button>
-        <button
+        </motion.button>
+        <motion.button
           id="google-login"
-          className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-red-600 transition duration-300 ease-in-out"
+          className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full bg-red-500 lg:hover:bg-red-600 transition duration-300 ease-in-out"
+          whileHover={{ 
+            scale: 1.05,
+            transition: { duration: 0.2 }
+          }}
+          whileTap={{ scale: 0.95 }}
         >
           <i className="fa-brands fa-google text-white mr-2 lg:mr-4"></i>
           Google
-        </button>
+        </motion.button>
       </div>
 
       <section id="subscribe" className="bg-[#F7F7F7] p-8">
