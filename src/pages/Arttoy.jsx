@@ -9,7 +9,7 @@ function Arttoy() {
   const [quantities, setQuantities] = useState({}); // เก็บปริมาณสินค้าแยกตาม id
 
   const artToyData = products.filter(
-    (product) => product.category === "Art Toy"
+    (product) => product.category === "ArtToy"
   );
 
   useEffect(() => {
@@ -76,12 +76,12 @@ function Arttoy() {
           {artToyData.length > 0 ? (
             artToyData.map((arttoy) => (
               <div
-                key={arttoy.id}
+                key={arttoy._id}
                 className="border p-6 rounded-lg shadow-md text-center"
               >
                 <h3 className="text-xl font-semibold">{arttoy.name}</h3>
                 <Link
-                  to={`/detail/${arttoy.id}`}
+                  to={`/detail/${arttoy._id}`}
                   className="text-blue-500 mt-4 inline-block hover:underline"
                 >
                   <img

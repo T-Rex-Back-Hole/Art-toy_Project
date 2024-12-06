@@ -12,7 +12,7 @@ const Cart = () => {
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       // เลือกสินค้าทั้งหมด
-      setSelectedItems(cart.map((item) => item.id));
+      setSelectedItems(cart.map((item) => item._id));
     } else {
       // ยกเลิกการเลือกทั้งหมด
       setSelectedItems([]);
@@ -57,12 +57,12 @@ const Cart = () => {
 
             {cart.map((item) => (
               <CartItem
-                key={item.id}
+                key={item._id}
                 item={item}
                 removeItem={removeItem}
                 updateQuantity={updateQuantity}
-                isChecked={isChecked(item.id)}
-                onSelectItem={() => handleSelectItem(item.id)}
+                isChecked={isChecked(item._id)}
+                onSelectItem={() => handleSelectItem(item._id)}
               />
             ))}
           </div>

@@ -34,7 +34,7 @@ const Hero = () => {
   }
 
   function addTocart(product) {
-    const quantity = quantities[product.id] || 1; // ใช้ค่า quantity ตาม id ของสินค้า
+    const quantity = quantities[product._id] || 1; // ใช้ค่า quantity ตาม id ของสินค้า
     if (quantity > 0) {
       const newItem = {
         ...product,
@@ -73,11 +73,11 @@ const Hero = () => {
         {heroData.length > 0 ? (
           heroData.map((hero) => (
             <div
-              key={hero.id}
+              key={hero._id}
               className="border p-6 rounded-lg shadow-md text-center"
             >
               <Link
-                to={`/detail/${hero.id}`}
+                to={`/detail/${hero._id}`}
                 className="text-blue-500 mt-4 inline-block hover:underline"
               >
                 <img
@@ -95,10 +95,10 @@ const Hero = () => {
                   id="quantity-box"
                   className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
                 >
-                  <button onClick={() => decreQuantity(hero.id)}>-</button>
-                  <span>{quantities[hero.id] || 1}</span>{" "}
+                  <button onClick={() => decreQuantity(hero._id)}>-</button>
+                  <span>{quantities[hero._id] || 1}</span>{" "}
                   {/* ใช้ quantity ตาม hero.id */}
-                  <button onClick={() => increQuantity(hero.id)}>+</button>
+                  <button onClick={() => increQuantity(hero._id)}>+</button>
                 </div>
               </div>
 
