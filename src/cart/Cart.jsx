@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useData } from "../context/DataProvider";
 import CartItem from "../cart/CartItem";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { cart, calculateTotal, removeItem, updateQuantity, formatMoney } =
@@ -95,10 +96,11 @@ const Cart = () => {
               </dd>
             </dl>
           </div>
-
-          <button className="w-full rounded-lg bg-[#5BDEE7] px-5 py-2.5 text-lg font-semibold text-white lg:hover:bg-[#3ef2ff]">
-            Checkout
-          </button>
+          <Link to="/checkout">
+            <button className="w-full rounded-lg bg-[#5BDEE7] px-5 py-2.5 text-lg font-semibold text-white lg:hover:bg-[#3ef2ff]">
+              Checkout
+            </button>
+          </Link>
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactLoading from 'react-loading';
 import Register from "./Register";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,7 +27,14 @@ const Login = () => {
 
   return (
     <>
-      <div className="font-bold text-5xl text-center my-12">Log in</div>
+      <motion.div 
+        className="font-bold text-5xl text-center my-12"
+        initial={{ opacity: 0 }} 
+        animate={{ opacity: 1 }} 
+        transition={{ duration: 0.5 }}
+      >
+        Log in
+      </motion.div>
       <section
         id="form"
         className="flex flex-col justify-center lg:flex-row lg:justify-center"
@@ -59,7 +67,13 @@ const Login = () => {
                   <ReactLoading type="spin" height={24} width={24} color="#ffffff" />
                 </div>
               ) : (
-                'Login'
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  onHoverStart={event => {}}
+                  onHoverEnd={event => {}}
+                >
+                  Login
+                </motion.button>
               )}
             </button>
           </div>
@@ -70,7 +84,13 @@ const Login = () => {
         <Link to="/register">
           <button className="font-bold lg:mb-3 text-[#B47AEA]">
             {" "}
-            Sign up{" "}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              onHoverStart={event => {}}
+              onHoverEnd={event => {}}
+            >
+              Sign up{" "}
+            </motion.button>
           </button>
         </Link>
       </div>
@@ -78,20 +98,26 @@ const Login = () => {
         id="login-by"
         className="flex container justify-center gap-10 lg:gap-0 lg:w-1/2 lg:mx-auto lg:justify-between lg:space-x-28 mb-10"
       >
-        <button
+        <motion.button
+          whileHover={{ scale: 1.2 }}
+          onHoverStart={event => {}}
+          onHoverEnd={event => {}}
           id="facebook-login"
-          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
+          className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:bg-blue-500 lg:hover:bg-blue-600 transition duration-300 ease-in-out"
         >
-          <i class="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4 "></i>
+          <i className="fa-brands fa-facebook text-white  mr-2 lg:mr-4"></i>
           Facebook
-        </button>
-        <button
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.2 }}
+          onHoverStart={event => {}}
+          onHoverEnd={event => {}}
           id="google-login"
-          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
+          className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:bg-red-500 lg:hover:bg-red-600 transition duration-300 ease-in-out"
         >
-          <i class="fa-brands fa-google text-red-600 mr-2 lg:mr-4"></i>
+          <i className="fa-brands fa-google text-white mr-2 lg:mr-4"></i>
           Google
-        </button>
+        </motion.button>
       </div>
 
       <section id="subscribe" className="bg-[#F7F7F7] p-8">
@@ -113,7 +139,7 @@ const Login = () => {
           <input
             type="email"
             placeholder="E-mail"
-            className="h-10 mt-4 placeholder:pl-3 rounded-full w-full lg:w-96 lg:h-12 lg:m-4 lg:px-4 lg:py-2 border border-gray-300 lg:rounded-md lg:placeholder:pl-0 focus:ring-1 focus:outline-none"
+            className="h-10 mt-4 placeholder:pl-3 rounded-full w-full lg:w-96 lg:h-12 lg:m-4 lg:px-4 lg:py-2 border border-gray-300 lg:rounded-full lg:placeholder:pl-0 focus:ring-1 focus:outline-none"
           />
           <button
             type="submit"
