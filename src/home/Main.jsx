@@ -34,7 +34,7 @@ const Main = () => {
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="h-96 object-contain p-2 rounded-lg lg:aspect-square sm:h-56 md:h-64 lg:h-80"
+                  className="h-96 object-contain p-2 rounded-lg lg:aspect-square sm:h-56 md:h-96 lg:h-80"
                 />
               </Link>
             ))}
@@ -57,12 +57,12 @@ const Main = () => {
           id="brand-logo"
           className="grid grid-cols-3 gap-4 mx-6 lg:grid-cols-6 lg:my-6"
         >
-          <img src={brander1} alt="" className="" />
-          <img src={brander2} alt="" className="" />
-          <img src={brander3} alt="" className="" />
-          <img src={brander4} alt="" className="" />
-          <img src={brander5} alt="" className="" />
-          <img src={brander6} alt="" className="" />
+          <img src={brander1} alt="brander1" className="" />
+          <img src={brander2} alt="brander2" className="" />
+          <img src={brander3} alt="brander3" className="" />
+          <img src={brander4} alt="brander4" className="" />
+          <img src={brander5} alt="brander5" className="" />
+          <img src={brander6} alt="brander6" className="" />
         </div>
       </section>
 
