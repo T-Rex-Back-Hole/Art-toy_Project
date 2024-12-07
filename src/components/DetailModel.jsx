@@ -34,6 +34,7 @@ const DetailModel = () => {
 
   const handleAddToCart = () => {
     if (product) {
+      console.log("Log product =>>",product)
       addToCart({ ...product, quantity });
     }
   };
