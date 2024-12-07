@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [cartItemCount, setCartItemCount] = useState(0);
   const backendUrl = import.meta.env.VITE_USER_URL;
-  
+
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -22,12 +22,11 @@ export const DataProvider = ({ children }) => {
       setProducts(response.data.products);
 
       setLoading(false);
-    } catch (err) {
-      setError("Error fetching data: " + err.message);
+    } catch (error) {
+      setError("Error fetching data: " + error.message);
       setLoading(false);
     }
   };
-
 
   const updateCartItemCount = () => {
     const totalQuantity = Object.values(cart).reduce(
@@ -37,17 +36,24 @@ export const DataProvider = ({ children }) => {
     setCartItemCount(totalQuantity);
   };
 
-  const addToCart = async (itemId) => {
-  
+  useEffect(() => {
+    console.log("Log cart =>", cart);
+  },[cart]);
+
+  const addToCart = async (product) => {
+    const { _id } = product;
+
     let cartData = { ...cart };
 
-    if (cartData[itemId]) {
-      cartData[itemId].quantity += 1;
+    if (cartData[_id]) {
+      cartData[_id].quantity += 1;
     } else {
-      cartData[itemId] = { quantity: 1 };  // assuming cart data includes size and quantity
+      cartData[_id] = { quantity: 1 }; // assuming cart data includes size and quantity
     }
+    setCart(product);
 
-    setCart(cartData);
+    
+
     toast.success("Product added!", {
       position: "top-right",
       autoClose: 1000,
@@ -60,23 +66,20 @@ export const DataProvider = ({ children }) => {
 
     updateCartItemCount();
 
-    if (token) {
-      try {
-        await axios.post(
-          `${backendUrl}/cart/add`,
-          { itemId, size },
-          { headers: { token } }
-        );
-      } catch (error) {
-        console.log(error);
-        toast.error(error.message);
-      }
+    try {
+      await axios.post(`${backendUrl}/cart/add`, {
+        userId: "67546911878a73f04524d23c",
+        _id,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
     }
   };
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
-    
+
     setCart((prevCart) => {
       const newCart = { ...prevCart };
       if (newCart[id]) {
@@ -99,7 +102,10 @@ export const DataProvider = ({ children }) => {
   };
 
   const calculateTotal = () => {
-    const totalItems = Object.values(cart).reduce((total, item) => total + item.quantity, 0);
+    const totalItems = Object.values(cart).reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
     const total = Object.values(cart).reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
