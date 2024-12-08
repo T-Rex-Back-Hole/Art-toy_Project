@@ -1,58 +1,60 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordStrong, setIsPasswordStrong] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState([]);
-  const [formUser, setFormUser] = useState(initialfromUser);
-
-  const navigate = useNavigate();
-  const initialfromUser = {
+  const [formUser, setFormUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setUser([...user, formUser]);
-    if (email && password) {
-      navigate("/login");
-    } else {
-      alert("Information is incomplete");
-    }
-  };
-  const handleChange = (event) => {
-    const name = event.target.value;
-    const value = event.target.value;
-    setFormUser({ ...formUser, [name]: value });
-  };
+  });
+  const navigate = useNavigate();
 
+  // ตรวจสอบความถูกต้องของอีเมล
   useEffect(() => {
-    if (email) {
+    if (formUser.email) {
       const emailRegX = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,6}$/;
-      const isValidEmail = emailRegX.test(email);
-      setIsEmailValid(isValidEmail);
+      setIsEmailValid(emailRegX.test(formUser.email));
     }
-  }, [email]);
+  }, [formUser.email]);
 
+  // ตรวจสอบความแข็งแกร่งของรหัสผ่าน
   useEffect(() => {
-    if (password) {
-      const minLength = password.length >= 8;
-      const hasLowercase = /[a-z]/.test(password);
-      const hasUppercase = /[A-Z]/.test(password);
-      const hasNumber = /[0-9]/.test(password);
-      const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
+    if (formUser.password) {
+      const minLength = formUser.password.length >= 8;
+      const hasLowercase = /[a-z]/.test(formUser.password);
+      const hasUppercase = /[A-Z]/.test(formUser.password);
+      const hasNumber = /[0-9]/.test(formUser.password);
+      const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(formUser.password);
       setIsPasswordStrong(
         minLength && hasLowercase && hasUppercase && hasNumber && hasSymbol
       );
     }
-  }, [password]);
+  }, [formUser.password]);
+
+  // ฟังก์ชันที่ใช้เมื่อผู้ใช้ส่งข้อมูล
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (
+      isEmailValid &&
+      isPasswordStrong &&
+      formUser.email &&
+      formUser.password
+    ) {
+      localStorage.setItem("user", JSON.stringify(formUser)); // เก็บข้อมูลลง localStorage
+      navigate("/login"); // นำทางไปยังหน้า login
+    } else {
+      alert("Information is incomplete or incorrect");
+    }
+  };
+
+  // ฟังก์ชันที่ใช้ในการเปลี่ยนแปลงข้อมูลใน form
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormUser({ ...formUser, [name]: value });
+  };
 
   return (
     <>
@@ -74,6 +76,7 @@ const Register = () => {
             First Name:
             <input
               id="firstName"
+              name="firstName"
               type="text"
               value={formUser.firstName}
               placeholder="First name"
@@ -85,6 +88,7 @@ const Register = () => {
             Last Name:
             <input
               id="lastName"
+              name="lastName"
               type="text"
               value={formUser.lastName}
               placeholder="Last Name"
@@ -96,13 +100,11 @@ const Register = () => {
             E-mail:{" "}
             <input
               id="email"
+              name="email"
               type="email"
               value={formUser.email}
               placeholder="E-mail"
-              onChange={(event) => {
-                setEmail(event.target.value);
-                handleChange();
-              }}
+              onChange={handleChange}
               className="w-full rounded-full px-4 py-2 mb-1 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
             />
             {!isEmailValid && (
@@ -113,13 +115,11 @@ const Register = () => {
             Password:{" "}
             <input
               id="password"
+              name="password"
               type="password"
               placeholder="Password"
               value={formUser.password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-                handleChange();
-              }}
+              onChange={handleChange}
               className="w-full rounded-full px-4 py-2 mb-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
             />
             {!isPasswordStrong && (
@@ -129,11 +129,10 @@ const Register = () => {
               </p>
             )}
           </label>
-
           <div id="btn-create-account" className="flex w-full">
             <button
               type="submit"
-              class="w-full rounded-full mt-2 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:rounded-md lg:hover:bg-purple-600 focus:outline-none"
+              className="w-full rounded-full mt-2 font-bold bg-[#B47AEA] text-white py-3 px-6 mb-3 lg:mt-0 lg:rounded-md lg:hover:bg-purple-600 focus:outline-none"
             >
               Create account
             </button>
@@ -147,16 +146,16 @@ const Register = () => {
       >
         <button
           id="facebook-login"
-          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
+          className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
         >
-          <i class="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4"></i>
+          <i className="fa-brands fa-facebook text-blue-500 mr-2 lg:mr-4"></i>
           Facebook
         </button>
         <button
           id="google-login"
-          class="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
+          className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:hover:bg-gray-100"
         >
-          <i class="fa-brands fa-google text-red-600 mr-2 lg:mr-4"></i>
+          <i className="fa-brands fa-google text-red-600 mr-2 lg:mr-4"></i>
           Google
         </button>
       </div>
@@ -185,7 +184,7 @@ const Register = () => {
           <button
             type="submit"
             id="subscribe-btn"
-            className="h-10 mt-4 bg-[#B47AEA] rounded-full lg:h-12 lg:px-12 lg:py-2  lg:rounded-md text-white lg:hover:bg-purple-600 focus:outline-none font-semibold text-xl"
+            className="h-10 mt-4 bg-[#B47AEA] rounded-full lg:h-12 lg:px-12 lg:py-2 lg:rounded-md text-white lg:hover:bg-purple-600 focus:outline-none font-semibold text-xl"
           >
             Subscribe
           </button>
