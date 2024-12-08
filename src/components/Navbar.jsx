@@ -1,15 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useData } from "../components/DataProvider";
+import { useData } from "../context/DataProvider";
+import logo from "../../images/dino.png";
 
 const Navbar = () => {
   const { cartItemCount } = useData();
 
   return (
-    <nav className="bg-black px-12 py-2 flex flex-col items-center lg:flex-row lg:justify-between">
+    <nav className="sticky top-0 z-50 bg-black px-12 py-2 flex flex-col items-center lg:flex-row lg:justify-between">
       <Link to="/">
         <div id="logo" className="flex items-center">
-          <img src="./images/dino.png" alt="" className="w-10 mx-auto mr-5" />
+          <img src={logo} alt="" className="w-10 mx-auto mr-5" />
           <span className="text-[#B47AEA] text-2xl font-bold">
             T-Rex BlackHole
           </span>
@@ -20,13 +21,16 @@ const Navbar = () => {
         id="menu-icon"
         className="flex justify-between my-2 lg:my-0 lg:justify-between lg:items-center"
       >
+        {/* <Link to="/art-toy"></Link>
+        <Link to="/hero"></Link> */}
+
         <div id="search">
           <input
             type="text"
             placeholder="Search..."
-            className="hidden lg:w-64 lg:inline m-4 px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none"
+            className="relative hidden lg:w-64 lg:inline m-4 px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none"
           />
-          <i className="fa-solid fa-magnifying-glass nav-icon cursor-pointer px-4 lg:hover:text-purple-600"></i>
+          <i className="fa-solid fa-magnifying-glass absolute hidden lg:inline nav-icon end-56 top-1/2 transform -translate-y-1/2 text-gray-300 px-5"></i>
         </div>
 
         <Link to="/login">

@@ -9,7 +9,17 @@ module.exports = {
       fontFamily: {
         body: ['Poppins']
         
-      }
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 40s linear infinite',
+        'marquee-mobile': 'marquee 10s linear infinite',
+      },
     },
   },
   plugins: [],
