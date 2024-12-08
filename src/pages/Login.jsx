@@ -1,27 +1,43 @@
 import React, { useState } from "react";
 import ReactLoading from "react-loading";
-import Register from "./Register";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { motion } from "framer-motion";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // state สำหรับข้อความ error
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage(""); // เคลียร์ข้อความ error ก่อนเริ่มการ login
 
     try {
-      // จำลองการเรียก API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      navigate("/personal-info");
+      const response = await axios.post(
+        "http://localhost:5000/api/client/login", // URL ของ API
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json", // กำหนด header
+          },
+        }
+      );
+
+      const data = response.data;
+      if (data.success) {
+        navigate("/personal-info"); // ถ้าการ login สำเร็จ ให้ไปที่หน้า personal-info
+      } else {
+        setErrorMessage(data.message); // แสดงข้อความ error ถ้า login ไม่สำเร็จ
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Login Error:", error);
+      setErrorMessage("An error occurred during login."); // แสดงข้อความ error ถ้ามีข้อผิดพลาด
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // หยุดโหลดเมื่อเสร็จสิ้น
     }
   };
 
@@ -59,6 +75,8 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}{" "}
+          {/* แสดงข้อความ error */}
           <div id="btn-login" className="flex w-full">
             <button
               type="submit"
@@ -156,34 +174,6 @@ const Login = () => {
           >
             Subscribe
           </button>
-        </div>
-      </section>
-
-      <section id="icon-service">
-        <div
-          id="container-service"
-          className="p-2 grid grid-cols-2 lg:flex lg:flex-row lg:justify-evenly lg:p-10"
-        >
-          <div id="service-box1" className="text-center p-10">
-            <i className="text-[#B47AEA] fa-solid fa-lock text-4xl"></i>
-            <p>Payment</p>
-            <p>100% secured</p>
-          </div>
-          <div id="service-box2" className="text-center p-10">
-            <i className="text-[#B47AEA] fa-solid fa-rocket text-4xl"></i>
-            <p>Payment</p>
-            <p>100% secured</p>
-          </div>
-          <div id="service-box3" className="text-center p-10">
-            <i className="text-[#B47AEA] fa-solid fa-gift text-4xl"></i>
-            <p>Payment</p>
-            <p>100% secured</p>
-          </div>
-          <div id="service-box4" className="text-center p-10">
-            <i className="text-[#B47AEA] fa-solid fa-comments text-4xl"></i>
-            <p>Payment</p>
-            <p>100% secured</p>
-          </div>
         </div>
       </section>
     </>
