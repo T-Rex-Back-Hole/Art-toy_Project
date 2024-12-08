@@ -11,12 +11,8 @@ const DetailModel = () => {
   useEffect(() => {
     const findProduct = () => {
       if (!loading && products.length > 0) {
-        const productLookup = products.reduce((acc, product) => {
-          acc[product.id] = product;
-          return acc;
-        }, {});
+        const selectedProduct = products.find((product) => product._id === id);
 
-        const selectedProduct = productLookup[id];
         setProduct(selectedProduct);
       }
     };
@@ -24,13 +20,21 @@ const DetailModel = () => {
     findProduct();
   }, [id, products, loading]);
 
-  const incrementQuantity = () => setQuantity(quantity + 1);
+  const incrementQuantity = () => {
+    if (product && quantity < product.stock) {
+      setQuantity(quantity + 1);
+    }
+  };
+
   const decrementQuantity = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   };
 
   const handleAddToCart = () => {
     if (product) {
+      console.log("Log product =>>",product)
       addToCart({ ...product, quantity });
     }
   };

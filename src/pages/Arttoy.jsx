@@ -11,7 +11,7 @@ function Arttoy() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const artToyData = products.filter(
-    (product) => product.category === "Art Toy"
+    (product) => product.category === "ArtToy"
   );
 
   const sortProducts = (products) => {
@@ -139,12 +139,12 @@ function Arttoy() {
           {filteredAndSortedProducts.length > 0 ? (
             filteredAndSortedProducts.map((arttoy) => (
               <div
-                key={arttoy.id}
+                key={arttoy._id}
                 className="border p-6 rounded-lg shadow-md text-center"
               >
                 <h3 className="text-xl font-semibold">{arttoy.name}</h3>
                 <Link
-                  to={`/detail/${arttoy.id}`}
+                  to={`/detail/${arttoy._id}`}
                   className="text-blue-500 mt-4 inline-block hover:underline"
                 >
                   <img

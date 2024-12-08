@@ -46,7 +46,7 @@ const CartItem = ({
           <div className="">
             <h2 className="text-xl font-bold lg:text-2xl">{item.name}</h2>
 
-            {item.category === "Art Toy" ? (
+            {item.category === "ArtToy" ? (
               <Link to="/art-toy">
                 <p className="text-xs text-blue-500 underline py-1">
                   Category: <span className="">{item.category}</span>

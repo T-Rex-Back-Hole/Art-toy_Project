@@ -25,10 +25,11 @@ const Main = () => {
         <div className="overflow-hidden relative">
           <div className="flex lg:space-x-5 animate-marquee-mobile lg:animate-marquee">
             {/* แสดงสินค้าทั้งหมดและทำสำเนาเพื่อให้เลื่อนไหลแบบไม่หยุด */}
-            {[...products, ...products, ...products].map((product, index) => (
+
+            {products.map((product, index) => (
               <Link
                 key={index}
-                to={`/detail/${product.id}`}
+                to={`/detail/${product._id}`}
                 className="flex-shrink-0 w-full lg:w-1/6 product"
               >
                 <img

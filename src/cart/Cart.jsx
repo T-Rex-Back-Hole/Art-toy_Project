@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useData } from "../context/DataProvider";
 import CartItem from "../cart/CartItem";
 import { Link } from "react-router-dom";
@@ -6,18 +6,21 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const { cart, calculateTotal, removeItem, updateQuantity, formatMoney } =
     useData();
+
   const { total, totalItems } = calculateTotal();
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState();
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       // เลือกสินค้าทั้งหมด
-      setSelectedItems(cart.map((item) => item.id));
+      
+      setSelectedItems(cart.map((item) => item._id));
     } else {
       // ยกเลิกการเลือกทั้งหมด
       setSelectedItems([]);
     }
   };
+
 
   const handleSelectItem = (id) => {
     setSelectedItems((prevSelected) =>
@@ -39,14 +42,7 @@ const Cart = () => {
           <div className="space-y-2">
             <div className="flex justify-between items-center rounded-lg border py-2 px-4 border-gray-200 bg-white shadow-md">
               <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  className=""
-                  onChange={handleSelectAll}
-                  checked={
-                    selectedItems.length === cart.length && cart.length > 0
-                  }
-                />
+                <input type="checkbox" className="" />
                 <h1 className="font-semibold ml-4">Select All</h1>
               </div>
               <i
@@ -55,16 +51,14 @@ const Cart = () => {
               ></i>
             </div>
 
-            {cart.map((item) => (
-              <CartItem
-                key={item.id}
-                item={item}
-                removeItem={removeItem}
-                updateQuantity={updateQuantity}
-                isChecked={isChecked(item.id)}
-                onSelectItem={() => handleSelectItem(item.id)}
-              />
-            ))}
+            <CartItem
+              key={cart._id}
+              item={cart}
+              removeItem={removeItem}
+              updateQuantity={updateQuantity}
+              isChecked={isChecked(cart._id)}
+              onSelectItem={() => handleSelectItem(cart._id)}
+            />
           </div>
         </div>
       </div>
@@ -76,11 +70,9 @@ const Cart = () => {
             <div className="space-y-2">
               <dl className="flex items-center justify-between gap-4">
                 <dt className="text-base font-normal text-gray-500">
-                  Subtotal ({totalItems} items)
+                  Subtotal
                 </dt>
-                <dd className="text-base font-medium text-gray-900">
-                  ฿ {formatMoney(total)}
-                </dd>
+                <dd className="text-base font-medium text-gray-900">฿</dd>
               </dl>
               <dl className="flex items-center justify-between gap-4">
                 <dt className="text-base font-normal text-gray-500">
@@ -91,9 +83,7 @@ const Cart = () => {
             </div>
             <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
               <dt className="text-base font-bold text-gray-900">Total</dt>
-              <dd className="text-base font-bold text-green-600">
-                ฿ {formatMoney(total)}
-              </dd>
+              <dd className="text-base font-bold text-green-600">฿</dd>
             </dl>
           </div>
           <Link to="/checkout">
