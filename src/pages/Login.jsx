@@ -14,30 +14,30 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage(""); // เคลียร์ข้อความ error ก่อนเริ่มการ login
+    setErrorMessage("");
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/client/login", // URL ของ API
+        "/api/auth/login",
         { email, password },
         {
           headers: {
-            "Content-Type": "application/json", // กำหนด header
+            "Content-Type": "application/json",
           },
         }
       );
 
       const data = response.data;
       if (data.success) {
-        navigate("/personal-info"); // ถ้าการ login สำเร็จ ให้ไปที่หน้า personal-info
+        navigate("/personal-info");
       } else {
-        setErrorMessage(data.message); // แสดงข้อความ error ถ้า login ไม่สำเร็จ
+        setErrorMessage(data.message);
       }
     } catch (error) {
       console.error("Login Error:", error);
-      setErrorMessage("An error occurred during login."); // แสดงข้อความ error ถ้ามีข้อผิดพลาด
+      setErrorMessage("An error occurred during login.");
     } finally {
-      setIsLoading(false); // หยุดโหลดเมื่อเสร็จสิ้น
+      setIsLoading(false);
     }
   };
 
@@ -76,7 +76,6 @@ const Login = () => {
             className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
           {errorMessage && <p className="text-red-600">{errorMessage}</p>}{" "}
-          {/* แสดงข้อความ error */}
           <div id="btn-login" className="flex w-full">
             <button
               type="submit"
