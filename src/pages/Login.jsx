@@ -1,36 +1,61 @@
-import React, { useState } from "react";
-import ReactLoading from 'react-loading';
-import Register from "./Register";
+import React, { useContext, useState } from "react";
+import ReactLoading from "react-loading";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { motion } from "framer-motion";
+import { DataProvider } from "../context/DataProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // state สำหรับข้อความ error
   const navigate = useNavigate();
+  const { token, setToken } = useContext(DataProvider);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
+    setErrorMessage("");
+
     try {
-      // จำลองการเรียก API
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      navigate("/personal-info");
+      const response = await axios.post(
+        `${backendUrl}/register`,
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = response.data;
+      if (data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+      } else {
+        setErrorMessage(data.message);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Login Error:", error);
+      setErrorMessage("An error occurred during login.");
     } finally {
       setIsLoading(false);
     }
   };
 
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
+
   return (
     <>
-      <motion.div 
+      <motion.div
         className="font-bold text-5xl text-center my-12"
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
         Log in
@@ -39,7 +64,10 @@ const Login = () => {
         id="form"
         className="flex flex-col justify-center lg:flex-row lg:justify-center"
       >
-        <form onSubmit={handleSubmit} className="flex flex-col px-4 gap-y-4 lg:gap-y-0 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col px-4 gap-y-4 lg:gap-y-0 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0"
+        >
           <input
             id="email"
             type="email"
@@ -56,6 +84,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}{" "}
           <div id="btn-login" className="flex w-full">
             <button
               type="submit"
@@ -64,13 +93,18 @@ const Login = () => {
             >
               {isLoading ? (
                 <div className="flex justify-center">
-                  <ReactLoading type="spin" height={24} width={24} color="#ffffff" />
+                  <ReactLoading
+                    type="spin"
+                    height={24}
+                    width={24}
+                    color="#ffffff"
+                  />
                 </div>
               ) : (
                 <motion.button
                   whileHover={{ scale: 1.1 }}
-                  onHoverStart={event => {}}
-                  onHoverEnd={event => {}}
+                  onHoverStart={(event) => {}}
+                  onHoverEnd={(event) => {}}
                 >
                   Login
                 </motion.button>
@@ -86,8 +120,8 @@ const Login = () => {
             {" "}
             <motion.button
               whileHover={{ scale: 1.1 }}
-              onHoverStart={event => {}}
-              onHoverEnd={event => {}}
+              onHoverStart={(event) => {}}
+              onHoverEnd={(event) => {}}
             >
               Sign up{" "}
             </motion.button>
@@ -100,8 +134,8 @@ const Login = () => {
       >
         <motion.button
           whileHover={{ scale: 1.2 }}
-          onHoverStart={event => {}}
-          onHoverEnd={event => {}}
+          onHoverStart={(event) => {}}
+          onHoverEnd={(event) => {}}
           id="facebook-login"
           className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:bg-blue-500 lg:hover:bg-blue-600 transition duration-300 ease-in-out"
         >
@@ -110,8 +144,8 @@ const Login = () => {
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.2 }}
-          onHoverStart={event => {}}
-          onHoverEnd={event => {}}
+          onHoverStart={(event) => {}}
+          onHoverEnd={(event) => {}}
           id="google-login"
           className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:bg-red-500 lg:hover:bg-red-600 transition duration-300 ease-in-out"
         >
@@ -148,34 +182,6 @@ const Login = () => {
           >
             Subscribe
           </button>
-        </div>
-      </section>
-
-      <section id="icon-service">
-        <div
-          id="container-service"
-          className="p-2 grid grid-cols-2 lg:flex lg:flex-row lg:justify-evenly lg:p-10"
-        >
-          <div id="service-box1" className="text-center p-10">
-            <i className="text-[#B47AEA] fa-solid fa-lock text-4xl"></i>
-            <p>Payment</p>
-            <p>100% secured</p>
-          </div>
-          <div id="service-box2" className="text-center p-10">
-            <i className="text-[#B47AEA] fa-solid fa-rocket text-4xl"></i>
-            <p>Payment</p>
-            <p>100% secured</p>
-          </div>
-          <div id="service-box3" className="text-center p-10">
-            <i className="text-[#B47AEA] fa-solid fa-gift text-4xl"></i>
-            <p>Payment</p>
-            <p>100% secured</p>
-          </div>
-          <div id="service-box4" className="text-center p-10">
-            <i className="text-[#B47AEA] fa-solid fa-comments text-4xl"></i>
-            <p>Payment</p>
-            <p>100% secured</p>
-          </div>
         </div>
       </section>
     </>

@@ -16,7 +16,7 @@ import Account from "./src/pages/Account";
 import { DataProvider } from "./src/context/DataProvider";
 import Checkout from "./src/cart/Checkout";
 import CompletePurchase from "./src/cart/CompletePurchase";
-
+export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const App = () => {
   return (
     <DataProvider>
