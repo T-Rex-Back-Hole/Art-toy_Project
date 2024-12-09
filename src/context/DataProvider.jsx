@@ -127,10 +127,6 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
-      getUserCart(localStorage.getItem("token"));
-    }
-    if (token) {
-      getUserCart(token);
     }
   }, [token]);
 
