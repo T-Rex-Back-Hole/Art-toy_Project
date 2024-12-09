@@ -16,6 +16,7 @@ import Account from "./src/pages/Account";
 import { DataProvider } from "./src/context/DataProvider";
 import Checkout from "./src/cart/Checkout";
 import CompletePurchase from "./src/cart/CompletePurchase";
+import Personal from "./src/pages/Personal-info";
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/personal" element={<Personal />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/art-toy" element={<Arttoy />} />

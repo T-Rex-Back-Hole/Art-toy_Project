@@ -81,7 +81,7 @@ const Hero = () => {
   };
 
   const filteredAndSortedProducts = sortProducts(
-    heroData.filter(product => 
+    heroData.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );

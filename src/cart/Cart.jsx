@@ -4,23 +4,19 @@ import CartItem from "../cart/CartItem";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, calculateTotal, removeItem, updateQuantity, formatMoney } =
-    useData();
+  const { cart, removeItem, updateQuantity } = useData();
 
-  const { total, totalItems } = calculateTotal();
-  const [selectedItems, setSelectedItems] = useState();
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       // เลือกสินค้าทั้งหมด
-      
       setSelectedItems(cart.map((item) => item._id));
     } else {
       // ยกเลิกการเลือกทั้งหมด
       setSelectedItems([]);
     }
   };
-
 
   const handleSelectItem = (id) => {
     setSelectedItems((prevSelected) =>
@@ -42,7 +38,11 @@ const Cart = () => {
           <div className="space-y-2">
             <div className="flex justify-between items-center rounded-lg border py-2 px-4 border-gray-200 bg-white shadow-md">
               <div className="flex items-center">
-                <input type="checkbox" className="" />
+                <input
+                  type="checkbox"
+                  onChange={handleSelectAll}
+                  className=""
+                />
                 <h1 className="font-semibold ml-4">Select All</h1>
               </div>
               <i
@@ -50,15 +50,20 @@ const Cart = () => {
                 onClick={() => selectedItems.forEach((id) => removeItem(id))}
               ></i>
             </div>
-
-            <CartItem
-              key={cart._id}
-              item={cart}
-              removeItem={removeItem}
-              updateQuantity={updateQuantity}
-              isChecked={isChecked(cart._id)}
-              onSelectItem={() => handleSelectItem(cart._id)}
-            />
+            {cart.length > 0 ? (
+              cart.map((item) => (
+                <CartItem
+                  key={item._id}
+                  item={item}
+                  removeItem={removeItem}
+                  updateQuantity={updateQuantity}
+                  isChecked={isChecked(item._id)}
+                  onSelectItem={() => handleSelectItem(item._id)}
+                />
+              ))
+            ) : (
+              <p>Your cart is empty</p>
+            )}
           </div>
         </div>
       </div>

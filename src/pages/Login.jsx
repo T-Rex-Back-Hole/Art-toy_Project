@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useData } from "../context/DataProvider";
+
 const backendUrl = import.meta.env.VITE_USER_URL;
 
 const Login = () => {
@@ -14,42 +15,56 @@ const Login = () => {
   const navigate = useNavigate();
   const { token, setToken } = useData();
 
+  // เช็คว่า user ได้ login แล้วหรือยัง
+  useEffect(() => {
+    // หากมี token อยู่ใน localStorage หรือใน context แล้ว ให้ redirect ไปหน้าหลัก
+    if (localStorage.getItem("token") || token) {
+      navigate(""); // หรือหน้าใดก็ได้ที่คุณต้องการหลังจาก login
+    }
+  }, [token, navigate]);
+
+  // ฟังก์ชันสำหรับการล็อกอิน
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage("");
+    setErrorMessage(""); // รีเซ็ตข้อความ error ก่อน
 
     try {
+      // ส่งคำขอ POST ไปที่ API backend สำหรับการล็อกอิน
       const response = await axios.post(
         `${backendUrl}/client/login`,
         { email, password },
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", // กำหนดประเภทของข้อมูลที่ส่ง
           },
         }
       );
 
       const data = response.data;
+
       if (data.success) {
-        setToken(response.data.token);
-        localStorage.setItem("token", response.data.token);
+        // หากล็อกอินสำเร็จ, เก็บ token ไว้ใน localStorage และ context
+        setToken(data.token);
+        localStorage.setItem("token", data.token); // เก็บ token ใน localStorage
+        navigate("/personal"); // เปลี่ยนเส้นทางไปที่หน้า Home หรือหน้าที่คุณต้องการ
       } else {
-        setErrorMessage(data.message);
+        setErrorMessage(data.message); // แสดงข้อความ error หากล็อกอินไม่สำเร็จ
       }
     } catch (error) {
       console.error("Login Error:", error);
       setErrorMessage("An error occurred during login.");
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // ปิดการแสดง loading เมื่อเสร็จสิ้น
     }
   };
 
-  useEffect(() => {
-    if (token || localStorage.getItem("token")) {
-      navigate("/");
-    }
-  }, [token, navigate]);
+  // ฟังก์ชันสำหรับการล็อกเอาท์
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // ลบ token ออกจาก localStorage
+    setToken(null); // รีเซ็ต token ใน context
+    navigate("/personal"); // เปลี่ยนเส้นทางไปที่หน้า login
+  };
 
   return (
     <>
@@ -61,6 +76,7 @@ const Login = () => {
       >
         Log in
       </motion.div>
+
       <section
         id="form"
         className="flex flex-col justify-center lg:flex-row lg:justify-center"
@@ -85,7 +101,8 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full rounded-full px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
           />
-          {errorMessage && <p className="text-red-600">{errorMessage}</p>}{" "}
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+
           <div id="btn-login" className="flex w-full">
             <button
               type="submit"
@@ -114,39 +131,36 @@ const Login = () => {
           </div>
         </form>
       </section>
+
       <div id="go-to-register" className="flex justify-center gap-4">
         <p className="text-gray-400">Don't have an account?</p>
         <Link to="/register">
           <button className="font-bold lg:mb-3 text-[#B47AEA]">
-            {" "}
             <motion.button
               whileHover={{ scale: 1.1 }}
               onHoverStart={(event) => {}}
               onHoverEnd={(event) => {}}
             >
-              Sign up{" "}
+              Sign up
             </motion.button>
           </button>
         </Link>
       </div>
+
       <div
         id="login-by"
         className="flex container justify-center gap-10 lg:gap-0 lg:w-1/2 lg:mx-auto lg:justify-between lg:space-x-28 mb-10"
       >
         <motion.button
           whileHover={{ scale: 1.2 }}
-          onHoverStart={(event) => {}}
-          onHoverEnd={(event) => {}}
           id="facebook-login"
           className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:bg-blue-500 lg:hover:bg-blue-600 transition duration-300 ease-in-out"
         >
-          <i className="fa-brands fa-facebook text-white  mr-2 lg:mr-4"></i>
+          <i className="fa-brands fa-facebook text-white mr-2 lg:mr-4"></i>
           Facebook
         </motion.button>
         <motion.button
           whileHover={{ scale: 1.2 }}
-          onHoverStart={(event) => {}}
-          onHoverEnd={(event) => {}}
           id="google-login"
           className="rounded-full w-2/5 mt-4 md:mt-0 py-2 border border-gray-300 lg:rounded-md lg:w-full lg:bg-red-500 lg:hover:bg-red-600 transition duration-300 ease-in-out"
         >
