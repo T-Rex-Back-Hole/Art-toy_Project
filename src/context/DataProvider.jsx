@@ -116,13 +116,18 @@ export const DataProvider = ({ children }) => {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    updateCartItemCount();
-  }, [cart]);
+  useEffect(
+    () => {
+      fetchData();
+      updateCartItemCount();
+      if (!token && localStorage.getItem("token")) {
+        setToken(localStorage.getItem("token"));
+      }
+    },
+    [],
+    [cart],
+    [token]
+  );
 
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
