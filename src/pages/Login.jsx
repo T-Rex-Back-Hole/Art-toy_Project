@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ReactLoading from "react-loading";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { DataProvider } from "../context/DataProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // state สำหรับข้อความ error
   const navigate = useNavigate();
+  const { token, setToken } = useContext(DataProvider);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +20,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "/api/auth/login",
+        `${backendUrl}/register`,
         { email, password },
         {
           headers: {
@@ -29,7 +31,8 @@ const Login = () => {
 
       const data = response.data;
       if (data.success) {
-        navigate("/personal-info");
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
       } else {
         setErrorMessage(data.message);
       }
@@ -40,6 +43,12 @@ const Login = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   return (
     <>

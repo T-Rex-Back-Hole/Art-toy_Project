@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import axios from "axios"; // นำเข้า axios
+import axios from "axios";
 
 const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordStrong, setIsPasswordStrong] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [formUser, setFormUser] = useState({
-    firstName: "",
-    lastName: "",
+    userName: "",
     email: "",
     password: "",
   });
@@ -19,7 +16,6 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  // Handle form change
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormUser({ ...formUser, [name]: value });
@@ -53,25 +49,16 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (
-      formUser.firstName &&
-      formUser.lastName &&
-      formUser.email &&
-      formUser.password
-    ) {
+    if (formUser.userName && formUser.email && formUser.password) {
       setLoading(true);
       setError("");
 
       try {
-        const response = await axios.post(
-          "http://localhost:5000/api/client/register",
-          formUser,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await axios.post(`${backendUrl}/register`, formUser, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         if (response.status === 200) {
           navigate("/login");
@@ -106,29 +93,18 @@ const Register = () => {
           className="flex flex-col px-4 lg:flex-col lg:justify-center lg:space-y-4 lg:w-1/2 lg:px-0"
           onSubmit={handleSubmit}
         >
-          <p className="text-base my-2 px-3 lg:my-0">
+          <p className="text-base my-2 px-1 lg:my-0">
             Please fill below information
           </p>
           <label>
-            First Name:
+            Username:{" "}
             <input
               name="firstName"
               type="text"
-              value={formUser.firstName}
+              value={formUser.userName}
               placeholder="First name"
               onChange={handleChange}
               className="w-full rounded-md px-4 py-2 border mb-1 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"
-            />
-          </label>
-          <label>
-            Last Name:
-            <input
-              name="lastName"
-              type="text"
-              value={formUser.lastName}
-              placeholder="Last Name"
-              onChange={handleChange}
-              className="w-full rounded-md px-4 py-2 mb-1 border border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
           </label>
           <label>

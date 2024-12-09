@@ -14,6 +14,7 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [cartItemCount, setCartItemCount] = useState(0);
   const backendUrl = import.meta.env.VITE_USER_URL;
+  const [token, setToken] = useState("");
 
   const fetchData = async () => {
     setLoading(true);
@@ -38,7 +39,7 @@ export const DataProvider = ({ children }) => {
 
   useEffect(() => {
     console.log("Log cart =>", cart);
-  },[cart]);
+  }, [cart]);
 
   const addToCart = async (product) => {
     const { _id } = product;
@@ -51,8 +52,6 @@ export const DataProvider = ({ children }) => {
       cartData[_id] = { quantity: 1 }; // assuming cart data includes size and quantity
     }
     setCart(product);
-
-    
 
     toast.success("Product added!", {
       position: "top-right",
@@ -125,6 +124,16 @@ export const DataProvider = ({ children }) => {
     updateCartItemCount();
   }, [cart]);
 
+  useEffect(() => {
+    if (!token && localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+      getUserCart(localStorage.getItem("token"));
+    }
+    if (token) {
+      getUserCart(token);
+    }
+  }, [token]);
+
   return (
     <DataContext.Provider
       value={{
@@ -139,6 +148,8 @@ export const DataProvider = ({ children }) => {
         calculateTotal,
         cartItemCount,
         formatMoney,
+        setToken,
+        token,
       }}
     >
       {children}
