@@ -22,18 +22,17 @@ const CartItem = ({
             onChange={onSelectItem}
           />
           <i
-            onClick={() => removeItem(item.id)}
+            onClick={() => removeItem(item._id)} // ใช้ item._id แทน item.id
             className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
           ></i>
         </div>
       </div>
 
       {/* content box --------------------------------------------------------------------------- */}
-
       <div id="content-box" className="flex lg:justify-evenly">
         <div id="img" className="w-1/2 mx-2 lg:w-1/3">
           <Link
-            to={`/detail/${item.id}`}
+            to={`/detail/${item._id}`} // ใช้ item._id แทน item.id
             className="border-2 rounded-lg border-gray-200 mr-4 flex p-2"
           >
             <img className="" src={item.image} alt={item.name} />
@@ -41,7 +40,6 @@ const CartItem = ({
         </div>
 
         {/* Head price --------------------------------------------------------------------------- */}
-
         <div id="head-price" className="flex flex-col w-1/2 justify-between">
           <div className="">
             <h2 className="text-xl font-bold lg:text-2xl">{item.name}</h2>
@@ -67,15 +65,16 @@ const CartItem = ({
 
           <div className="w-5/6 flex justify-between items-end align-bottom bg-gray-50 px-4 py-2 my-4 font-medium rounded-full lg:w-2/3">
             <button
-              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+              onClick={() => updateQuantity(item._id, item.quantity - 1)} // ลดจำนวนสินค้า
               type="button"
               className="text-xl px-1"
+              disabled={item.quantity <= 1} // ไม่ให้ลดเหลือน้อยกว่าหนึ่ง
             >
               -
             </button>
             <span className="px-2">{item.quantity}</span>
             <button
-              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+              onClick={() => updateQuantity(item._id, item.quantity + 1)} // เพิ่มจำนวนสินค้า
               type="button"
               className="text-xl px-1"
             >
