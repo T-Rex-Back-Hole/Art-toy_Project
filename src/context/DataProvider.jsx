@@ -14,6 +14,7 @@ export const DataProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [cartItemCount, setCartItemCount] = useState(0);
   const backendUrl = import.meta.env.VITE_USER_URL;
+  const [token, setToken] = useState("");
 
   const fetchData = async () => {
     setLoading(true);
@@ -39,6 +40,7 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+
   const calculateTotal = () => {
     if (Array.isArray(cart)) {
       const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -52,6 +54,7 @@ export const DataProvider = ({ children }) => {
       return { total: 0, totalItems: 0 };
     }
   };
+
 
   const addToCart = async (product) => {
     const { _id } = product;
@@ -119,13 +122,24 @@ export const DataProvider = ({ children }) => {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(
+    () => {
+      fetchData();
+      updateCartItemCount();
+      if (!token && localStorage.getItem("token")) {
+        setToken(localStorage.getItem("token"));
+      }
+    },
+    [],
+    [cart],
+    [token]
+  );
 
   useEffect(() => {
-    updateCartItemCount();
-  }, [cart]);
+    if (!token && localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+    }
+  }, [token]);
 
   return (
     <DataContext.Provider
@@ -141,6 +155,8 @@ export const DataProvider = ({ children }) => {
         calculateTotal,
         cartItemCount,
         formatMoney,
+        setToken,
+        token,
       }}
     >
       {children}
