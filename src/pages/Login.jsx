@@ -19,7 +19,7 @@ const Login = () => {
   useEffect(() => {
     // หากมี token อยู่ใน localStorage หรือใน context แล้ว ให้ redirect ไปหน้าหลัก
     if (localStorage.getItem("token") || token) {
-      navigate(""); // หรือหน้าใดก็ได้ที่คุณต้องการหลังจาก login
+      navigate("/personal"); // หรือหน้าใดก็ได้ที่คุณต้องการหลังจาก login
     }
   }, [token, navigate]);
 
