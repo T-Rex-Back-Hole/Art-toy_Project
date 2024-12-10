@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import { header } from "framer-motion/client";
 
 // Context creation
 const DataContext = createContext();
@@ -67,16 +67,6 @@ export const DataProvider = ({ children }) => {
       return; // หยุดการทำงานหากไม่มี token
     }
 
-    // ถอดรหัส JWT เพื่อนำ userId ออกมา
-    const decodedToken = jwt_decode(token); // ใช้ jwt_decode() เป็นฟังก์ชัน
-    console.log(decodedToken);
-    const userId = decodedToken.id;
-
-    if (!userId) {
-      toast.error("Invalid token.");
-      return;
-    }
-
     // อัปเดตข้อมูลตะกร้าใน state
     setCart((prevCart) => {
       const updatedCart = Array.isArray(prevCart) ? [...prevCart] : [];
@@ -105,13 +95,17 @@ export const DataProvider = ({ children }) => {
 
     updateCartItemCount();
 
+    console.log("Log ID => ", _id);
     try {
       // ส่งข้อมูลตะกร้าไปยัง backend
-      await axios.post(`${backendUrl}/cart/add`, {
-        userId, // ส่ง userId ที่ได้จากการ decode token
-        itemId: _id,
-        quantity,
-      });
+      await axios.post(
+        `${backendUrl}/cart/add`,
+        {
+          itemId: _id,
+          quantity,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
     } catch (error) {
       console.error("Error adding to cart:", error);
       toast.error("Failed to add product to cart. Please try again.");
@@ -132,10 +126,34 @@ export const DataProvider = ({ children }) => {
     updateCartItemCount();
   };
 
-  // Remove product from cart
-  const removeItem = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
-    updateCartItemCount();
+  const removeItem = async (id) => {
+    setLoading(true);
+    try {
+      // ส่งคำขอ DELETE ไปยัง backend เพื่อลบสินค้าจากฐานข้อมูล
+      const response = await axios.delete(
+        `${backendUrl}/cart/removeItem`,
+        {
+          params: { itemId: id },
+          headers: { Authorization: `Bearer ${token}` }
+        },
+      );
+
+      // ตรวจสอบว่า API ลบสำเร็จหรือไม่
+      if (response.data.success) {
+        // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
+        setCart(response.data.cartData); // อัปเดต cartData จาก API
+        updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
+        toast.success("Item removed from cart! ✅🎉 ");
+      } else {
+        console.error("Error Remove Item :", response.data.message);
+        toast.error(`Error Remove Item ${response.data.message} 🔥🔥`);
+      }
+    } catch (error) {
+      console.error("Error removing item from cart", error);
+      toast.error("Error removing item from cart. Please try again.");
+    } finally {
+      setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
+    }
   };
 
   // Format money
