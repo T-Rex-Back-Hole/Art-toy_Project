@@ -4,15 +4,9 @@ import { useData } from "../context/DataProvider";
 import ReactLoading from "react-loading";
 
 const Arttoy = () => {
-  const {
-    products,
-    loading,
-    error,
-    fetchData,
-    addToCart,
-    formatMoney,
-    cartItemCount,
-  } = useData();
+  const { products, loading, error, fetchData, addToCart, formatMoney } =
+    useData();
+
   const [quantities, setQuantities] = useState({});
   const [sortType, setSortType] = useState("default");
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,11 +15,12 @@ const Arttoy = () => {
     (product) => product.category === "ArtToy"
   );
 
+  // Use useEffect to call fetchData when the component is mounted
   useEffect(() => {
     if (!products.length) {
-      fetchData();
+      fetchData(); // Fetch data from the backend
     }
-  }, [products, fetchData]);
+  }, [products, fetchData]); // Add fetchData to dependency array
 
   if (loading) {
     return (
@@ -42,18 +37,6 @@ const Arttoy = () => {
 
   if (error) {
     return <p>{error}</p>;
-  }
-
-  function addTocart(product) {
-    const quantity = quantities[product._id] || 1;
-    if (quantity > 0) {
-      const newItem = {
-        ...product,
-        quantity: quantity,
-      };
-      addToCart(newItem);
-      setQuantities({});
-    }
   }
 
   const increQuantity = (id) => {
@@ -109,21 +92,6 @@ const Arttoy = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-8 pr-4 py-1 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
-          <svg
-            className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400"
-            width="14"
-            height="14"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
         </div>
 
         <select
@@ -178,7 +146,7 @@ const Arttoy = () => {
               >
                 <button
                   className="addtocart-btn"
-                  onClick={() => addTocart(arttoy)}
+                  onClick={() => addToCart(arttoy, quantities[arttoy._id] || 1)}
                 >
                   ADD TO CART
                 </button>
