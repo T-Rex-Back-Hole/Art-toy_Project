@@ -11,7 +11,7 @@ export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]); // Initializing as an empty array
+  const [cart, setCart] = useState({}); // Initializing as an empty array
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartItemCount, setCartItemCount] = useState(0);
@@ -28,6 +28,26 @@ export const DataProvider = ({ children }) => {
       setError("Error fetching data: " + error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Fetch data cart
+  const getItems = async () => {
+    try {
+      // เรียก API เพื่อดึงข้อมูลตะกร้าและข้อมูลผู้ใช้ (userId, token)
+      const response = await axios.get(`${backendUrl}/cart/get`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      console.log(response.data);
+      if (response.data.success) {
+        const { cart } = response.data;
+        
+        setCart(cart);
+        console.log("set cart =>>",cart);
+      }
+    } catch (error) {
+      console.error("Error getting items in cart:", error);
+      toast.error("Failed to get items in cart. Please try again.");
     }
   };
 
@@ -137,7 +157,7 @@ export const DataProvider = ({ children }) => {
       // ตรวจสอบว่า API ลบสำเร็จหรือไม่
       if (response.data.success) {
         // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
-        setCart(response.data.cartData); // อัปเดต cartData จาก API
+        setCart(response.data.cart); // อัปเดต cartData จาก API
         updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
         toast.success("Item removed from cart! ✅🎉 ");
       } else {
@@ -173,7 +193,6 @@ export const DataProvider = ({ children }) => {
       localStorage.setItem("token", token);
     }
   }, [token]); // Only update localStorage when token changes
-
   return (
     <DataContext.Provider
       value={{
@@ -190,6 +209,8 @@ export const DataProvider = ({ children }) => {
         formatMoney,
         setToken,
         token,
+        getItems,
+        setCart,
       }}
     >
       {children}
