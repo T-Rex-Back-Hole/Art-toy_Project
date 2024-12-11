@@ -12,7 +12,7 @@ const Register = () => {
     userName: "",
     email: "",
     password: "",
-   
+    role: " "
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -57,7 +57,7 @@ const Register = () => {
       setError("");
 
       try {
-        const response = await axios.post(`${backendUrl}/register`, formUser, {
+        const response = await axios.post(`${backendUrl}/client/register`, formUser, {
           headers: {
             "Content-Type": "application/json",
           },
