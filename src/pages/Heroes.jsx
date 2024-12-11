@@ -35,24 +35,6 @@ const Hero = () => {
     return <p>{error}</p>;
   }
 
-  // เพิ่มหรือลดปริมาณสินค้า
-  const increQuantity = (id) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [id]: (prevQuantities[id] || 1) + 1,
-    }));
-  };
-
-  const decreQuantity = (id) => {
-    setQuantities((prevQuantities) => {
-      const newQuantity = (prevQuantities[id] || 1) - 1;
-      return {
-        ...prevQuantities,
-        [id]: newQuantity > 0 ? newQuantity : 1,
-      };
-    });
-  };
-
   const sortProducts = (products) => {
     switch (sortType) {
       case "price-asc":
@@ -141,16 +123,6 @@ const Hero = () => {
                 <p className="text-xl text-purple-600">
                   {formatMoney(hero.price)} ฿
                 </p>
-
-                <div
-                  id="quantity-box"
-                  className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
-                >
-                  <button onClick={() => decreQuantity(hero._id)}>-</button>
-                  <span>{quantities[hero._id] || 1}</span>{" "}
-                  {/* ใช้ quantity ตาม hero.id */}
-                  <button onClick={() => increQuantity(hero._id)}>+</button>
-                </div>
               </div>
 
               <div
@@ -163,7 +135,6 @@ const Hero = () => {
                 >
                   ADD TO CART
                 </button>
-                <button className="buynow-btn">BUY NOW!!</button>
               </div>
             </div>
           ))
