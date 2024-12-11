@@ -39,23 +39,6 @@ const Arttoy = () => {
     return <p>{error}</p>;
   }
 
-  const increQuantity = (id) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [id]: (prevQuantities[id] || 1) + 1,
-    }));
-  };
-
-  const decreQuantity = (id) => {
-    setQuantities((prevQuantities) => {
-      const newQuantity = (prevQuantities[id] || 1) - 1;
-      return {
-        ...prevQuantities,
-        [id]: newQuantity > 0 ? newQuantity : 1,
-      };
-    });
-  };
-
   const sortProducts = (products) => {
     switch (sortType) {
       case "price-asc":
@@ -129,15 +112,6 @@ const Arttoy = () => {
                 <p className="text-xl text-purple-600">
                   {formatMoney(arttoy.price)} ฿
                 </p>
-
-                <div
-                  id="quantity-box"
-                  className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full"
-                >
-                  <button onClick={() => decreQuantity(arttoy._id)}>-</button>
-                  <span>{quantities[arttoy._id] || 1}</span>{" "}
-                  <button onClick={() => increQuantity(arttoy._id)}>+</button>
-                </div>
               </div>
 
               <div
@@ -150,7 +124,6 @@ const Arttoy = () => {
                 >
                   ADD TO CART
                 </button>
-                <button className="buynow-btn">BUY NOW!!</button>
               </div>
             </div>
           ))

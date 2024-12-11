@@ -45,7 +45,7 @@ const Login = () => {
       if (data.success) {
         setToken(data.token);
         localStorage.setItem("token", data.token); // เก็บ token ใน localStorage
-        navigate("/account"); // เปลี่ยนเส้นทางไปที่หน้า Home หรือหน้าที่คุณต้องการ
+        navigate("/personal"); // เปลี่ยนเส้นทางไปที่หน้า Home หรือหน้าที่คุณต้องการ
 
       } else {
         setErrorMessage(data.message); // แสดงข้อความ error หากล็อกอินไม่สำเร็จ
