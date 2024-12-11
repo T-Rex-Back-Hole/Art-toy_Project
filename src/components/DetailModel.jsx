@@ -20,18 +20,7 @@ const DetailModel = () => {
     findProduct();
   }, [id, products, loading]);
 
-  const incrementQuantity = () => {
-    if (product && quantity < product.stock) {
-      setQuantity(quantity + 1);
-    }
-  };
-
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-
+  
   const handleAddToCart = () => {
     if (product) {
       console.log("Log product =>>",product)
@@ -39,9 +28,6 @@ const DetailModel = () => {
     }
   };
 
-  const buyNow = () => {
-    console.log(`Buying ${quantity} items now.`);
-  };
 
   const formatMoney = (money) => {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -99,28 +85,9 @@ const DetailModel = () => {
           {/* Availability */}
           <div className="flex justify-between items-center">
             <h1 className="text-green-500 text-lg font-semibold my-4">
-              In Stock : 0
+              In Stock
             </h1>
-            {/* Quantity Selector */}
-            <div className="w-1/2 flex justify-between self-center bg-gray-50 px-4 py-2 font-medium rounded-full">
-              <button
-                onClick={decrementQuantity}
-                type="button"
-                id="decrement-button"
-                className="text-xl px-1"
-              >
-                -
-              </button>
-              <span className="mx-6 text-center">{quantity}</span>
-              <button
-                onClick={incrementQuantity}
-                type="button"
-                id="increment-button"
-                className="text-xl px-1"
-              >
-                +
-              </button>
-            </div>
+           
           </div>
 
           {/* Action Buttons */}
@@ -133,14 +100,6 @@ const DetailModel = () => {
             </button>
           </div>
 
-          <div className="flex justify-center items-center mb-2">
-            <button
-              onClick={buyNow}
-              className="bg-[#98F5FC] rounded-full w-full text-white font-semibold px-16 py-3 shadow-sm hover:bg-[#42F2FF]"
-            >
-              BUY NOW!!
-            </button>
-          </div>
         </div>
       </div>
     </section>
