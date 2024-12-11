@@ -5,7 +5,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { useData } from "../context/DataProvider";
 
-const backendUrl = import.meta.env.VITE_USER_URL;
+const backendUrl = import.meta.env.VITE_USER_URL + "/client";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const Login = () => {
   useEffect(() => {
     // หากมี token อยู่ใน localStorage หรือใน context แล้ว ให้ redirect ไปหน้าหลัก
     if (localStorage.getItem("token") || token) {
-      navigate("/personal"); // หรือหน้าใดก็ได้ที่คุณต้องการหลังจาก login
+      navigate("/personal");
     }
   }, [token, navigate]);
 
@@ -27,12 +27,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage(""); // รีเซ็ตข้อความ error ก่อน
+    setErrorMessage("");
 
     try {
-      // ส่งคำขอ POST ไปที่ API backend สำหรับการล็อกอิน
       const response = await axios.post(
-        `${backendUrl}/client/login`,
+        `${backendUrl}/login`,
         { email, password },
         {
           headers: {
@@ -44,10 +43,10 @@ const Login = () => {
       const data = response.data;
 
       if (data.success) {
-        // หากล็อกอินสำเร็จ, เก็บ token ไว้ใน localStorage และ context
         setToken(data.token);
         localStorage.setItem("token", data.token); // เก็บ token ใน localStorage
         navigate("/account"); // เปลี่ยนเส้นทางไปที่หน้า Home หรือหน้าที่คุณต้องการ
+
       } else {
         setErrorMessage(data.message); // แสดงข้อความ error หากล็อกอินไม่สำเร็จ
       }
@@ -64,6 +63,7 @@ const Login = () => {
     localStorage.removeItem("token"); // ลบ token ออกจาก localStorage
     setToken(null); // รีเซ็ต token ใน context
     navigate("/login"); // เปลี่ยนเส้นทางไปที่หน้า login
+
   };
 
   return (
@@ -119,13 +119,13 @@ const Login = () => {
                   />
                 </div>
               ) : (
-                <motion.button
+                <motion.div
                   whileHover={{ scale: 1.1 }}
                   onHoverStart={(event) => {}}
                   onHoverEnd={(event) => {}}
                 >
                   Login
-                </motion.button>
+                </motion.div>
               )}
             </button>
           </div>
