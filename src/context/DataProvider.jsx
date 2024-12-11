@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { header } from "framer-motion/client";
 
 // Context creation
 const DataContext = createContext();
@@ -130,13 +129,10 @@ export const DataProvider = ({ children }) => {
     setLoading(true);
     try {
       // ส่งคำขอ DELETE ไปยัง backend เพื่อลบสินค้าจากฐานข้อมูล
-      const response = await axios.delete(
-        `${backendUrl}/cart/removeItem`,
-        {
-          params: { itemId: id },
-          headers: { Authorization: `Bearer ${token}` }
-        },
-      );
+      const response = await axios.delete(`${backendUrl}/cart/removeItem`, {
+        params: { itemId: id },
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       // ตรวจสอบว่า API ลบสำเร็จหรือไม่
       if (response.data.success) {
