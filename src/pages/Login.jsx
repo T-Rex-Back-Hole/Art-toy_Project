@@ -32,8 +32,8 @@ const Login = () => {
 
       const data = response.data;
       if (data.success) {
-        setToken(response.data.token);
-        localStorage.setItem("token", response.data.token);
+        setToken(data.token);
+        localStorage.setItem("token", data.token);
       } else {
         setErrorMessage(data.message);
       }
@@ -102,13 +102,13 @@ const Login = () => {
                   />
                 </div>
               ) : (
-                <motion.button
+                <motion.div
                   whileHover={{ scale: 1.1 }}
                   onHoverStart={(event) => {}}
                   onHoverEnd={(event) => {}}
                 >
                   Login
-                </motion.button>
+                </motion.div>
               )}
             </button>
           </div>
