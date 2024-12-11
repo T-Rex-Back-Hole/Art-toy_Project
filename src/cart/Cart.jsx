@@ -4,16 +4,14 @@ import CartItem from "../cart/CartItem";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeItem, updateQuantity } = useData();
-
+  const { cart, removeItem, updateQuantity, getItems, token, calculateTotal } =
+    useData(); // ดึง calculateTotal
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      // เลือกสินค้าทั้งหมด
       setSelectedItems(cart.map((item) => item._id));
     } else {
-      // ยกเลิกการเลือกทั้งหมด
       setSelectedItems([]);
     }
   };
@@ -27,6 +25,30 @@ const Cart = () => {
   };
 
   const isChecked = (id) => selectedItems.includes(id);
+
+  // useEffect(() => {
+  //   const fetchCartData = async () => {
+  //     if (token) {
+  //       try {
+  //         // Check if cart is not empty and getItems is properly called
+  //         if (cart && cart.length > 0) {
+  //           await Promise.all(cart.map((item) => getItems(item))); // Make sure 'item' is not undefined
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching cart items:", error);
+  //       }
+  //     }
+  //   };
+
+  //   fetchCartData();
+  // }, [token, cart, getItems]);
+
+  useEffect(() => {
+    getItems();
+  }, []);
+  console.log("cart ==>>", cart);
+  // คำนวณยอดรวมทั้งหมด
+  const { total, totalItems } = calculateTotal(); // ใช้ฟังก์ชัน calculateTotal ที่มีใน Context
 
   return (
     <section className="mt-3 antialiased lg:flex lg:justify-center mx-auto ">
@@ -50,17 +72,20 @@ const Cart = () => {
                 onClick={() => selectedItems.forEach((id) => removeItem(id))}
               ></i>
             </div>
-            {cart.length > 0 ? (
-              cart.map((item) => (
-                <CartItem
-                  key={item._id}
-                  item={item}
-                  removeItem={removeItem}
-                  updateQuantity={updateQuantity}
-                  isChecked={isChecked(item._id)}
-                  onSelectItem={() => handleSelectItem(item._id)}
-                />
-              ))
+            {Object.values(cart).length > 0 ? (
+              Object.entries(cart).map(([id, item]) =>
+                item ? (
+                  <CartItem
+                    key={id}
+                    item={item}
+                    removeItem={removeItem}
+                    updateQuantity={updateQuantity}
+                    isChecked={isChecked(id)}
+                    onSelectItem={() => handleSelectItem(id)}
+                    productId={id}
+                  />
+                ) : null
+              )
             ) : (
               <p>Your cart is empty</p>
             )}
@@ -77,7 +102,9 @@ const Cart = () => {
                 <dt className="text-base font-normal text-gray-500">
                   Subtotal
                 </dt>
-                <dd className="text-base font-medium text-gray-900">฿</dd>
+                <dd className="text-base font-medium text-gray-900">
+                  ฿{total ? total.toFixed(2) : "0.00"}
+                </dd>
               </dl>
               <dl className="flex items-center justify-between gap-4">
                 <dt className="text-base font-normal text-gray-500">
@@ -88,7 +115,9 @@ const Cart = () => {
             </div>
             <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
               <dt className="text-base font-bold text-gray-900">Total</dt>
-              <dd className="text-base font-bold text-green-600">฿</dd>
+              <dd className="text-base font-bold text-green-600">
+                ฿{(total + 0).toFixed(2)} {/* รวมยอดรวมกับค่าจัดส่ง */}
+              </dd>
             </dl>
           </div>
           <Link to="/checkout">

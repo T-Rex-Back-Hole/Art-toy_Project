@@ -7,6 +7,7 @@ const CartItem = ({
   updateQuantity,
   isChecked,
   onSelectItem,
+  productId,
 }) => {
   const { formatMoney } = useData();
 
@@ -22,7 +23,7 @@ const CartItem = ({
             onChange={onSelectItem}
           />
           <i
-            onClick={() => removeItem(item._id)} // ใช้ item._id แทน item.id
+            onClick={() => removeItem(productId)}
             className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
           ></i>
         </div>
