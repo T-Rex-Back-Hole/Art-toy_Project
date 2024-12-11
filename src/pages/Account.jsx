@@ -9,7 +9,7 @@ const Account = () => {
         <div id="info" className="">
           <i class="fa-solid fa-circle-user size-36 text-9xl text-gray-300 text-center"></i>
         </div>
-        <p className="text-center text-2xl font-semibold m-4 mb-4">Pook Thatchai</p>
+        <p className="text-center text-2xl font-semibold m-4 mb-4">Firstname Lastname</p>
 
         <div
           id="top-container"
@@ -29,12 +29,12 @@ const Account = () => {
         >
           <div id="user" className="flex justify-between">
             <p className="text-left">User</p>
-            <p className="text-right block w-full">Pook1234</p>
+            <p className="text-right block w-full">test008</p>
           </div>
           <hr className="border-t-2 border-gray-300 my-4 w-full" />
           <div id="user" className="flex justify-between">
             <p className="text-left w-full">Name</p>
-            <p className="text-right block w-full">Pook Thatchai</p>
+            <p className="text-right block w-full">test008</p>
           </div>
           <hr className="border-t-2 border-gray-300 my-4 w-full" />
           <div id="user" className="flex justify-between">
