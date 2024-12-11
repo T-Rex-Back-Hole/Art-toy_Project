@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
-
+const backendUrl = import.meta.env.VITE_USER_URL + "/client";
 const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordStrong, setIsPasswordStrong] = useState(true);
@@ -49,6 +49,10 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Log formUser ก่อนส่งไปยัง Backend
+    console.log("Form Data:", formUser);
+
     if (formUser.userName && formUser.email && formUser.password) {
       setLoading(true);
       setError("");
@@ -61,11 +65,12 @@ const Register = () => {
         });
 
         if (response.status === 200) {
-          navigate("/login");
+          navigate("/contact");
         } else {
           setError(response.data.message || "Registration failed");
         }
       } catch (error) {
+        console.error("Error in handleSubmit:", error); // เพิ่มการ log ข้อผิดพลาด
         setError("Something went wrong. Please try again later.");
       } finally {
         setLoading(false);
@@ -99,10 +104,10 @@ const Register = () => {
           <label>
             Username:{" "}
             <input
-              name="firstName"
+              name="userName"
               type="text"
               value={formUser.userName}
-              placeholder="First name"
+              placeholder="Username"
               onChange={handleChange}
               className="w-full rounded-md px-4 py-2 border mb-1 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
@@ -156,7 +161,6 @@ const Register = () => {
           {error && <p className="text-red-600 text-center">{error}</p>}
         </form>
       </section>
-
       <div
         id="login-by"
         className="flex container justify-center gap-10 lg:gap-0 lg:w-1/2 lg:mx-auto lg:justify-between lg:space-x-28 mb-10"

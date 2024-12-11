@@ -2,58 +2,88 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { header } from "framer-motion/client";
 
+// Context creation
 const DataContext = createContext();
 
+// Custom hook for easy access to the context
 export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState([]); // Initializing as an empty array
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartItemCount, setCartItemCount] = useState(0);
   const backendUrl = import.meta.env.VITE_USER_URL;
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token") || ""); // Initialize token from localStorage
 
+  // Fetch data from backend
   const fetchData = async () => {
     setLoading(true);
     try {
       const response = await axios.get(`${backendUrl}/products`);
       setProducts(response.data.products);
-
-      setLoading(false);
     } catch (error) {
       setError("Error fetching data: " + error.message);
+    } finally {
       setLoading(false);
     }
   };
 
+  // Update cart item count
   const updateCartItemCount = () => {
-    const totalQuantity = Object.values(cart).reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
-    setCartItemCount(totalQuantity);
+    if (Array.isArray(cart)) {
+      const totalQuantity = cart.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+      setCartItemCount(totalQuantity);
+    }
   };
 
-  useEffect(() => {
-    console.log("Log cart =>", cart);
-  }, [cart]);
+  // Calculate total price
+  const calculateTotal = () => {
+    if (Array.isArray(cart)) {
+      const total = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+      return { total, totalItems: cart.length };
+    }
+    return { total: 0, totalItems: 0 };
+  };
 
-  const addToCart = async (product) => {
+  // Add product to cart
+  const addToCart = async (product, quantity) => {
     const { _id } = product;
 
-    let cartData = { ...cart };
+    const token = localStorage.getItem("token");
 
-    if (cartData[_id]) {
-      cartData[_id].quantity += 1;
-    } else {
-      cartData[_id] = { quantity: 1 }; // assuming cart data includes size and quantity
+    // ตรวจสอบว่ามี token หรือไม่
+    if (!token) {
+      toast.error("Please log in to add products to the cart.");
+      return; // หยุดการทำงานหากไม่มี token
     }
-    setCart(product);
 
-    toast.success("Product added!", {
+    // อัปเดตข้อมูลตะกร้าใน state
+    setCart((prevCart) => {
+      const updatedCart = Array.isArray(prevCart) ? [...prevCart] : [];
+      const existingProductIndex = updatedCart.findIndex(
+        (item) => item._id === _id
+      );
+
+      if (existingProductIndex !== -1) {
+        updatedCart[existingProductIndex].quantity += quantity;
+      } else {
+        updatedCart.push({ ...product, quantity });
+      }
+
+      return updatedCart;
+    });
+
+    toast.success("Product added to cart!", {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: false,
@@ -65,70 +95,88 @@ export const DataProvider = ({ children }) => {
 
     updateCartItemCount();
 
+    console.log("Log ID => ", _id);
     try {
-      await axios.post(`${backendUrl}/cart/add`, {
-        userId: "67546911878a73f04524d23c",
-        _id,
-      });
+      // ส่งข้อมูลตะกร้าไปยัง backend
+      await axios.post(
+        `${backendUrl}/cart/add`,
+        {
+          itemId: _id,
+          quantity,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
     } catch (error) {
-      console.log(error);
-      toast.error(error.message);
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add product to cart. Please try again.");
     }
   };
 
+  // Update product quantity in cart
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
 
     setCart((prevCart) => {
-      const newCart = { ...prevCart };
-      if (newCart[id]) {
-        newCart[id].quantity = newQuantity;
+      const updatedCart = prevCart.map((item) =>
+        item._id === id ? { ...item, quantity: newQuantity } : item
+      );
+      return updatedCart;
+    });
+
+    updateCartItemCount();
+  };
+
+  const removeItem = async (id) => {
+    setLoading(true);
+    try {
+      // ส่งคำขอ DELETE ไปยัง backend เพื่อลบสินค้าจากฐานข้อมูล
+      const response = await axios.delete(
+        `${backendUrl}/cart/removeItem`,
+        {
+          params: { itemId: id },
+          headers: { Authorization: `Bearer ${token}` }
+        },
+      );
+
+      // ตรวจสอบว่า API ลบสำเร็จหรือไม่
+      if (response.data.success) {
+        // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
+        setCart(response.data.cartData); // อัปเดต cartData จาก API
+        updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
+        toast.success("Item removed from cart! ✅🎉 ");
+      } else {
+        console.error("Error Remove Item :", response.data.message);
+        toast.error(`Error Remove Item ${response.data.message} 🔥🔥`);
       }
-      return newCart;
-    });
-
-    updateCartItemCount();
+    } catch (error) {
+      console.error("Error removing item from cart", error);
+      toast.error("Error removing item from cart. Please try again.");
+    } finally {
+      setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
+    }
   };
 
-  const removeItem = (productId) => {
-    setCart((prevCart) => {
-      const newCart = { ...prevCart };
-      delete newCart[productId];
-      return newCart;
-    });
-
-    updateCartItemCount();
-  };
-
-  const calculateTotal = () => {
-    const totalItems = Object.values(cart).reduce(
-      (total, item) => total + item.quantity,
-      0
-    );
-    const total = Object.values(cart).reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-    return { total, totalItems };
-  };
-
+  // Format money
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
 
+  // Fetch data and update cart count on initial load
   useEffect(() => {
     fetchData();
-  }, []);
+  }, []); // Only run once on component mount
 
+  // Update cart item count when cart changes
   useEffect(() => {
     updateCartItemCount();
-  }, [cart]);
+  }, [cart]); // Recalculate total count when cart changes
 
+  // Token management in localStorage
   useEffect(() => {
-    if (!token && localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
+    if (token) {
+      localStorage.setItem("token", token);
     }
-  }, [token]);
+  }, [token]); // Only update localStorage when token changes
 
   return (
     <DataContext.Provider

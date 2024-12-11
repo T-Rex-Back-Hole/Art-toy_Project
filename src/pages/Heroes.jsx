@@ -35,18 +35,6 @@ const Hero = () => {
     return <p>{error}</p>;
   }
 
-  function addTocart(product) {
-    const quantity = quantities[product._id] || 1; // ใช้ค่า quantity ตาม id ของสินค้า
-    if (quantity > 0) {
-      const newItem = {
-        ...product,
-        quantity: quantity,
-      };
-      addToCart(newItem);
-      setQuantities({});
-    }
-  }
-
   // เพิ่มหรือลดปริมาณสินค้า
   const increQuantity = (id) => {
     setQuantities((prevQuantities) => ({
@@ -81,7 +69,7 @@ const Hero = () => {
   };
 
   const filteredAndSortedProducts = sortProducts(
-    heroData.filter(product => 
+    heroData.filter((product) =>
       product.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
   );
@@ -171,7 +159,7 @@ const Hero = () => {
               >
                 <button
                   className="addtocart-btn"
-                  onClick={() => addTocart(hero)}
+                  onClick={() => addToCart(hero, quantities[hero._id] || 1)}
                 >
                   ADD TO CART
                 </button>
