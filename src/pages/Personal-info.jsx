@@ -1,6 +1,24 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useData } from "../context/DataProvider";
 
 const PersonalInformation = () => {
+  const navigate = useNavigate();
+  const { token, setToken } = useData();
+
+  const handleLogout = () => {
+  try {
+    //ลบ token ออกจาก localstorage
+    localStorage.removeItem("token");
+    //ลบ token จาก context
+    setToken(null);
+    //redirect ไปหน้า login
+    navigate('/login')
+  } catch (error) {
+    console.log("Logout error", error);
+  }
+};
+
   return (
     <>
       <div className="font-bold text-5xl text-center my-12">Your account</div>
@@ -36,6 +54,12 @@ const PersonalInformation = () => {
             className="w-full rounded-full mt-1 font-bold bg-[#B47AEA] text-center text-white py-3 px-2 mb-1 lg:mt-3"
           >
             Change password
+          </button>
+          <button
+            onClick={handleLogout}
+            className="w-full rounded-full mt-1 font-bold bg-[#e24f45] text-center text-white py-3 px-2 mb-1 lg:mt-3"
+          >
+            Logout
           </button>
         </section>
         <section

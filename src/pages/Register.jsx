@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 const backendUrl = import.meta.env.VITE_USER_URL + "/client";
+
 const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordStrong, setIsPasswordStrong] = useState(true);
@@ -10,6 +11,7 @@ const Register = () => {
     userName: "",
     email: "",
     password: "",
+    role: " ",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
