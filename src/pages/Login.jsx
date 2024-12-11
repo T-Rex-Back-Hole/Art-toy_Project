@@ -44,7 +44,9 @@ const Login = () => {
 
       if (data.success) {
         setToken(data.token);
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.token); // เก็บ token ใน localStorage
+        navigate("/account"); // เปลี่ยนเส้นทางไปที่หน้า Home หรือหน้าที่คุณต้องการ
+
       } else {
         setErrorMessage(data.message); // แสดงข้อความ error หากล็อกอินไม่สำเร็จ
       }
@@ -60,7 +62,8 @@ const Login = () => {
   const handleLogout = () => {
     localStorage.removeItem("token"); // ลบ token ออกจาก localStorage
     setToken(null); // รีเซ็ต token ใน context
-    navigate("/"); // เปลี่ยนเส้นทางไปที่หน้า login
+    navigate("/login"); // เปลี่ยนเส้นทางไปที่หน้า login
+
   };
 
   return (
