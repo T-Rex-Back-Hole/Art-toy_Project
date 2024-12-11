@@ -11,6 +11,61 @@ const PersonalInformation = () => {
     userName: '',
     email: ''
   });
+  // เพิ่ม state สำหรับ modal change password
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+const [passwordError, setPasswordError] = useState('');
+
+// เพิ่มฟังก์ชันสำหรับ handle การเปลี่ยน password
+const handlePasswordChange = async (e) => {
+  e.preventDefault();
+
+  // ตรวจสอบรหัสผ่านใหม่ต้องตรงกัน
+  if (passwordData.newPassword !== passwordData.confirmPassword) {
+    setPasswordError('New passwords do not match');
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_USER_URL}/client/change-password`,
+      {
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    if (response.data.success) {
+      // รีเซ็ตฟอร์มและปิด modal
+      setShowPasswordModal(false);
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      });
+      setPasswordError('');
+      alert('Password changed successfully');
+    } else {
+      setPasswordError(response.data.message || 'Failed to change password');
+    }
+  } catch (error) {
+    console.error('Change password error:', error);
+    setPasswordError(error.response?.data?.message || 'An error occurred while changing password');
+  }
+};
+
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -57,7 +112,7 @@ const PersonalInformation = () => {
         >
           <i className="fa-solid fa-circle-user text-6xl lg:text-9xl text-gray-400"></i>
           <div id="name" className="font-bold text-center mt-2">
-            Pook Thatchai
+            {userData.userName}
           </div>
           <button
             id="info-box"
@@ -73,6 +128,7 @@ const PersonalInformation = () => {
           </button>
           <button
             id="passwordchange-box"
+            onClick={() => setShowPasswordModal(true)}
             className="w-full rounded-full mt-1 font-bold bg-[#B47AEA] text-center text-white py-3 px-2 mb-1 lg:mt-3"
           >
             Change password
@@ -180,6 +236,81 @@ const PersonalInformation = () => {
           </div>
         </div>
       </section>
+
+      {showPasswordModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg w-96">
+            <h2 className="text-2xl font-bold mb-4">Change Password</h2>
+            <form onSubmit={handlePasswordChange}>
+              <div className="mb-4">
+                <label className="block mb-2">Current Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.currentPassword}
+                  onChange={(e) => setPasswordData({
+                    ...passwordData,
+                    currentPassword: e.target.value
+                  })}
+                  className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block mb-2">New Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.newPassword}
+                  onChange={(e) => setPasswordData({
+                    ...passwordData,
+                    newPassword: e.target.value
+                  })}
+                  className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block mb-2">Confirm Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.confirmPassword}
+                  onChange={(e) => setPasswordData({
+                    ...passwordData,
+                    confirmPassword: e.target.value
+                  })}
+                  className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+              {passwordError && (
+                <p className="text-red-500 mb-4">{passwordError}</p>
+              )}
+              <div className="flex justify-end gap-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPasswordModal(false);
+                    setPasswordError('');
+                    setPasswordData({
+                      currentPassword: '',
+                      newPassword: '',
+                      confirmPassword: ''
+                    });
+                  }}
+                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-[#B47AEA] text-white hover:bg-purple-600 rounded-md transition duration-200"
+                >
+                  Change Password
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };
