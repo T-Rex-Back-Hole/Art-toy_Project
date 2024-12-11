@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import axios from "axios";
 
+const backendUrl = import.meta.env.VITE_USER_URL;
+
 const Register = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordStrong, setIsPasswordStrong] = useState(true);
@@ -10,6 +12,7 @@ const Register = () => {
     userName: "",
     email: "",
     password: "",
+   
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -99,10 +102,10 @@ const Register = () => {
           <label>
             Username:{" "}
             <input
-              name="firstName"
+              name="userName"
               type="text"
               value={formUser.userName}
-              placeholder="First name"
+              placeholder="username"
               onChange={handleChange}
               className="w-full rounded-md px-4 py-2 border mb-1 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
