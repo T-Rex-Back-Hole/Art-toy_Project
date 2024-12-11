@@ -11,7 +11,6 @@ const Register = () => {
     userName: "",
     email: "",
     password: "",
-    role: " ",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -51,34 +50,36 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Log formUser ก่อนส่งไปยัง Backend
     console.log("Form Data:", formUser);
 
-    if (formUser.userName && formUser.email && formUser.password) {
-      setLoading(true);
-      setError("");
+    if (!formUser.userName || !formUser.email || !formUser.password) {
+      setError("Please fill out all the fields.");
+      return;
+    }
 
-      try {
-        const response = await axios.post(`${backendUrl}/register`, formUser, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+    setLoading(true);
+    setError("");
 
-        if (response.status === 200) {
-          navigate("/contact");
-        } else {
-          setError(response.data.message || "Registration failed");
-        }
-      } catch (error) {
-        console.error("Error in handleSubmit:", error); // เพิ่มการ log ข้อผิดพลาด
-        setError("Something went wrong. Please try again later.");
-      } finally {
-        setLoading(false);
+    try {
+      const response = await axios.post(`${backendUrl}/register`, formUser, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 201) {
+        navigate("/login");
+      } else {
+        setError(response.data.message || "Registration failed");
       }
-    } else {
-      alert("Information is incomplete");
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+      setError(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again later."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
