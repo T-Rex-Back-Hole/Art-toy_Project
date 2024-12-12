@@ -5,8 +5,6 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { useData } from "../context/DataProvider";
 
-const backendUrl = import.meta.env.VITE_USER_URL + "/client";
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,31 +28,32 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      console.log("Attempting login with:", { email }); // log email ที่ใช้ login
+      console.log('Attempting login...');
 
       const response = await axios.post(
-        `${import.meta.env.VITE_USER_URL}/login`,
+        `${import.meta.env.VITE_API_URL}/client/login`,
         { email, password },
         {
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
           }
         }
       );
 
-      console.log("Login response:", response.data); // log response
+      console.log('Login response:', response.data);
 
       if (response.data.success) {
-        localStorage.setItem("token", response.data.token);
+        localStorage.setItem('token', response.data.token);
         setToken(response.data.token);
-        navigate("/personal");
+        navigate('/personal');
       } else {
-        setErrorMessage(response.data.message || "Login failed");
+        setErrorMessage(response.data.message);
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error('Login error:', error);
       setErrorMessage(
-        error.response?.data?.message || "An error occurred during login"
+        error.response?.data?.message || 
+        'An error occurred during login'
       );
     } finally {
       setIsLoading(false);
