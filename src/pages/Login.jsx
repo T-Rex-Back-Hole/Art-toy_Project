@@ -30,31 +30,34 @@ const Login = () => {
     setErrorMessage("");
 
     try {
+      console.log("Attempting login with:", { email }); // log email ที่ใช้ login
+
       const response = await axios.post(
-        `${backendUrl}/login`,
+        `${import.meta.env.VITE_USER_URL}/login`,
         { email, password },
         {
           headers: {
-            "Content-Type": "application/json", // กำหนดประเภทของข้อมูลที่ส่ง
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
 
-      const data = response.data;
+      console.log("Login response:", response.data); // log response
 
-      if (data.success) {
-        setToken(data.token);
-        localStorage.setItem("token", data.token); // เก็บ token ใน localStorage
-        navigate("/personal"); // เปลี่ยนเส้นทางไปที่หน้า Home หรือหน้าที่คุณต้องการ
-
+      if (response.data.success) {
+        localStorage.setItem("token", response.data.token);
+        setToken(response.data.token);
+        navigate("/personal");
       } else {
-        setErrorMessage(data.message); // แสดงข้อความ error หากล็อกอินไม่สำเร็จ
+        setErrorMessage(response.data.message || "Login failed");
       }
     } catch (error) {
-      console.error("Login Error:", error);
-      setErrorMessage("An error occurred during login.");
+      console.error("Login error:", error);
+      setErrorMessage(
+        error.response?.data?.message || "An error occurred during login"
+      );
     } finally {
-      setIsLoading(false); // ปิดการแสดง loading เมื่อเสร็จสิ้น
+      setIsLoading(false);
     }
   };
 

@@ -70,11 +70,20 @@ const handlePasswordChange = async (e) => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_USER_URL}/client/profile`, {
+        // ตรวจสอบว่ามี token หรือไม่
+        const token = localStorage.getItem('token');
+        if (!token) {
+          navigate('/login');
+          return;
+        }
+
+        const response = await axios.get(`${import.meta.env.VITE_USER_URL}/profile`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
+        
+        console.log('API Response:', response.data); // เพิ่ม log เพื่อดูข้อมูลที่ได้รับ
         
         if (response.data.success) {
           setUserData({
@@ -83,14 +92,17 @@ const handlePasswordChange = async (e) => {
           });
         }
       } catch (error) {
-        console.log("Error fetching user data:", error);
+        console.error("Error fetching user data:", error);
+        // ถ้า token หมดอายุหรือไม่ถูกต้อง ให้ redirect ไปหน้า login
+        if (error.response?.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/login');
+        }
       }
     };
 
-    if (token) {
-      fetchUserData();
-    }
-  }, [token]);
+    fetchUserData();
+  }, [token, navigate]);
 
   const handleLogout = () => {
     try {
@@ -149,7 +161,7 @@ const handlePasswordChange = async (e) => {
               id="user-left"
               className="w-1/3 flex justify-end items-center text-end lg:w-1/6"
             >
-              User
+              <span className="text-gray-700 font-semibold">User</span>
             </div>
             <div
               id="user-right"
@@ -175,7 +187,7 @@ const handlePasswordChange = async (e) => {
               id="email-left"
               className="w-1/3 flex justify-end items-center text-end lg:w-1/6"
             >
-              E-mail
+              <span className="text-gray-700 font-semibold">E-mail</span>
             </div>
             <div
               id="email-right"
