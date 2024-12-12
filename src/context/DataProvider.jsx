@@ -41,9 +41,9 @@ export const DataProvider = ({ children }) => {
       console.log(response.data);
       if (response.data.success) {
         const { cart } = response.data;
-        
+
         setCart(cart);
-        console.log("set cart =>>",cart);
+        console.log("set cart =>>", cart);
       }
     } catch (error) {
       console.error("Error getting items in cart:", error);
