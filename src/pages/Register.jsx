@@ -51,34 +51,49 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    if (!formUser.userName || !formUser.email || !formUser.password) {
+      setError("Please fill in all required fields");
+      return;
+    }
 
-    // Log formUser ก่อนส่งไปยัง Backend
-    console.log("Form Data:", formUser);
-
-    if (formUser.userName && formUser.email && formUser.password) {
+    try {
       setLoading(true);
       setError("");
 
-      try {
-        const response = await axios.post(`${backendUrl}/register`, formUser, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+      console.log("Sending registration data:", {
+        userName: formUser.userName,
+        email: formUser.email
+      });
 
-        if (response.status === 200) {
-          navigate("/contact");
-        } else {
-          setError(response.data.message || "Registration failed");
+      const response = await axios.post(
+        `${import.meta.env.VITE_USER_URL}/register`,
+        {
+          userName: formUser.userName,
+          email: formUser.email,
+          password: formUser.password
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
         }
-      } catch (error) {
-        console.error("Error in handleSubmit:", error); // เพิ่มการ log ข้อผิดพลาด
-        setError("Something went wrong. Please try again later.");
-      } finally {
-        setLoading(false);
+      );
+
+      console.log("Registration response:", response.data);
+
+      if (response.data.success) {
+        // ลงทะเบียนสำเร็จ
+        alert("Registration successful!");
+        navigate("/login");
+      } else {
+        setError(response.data.message);
       }
-    } else {
-      alert("Information is incomplete");
+    } catch (error) {
+      console.error("Registration error:", error);
+      setError(error.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
