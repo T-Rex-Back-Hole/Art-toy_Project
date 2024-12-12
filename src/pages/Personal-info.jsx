@@ -1,23 +1,106 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useData } from "../context/DataProvider";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const PersonalInformation = () => {
   const navigate = useNavigate();
   const { token, setToken } = useData();
+  const [userData, setUserData] = useState({
+    userName: '',
+    email: ''
+  });
+  // เพิ่ม state สำหรับ modal change password
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
+const [passwordError, setPasswordError] = useState('');
 
-  const handleLogout = () => {
+// เพิ่มฟังก์ชันสำหรับ handle การเปลี่ยน password
+const handlePasswordChange = async (e) => {
+  e.preventDefault();
+
+  // ตรวจสอบรหัสผ่านใหม่ต้องตรงกัน
+  if (passwordData.newPassword !== passwordData.confirmPassword) {
+    setPasswordError('New passwords do not match');
+    return;
+  }
+
   try {
-    //ลบ token ออกจาก localstorage
-    localStorage.removeItem("token");
-    //ลบ token จาก context
-    setToken(null);
-    //redirect ไปหน้า login
-    navigate('/login')
+    const response = await axios.post(
+      `${import.meta.env.VITE_USER_URL}/client/change-password`,
+      {
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    if (response.data.success) {
+      // รีเซ็ตฟอร์มและปิด modal
+      setShowPasswordModal(false);
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      });
+      setPasswordError('');
+      alert('Password changed successfully');
+    } else {
+      setPasswordError(response.data.message || 'Failed to change password');
+    }
   } catch (error) {
-    console.log("Logout error", error);
+    console.error('Change password error:', error);
+    setPasswordError(error.response?.data?.message || 'An error occurred while changing password');
   }
 };
+
+
+
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_USER_URL}/client/profile`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        
+        if (response.data.success) {
+          setUserData({
+            userName: response.data.userData.userName,
+            email: response.data.userData.email
+          });
+        }
+      } catch (error) {
+        console.log("Error fetching user data:", error);
+      }
+    };
+
+    if (token) {
+      fetchUserData();
+    }
+  }, [token]);
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem("token");
+      setToken(null);
+      navigate('/login')
+    } catch (error) {
+      console.log("Logout error", error);
+    }
+  };
 
   return (
     <>
@@ -25,17 +108,11 @@ const PersonalInformation = () => {
       <section id="personal-information" className="flex flex-row">
         <section
           id="left-container"
-          className="w-1/4 flex flex-col items-center p-2 bg-F7F7F7 lg:w-1/3"
+          className="w-1/4 ml-20 flex flex-col items-center p-2 bg-F7F7F7 lg:w-2/12"
         >
-          {/* <img
-            id="personal-pic"
-            src="./images/banner2.png"
-            alt=""
-            className="rounded-full h-20 w-20"
-          ></img> */}
-          <i class="fa-solid fa-circle-user text-6xl lg:text-9xl text-gray-400"></i>
+          <i className="fa-solid fa-circle-user text-6xl lg:text-9xl text-gray-400"></i>
           <div id="name" className="font-bold text-center mt-2">
-            Pook Thatchai
+            {userData.userName}
           </div>
           <button
             id="info-box"
@@ -51,6 +128,7 @@ const PersonalInformation = () => {
           </button>
           <button
             id="passwordchange-box"
+            onClick={() => setShowPasswordModal(true)}
             className="w-full rounded-full mt-1 font-bold bg-[#B47AEA] text-center text-white py-3 px-2 mb-1 lg:mt-3"
           >
             Change password
@@ -75,8 +153,10 @@ const PersonalInformation = () => {
             </div>
             <div
               id="user-right"
-              className="w-full rounded-full border border-gray-300  py-5 px-6 mr-10 lg:w-1/2"
-            ></div>
+              className="w-full rounded-full border border-gray-300 py-5 px-6 mr-10 lg:w-1/2"
+            >
+              {userData.userName}
+            </div>
           </div>
           <div id="name" className="flex flex-row gap-4">
             <div
@@ -87,7 +167,7 @@ const PersonalInformation = () => {
             </div>
             <div
               id="name-right"
-              className="w-full rounded-full border  border-gray-300  py-5 px-6 mr-10 lg:w-1/2"
+              className="w-full rounded-full border border-gray-300 py-5 px-6 mr-10 lg:w-1/2"
             ></div>
           </div>
           <div id="email" className="flex flex-row gap-4">
@@ -99,53 +179,16 @@ const PersonalInformation = () => {
             </div>
             <div
               id="email-right"
-              className="w-full rounded-full border border-gray-300  py-5 px-6 mr-10 lg:w-1/2"
-            ></div>
-          </div>
-          <div id="phone-nums" className="flex flex-row gap-4">
-            <div
-              id="phone-nums-left"
-              className="w-1/3 flex justify-end items-center text-end lg:w-1/6"
-            >
-              Phone number
-            </div>
-            <div
-              id="phone-nums-right"
               className="w-full rounded-full border border-gray-300 py-5 px-6 mr-10 lg:w-1/2"
-            ></div>
-          </div>
-          <div id="gender" className="flex flex-row gap-4">
-            <div
-              id="gender-left"
-              className="w-1/3 flex justify-end items-center text-end lg:w-1/6"
             >
-              Gender
+              {userData.email}
             </div>
-            <div
-              id="gender-right"
-              className="w-full rounded-full border border-gray-300  py-5 px-6 mr-10 lg:w-1/2"
-            ></div>
-          </div>
-          <div id="bod" className="flex flex-row gap-4">
-            <div
-              id="bod-left"
-              className="w-1/3 flex justify-end items-center text-end lg:w-1/6"
-            >
-              Birth of Date
-            </div>
-            <div
-              id="bod-right"
-              className="w-full rounded-full border border-gray-300 py-5 px-6 mr-10 lg:w-1/2"
-            ></div>
           </div>
         </section>
       </section>
 
       <section id="subscribe" className="bg-[#F7F7F7] p-8">
-        <div
-          id="container-text"
-          className="flex flex-col justify-center text-center"
-        >
+        <div id="container-text" className="flex flex-col justify-center text-center">
           <h3 className="text-[#FFA4D5] text-2xl font-semibold">Subscribe!</h3>
           <h1 className="text-[#B47AEA] font-bold text-4xl">News Letter</h1>
           <p className="text-[#B47AEA]">
@@ -153,10 +196,7 @@ const PersonalInformation = () => {
             deals from T-Rex!
           </p>
         </div>
-        <div
-          id="subscribe-email"
-          className="flex flex-col lg:flex-row lg:justify-center"
-        >
+        <div id="subscribe-email" className="flex flex-col lg:flex-row lg:justify-center">
           <input
             type="email"
             placeholder="E-mail"
@@ -165,7 +205,7 @@ const PersonalInformation = () => {
           <button
             type="submit"
             id="subscribe-btn"
-            className="h-10 mt-4 bg-[#B47AEA] rounded-full lg:h-12 lg:px-12 lg:py-2  lg:rounded-md text-white lg:hover:bg-purple-600 focus:outline-none font-semibold text-xl"
+            className="h-10 mt-4 bg-[#B47AEA] rounded-full lg:h-12 lg:px-12 lg:py-2 lg:rounded-md text-white lg:hover:bg-purple-600 focus:outline-none font-semibold text-xl"
           >
             Subscribe
           </button>
@@ -173,10 +213,7 @@ const PersonalInformation = () => {
       </section>
 
       <section id="icon-service">
-        <div
-          id="container-service"
-          className="p-2 grid grid-cols-2 lg:flex lg:flex-row lg:justify-evenly lg:p-10"
-        >
+        <div id="container-service" className="p-2 grid grid-cols-2 lg:flex lg:flex-row lg:justify-evenly lg:p-10">
           <div id="service-box1" className="text-center p-10">
             <i className="text-[#B47AEA] fa-solid fa-lock text-4xl"></i>
             <p>Payment</p>
@@ -199,6 +236,81 @@ const PersonalInformation = () => {
           </div>
         </div>
       </section>
+
+      {showPasswordModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg w-96">
+            <h2 className="text-2xl font-bold mb-4">Change Password</h2>
+            <form onSubmit={handlePasswordChange}>
+              <div className="mb-4">
+                <label className="block mb-2">Current Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.currentPassword}
+                  onChange={(e) => setPasswordData({
+                    ...passwordData,
+                    currentPassword: e.target.value
+                  })}
+                  className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block mb-2">New Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.newPassword}
+                  onChange={(e) => setPasswordData({
+                    ...passwordData,
+                    newPassword: e.target.value
+                  })}
+                  className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block mb-2">Confirm Password:</label>
+                <input
+                  type="password"
+                  value={passwordData.confirmPassword}
+                  onChange={(e) => setPasswordData({
+                    ...passwordData,
+                    confirmPassword: e.target.value
+                  })}
+                  className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  required
+                />
+              </div>
+              {passwordError && (
+                <p className="text-red-500 mb-4">{passwordError}</p>
+              )}
+              <div className="flex justify-end gap-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPasswordModal(false);
+                    setPasswordError('');
+                    setPasswordData({
+                      currentPassword: '',
+                      newPassword: '',
+                      confirmPassword: ''
+                    });
+                  }}
+                  className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md transition duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-[#B47AEA] text-white hover:bg-purple-600 rounded-md transition duration-200"
+                >
+                  Change Password
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   );
 };

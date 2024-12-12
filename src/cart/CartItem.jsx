@@ -7,6 +7,7 @@ const CartItem = ({
   updateQuantity,
   isChecked,
   onSelectItem,
+  productId,
 }) => {
   const { formatMoney } = useData();
 
@@ -22,7 +23,7 @@ const CartItem = ({
             onChange={onSelectItem}
           />
           <i
-            onClick={() => removeItem(item._id)} // ใช้ item._id แทน item.id
+            onClick={() => removeItem(productId)}
             className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
           ></i>
         </div>
@@ -63,24 +64,7 @@ const CartItem = ({
             </p>
           </div>
 
-          <div className="w-5/6 flex justify-between items-end align-bottom bg-gray-50 px-4 py-2 my-4 font-medium rounded-full lg:w-2/3">
-            <button
-              onClick={() => updateQuantity(item._id, item.quantity - 1)} // ลดจำนวนสินค้า
-              type="button"
-              className="text-xl px-1"
-              disabled={item.quantity <= 1} // ไม่ให้ลดเหลือน้อยกว่าหนึ่ง
-            >
-              -
-            </button>
-            <span className="px-2">{item.quantity}</span>
-            <button
-              onClick={() => updateQuantity(item._id, item.quantity + 1)} // เพิ่มจำนวนสินค้า
-              type="button"
-              className="text-xl px-1"
-            >
-              +
-            </button>
-          </div>
+    
         </div>
       </div>
     </div>
