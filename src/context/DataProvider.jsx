@@ -38,12 +38,10 @@ export const DataProvider = ({ children }) => {
       const response = await axios.get(`${backendUrl}/cart/get`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      console.log(response.data);
       if (response.data.success) {
         const { cart } = response.data;
-        
+
         setCart(cart);
-        console.log("set cart =>>",cart);
       }
     } catch (error) {
       console.error("Error getting items in cart:", error);
@@ -64,14 +62,15 @@ export const DataProvider = ({ children }) => {
 
   // Calculate total price
   const calculateTotal = () => {
-    if (Array.isArray(cart)) {
-      const total = cart.reduce(
+    if (cart && Object.keys(cart).length > 0) {
+      // Use Object.values to get an array of the cart items
+      const total = Object.values(cart).reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
       );
-      return { total, totalItems: cart.length };
+      return { total };
     }
-    return { total: 0, totalItems: 0 };
+    return { total: 0 };
   };
 
   // Add product to cart
