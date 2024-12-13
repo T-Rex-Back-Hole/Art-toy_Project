@@ -4,14 +4,17 @@ import CartItem from "../cart/CartItem";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeItem, updateQuantity, getItems, token, calculateTotal } =
+  const { cart, removeItem, removeAllItem, updateQuantity, getItems, token, calculateTotal } =
     useData(); // ดึง calculateTotal
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedItems(cart.map((item) => item._id));
+      // เมื่อ checkbox "Select All" ถูกเช็ค, เลือกรายการทั้งหมด
+      const selected = Object.keys(cart);  // เก็บ ID ของทุกๆ รายการใน cart
+      setSelectedItems(selected);  // อัปเดต selectedItems ให้เลือกทั้งหมด
     } else {
+      // เมื่อ checkbox "Select All" ถูกยกเลิก, รีเซ็ต selectedItems
       setSelectedItems([]);
     }
   };
@@ -42,17 +45,17 @@ const Cart = () => {
           </h2>
           <div className="space-y-2">
             <div className="flex justify-between items-center rounded-lg border py-2 px-4 border-gray-200 bg-white shadow-md">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   type="checkbox"
                   onChange={handleSelectAll}
                   className=""
                 />
-                <h1 className="font-semibold ml-4">Select All</h1>
-              </div>
+              </div> */}
+                <h1 className="font-semibold ml-2">Delete All</h1>
               <i
                 className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
-                onClick={() => selectedItems.forEach((id) => removeItem(id))}
+                onClick={removeAllItem}
               ></i>
             </div>
             {Object.values(cart).length > 0 ? (

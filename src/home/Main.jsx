@@ -3,7 +3,6 @@ import { useData } from "../context/DataProvider";
 import Question from "./Question";
 import Subscribe from "./Subscribe";
 import News from "./News";
-
 import brander1 from "../../images/brand1.png";
 import brander2 from "../../images/brand2.png";
 import brander3 from "../../images/brand3.png";
@@ -12,10 +11,8 @@ import brander5 from "../../images/brand5.png";
 import brander6 from "../../images/brand6.png";
 import Arrival from "./Arrival";
 import Category from "./Category";
-
 const Main = () => {
   const { products } = useData();
-
   return (
     <>
       <section id="refer">
@@ -25,7 +22,6 @@ const Main = () => {
         <div className="overflow-hidden relative">
           <div className="flex lg:space-x-5 animate-marquee-mobile lg:animate-marquee">
             {/* แสดงสินค้าทั้งหมดและทำสำเนาเพื่อให้เลื่อนไหลแบบไม่หยุด */}
-
             {products.map((product, index) => (
               <Link
                 key={index}
@@ -42,17 +38,12 @@ const Main = () => {
           </div>
         </div>
       </section>
-
       {/* Category ---------------------------------------------------------------------------------------------------------------*/}
       <Category />
-
       {/* Arrival ---------------------------------------------------------------------------------------------------------------*/}
       <Arrival />
-
       {/* News ---------------------------------------------------------------------------------------------------------------*/}
-
       <News />
-
       <section id="brand" className="my-6 lg:my-12">
         <div
           id="brand-logo"
@@ -66,14 +57,11 @@ const Main = () => {
           <img src={brander6} alt="brander6" className="" />
         </div>
       </section>
-
       {/* Q&A ---------------------------------------------------------------------------------------------------------------*/}
       <Question />
-
       {/* Subscribe --------------------------------------------------------------------------------------------------- */}
       <Subscribe />
     </>
   );
 };
-
 export default Main;
