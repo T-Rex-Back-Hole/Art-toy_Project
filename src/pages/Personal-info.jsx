@@ -86,7 +86,7 @@ const handlePasswordChange = async (e) => {
           }
         );
         
-        console.log('API Response:', response.data); // เพิ่ม log เพื่อดูข้อมูลที่ได้รับ
+        console.log('Profile Response:', response.data); // เพิ่ม log
         
         if (response.data.success) {
           setUserData({
@@ -105,7 +105,7 @@ const handlePasswordChange = async (e) => {
     };
 
     fetchUserData();
-  }, [token, navigate]);
+  }, [navigate]);
 
   const handleLogout = () => {
     try {
@@ -195,7 +195,7 @@ const handlePasswordChange = async (e) => {
       </section>
 
      
-      <section id="subscribe" className="bg-[#F7F7F7] p-8">
+      <section id="subscribe" className="bg-[#F7F7F7] p-8 mt-12">
         <div id="container-text" className="flex flex-col justify-center text-center">
           <h3 className="text-[#FFA4D5] text-2xl font-semibold">Subscribe!</h3>
           <h1 className="text-[#B47AEA] font-bold text-4xl">News Letter</h1>
