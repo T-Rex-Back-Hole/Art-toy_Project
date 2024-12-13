@@ -32,7 +32,7 @@ const handlePasswordChange = async (e) => {
 
   try {
     const response = await axios.post(
-      `${import.meta.env.VITE_USER_URL}/client/change-password`,
+      `${import.meta.env.VITE_API_URL}/client/change-password`,
       {
         currentPassword: passwordData.currentPassword,
         newPassword: passwordData.newPassword
@@ -60,7 +60,7 @@ const handlePasswordChange = async (e) => {
     }
   } catch (error) {
     console.error('Change password error:', error);
-    setPasswordError(error.response?.data?.message || 'An error occurred while changing password');
+    setPasswordError(error.response?.data?.message || 'Password not match');
   }
 };
 
@@ -77,11 +77,14 @@ const handlePasswordChange = async (e) => {
           return;
         }
 
-        const response = await axios.get(`${import.meta.env.VITE_USER_URL}/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/client/profile`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        });
+        );
         
         console.log('API Response:', response.data); // เพิ่ม log เพื่อดูข้อมูลที่ได้รับ
         
@@ -116,8 +119,7 @@ const handlePasswordChange = async (e) => {
 
   return (
     <>
-      <div className="font-bold text-5xl text-center my-12">Your account</div>
-      <section id="personal-information" className="flex flex-row">
+      <section id="personal-information" className="flex flex-row mt-12">
         <section
           id="left-container"
           className="w-1/4 ml-20 flex flex-col items-center p-2 bg-F7F7F7 lg:w-2/12"
@@ -152,16 +154,20 @@ const handlePasswordChange = async (e) => {
             Logout
           </button>
         </section>
+
+        
+
         <section
           id="right-container"
           className="w-full flex flex-col gap-4 ml-4 mt-4 mb-6"
         >
+          <div className="font-bold text-2xl text-center mb-20 lg:mr-80 lg:text-5xl ">Your account</div>
           <div id="user" className="flex flex-row gap-4">
             <div
               id="user-left"
               className="w-1/3 flex justify-end items-center text-end lg:w-1/6"
             >
-              <span className="text-gray-700 font-semibold">User</span>
+              <span className="text-gray-700 font-semibold">Username</span>
             </div>
             <div
               id="user-right"
@@ -170,18 +176,7 @@ const handlePasswordChange = async (e) => {
               {userData.userName}
             </div>
           </div>
-          <div id="name" className="flex flex-row gap-4">
-            <div
-              id="name-left"
-              className="w-1/3 flex justify-end items-center text-end lg:w-1/6"
-            >
-              Name
-            </div>
-            <div
-              id="name-right"
-              className="w-full rounded-full border border-gray-300 py-5 px-6 mr-10 lg:w-1/2"
-            ></div>
-          </div>
+         
           <div id="email" className="flex flex-row gap-4">
             <div
               id="email-left"
@@ -199,6 +194,7 @@ const handlePasswordChange = async (e) => {
         </section>
       </section>
 
+     
       <section id="subscribe" className="bg-[#F7F7F7] p-8">
         <div id="container-text" className="flex flex-col justify-center text-center">
           <h3 className="text-[#FFA4D5] text-2xl font-semibold">Subscribe!</h3>
