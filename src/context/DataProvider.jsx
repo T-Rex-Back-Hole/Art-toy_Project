@@ -51,12 +51,14 @@ export const DataProvider = ({ children }) => {
 
   // Update cart item count
   const updateCartItemCount = () => {
-    if (Array.isArray(cart)) {
-      const totalQuantity = cart.reduce(
+    if (cart && Object.keys(cart).length > 0) {
+      const totalQuantity = Object.values(cart).reduce(
         (total, item) => total + item.quantity,
         0
       );
       setCartItemCount(totalQuantity);
+    } else {
+      setCartItemCount(0);
     }
   };
 
@@ -74,6 +76,7 @@ export const DataProvider = ({ children }) => {
   };
 
   // Add product to cart
+  // Add product to cart
   const addToCart = async (product, quantity) => {
     const { _id } = product;
 
@@ -87,18 +90,15 @@ export const DataProvider = ({ children }) => {
 
     // อัปเดตข้อมูลตะกร้าใน state
     setCart((prevCart) => {
-      const updatedCart = Array.isArray(prevCart) ? [...prevCart] : [];
-      const existingProductIndex = updatedCart.findIndex(
-        (item) => item._id === _id
-      );
+      const updatedCart = { ...prevCart }; // Create a shallow copy of cart
 
-      if (existingProductIndex !== -1) {
-        updatedCart[existingProductIndex].quantity += quantity;
+      if (updatedCart[_id]) {
+        updatedCart[_id].quantity += quantity; // Update the quantity if the product already exists
       } else {
-        updatedCart.push({ ...product, quantity });
+        updatedCart[_id] = { ...product, quantity }; // Add the product to cart if it doesn't exist
       }
 
-      return updatedCart;
+      return updatedCart; // Return the updated cart object
     });
 
     toast.success("Product added to cart!", {
@@ -113,7 +113,6 @@ export const DataProvider = ({ children }) => {
 
     updateCartItemCount();
 
-    console.log("Log ID => ", _id);
     try {
       // ส่งข้อมูลตะกร้าไปยัง backend
       await axios.post(
@@ -135,10 +134,13 @@ export const DataProvider = ({ children }) => {
     if (newQuantity < 1) return;
 
     setCart((prevCart) => {
-      const updatedCart = prevCart.map((item) =>
-        item._id === id ? { ...item, quantity: newQuantity } : item
-      );
-      return updatedCart;
+      const updatedCart = { ...prevCart }; // Create a shallow copy of cart
+
+      if (updatedCart[id]) {
+        updatedCart[id].quantity = newQuantity; // Update the quantity of the specific product
+      }
+
+      return updatedCart; // Return the updated cart object
     });
 
     updateCartItemCount();
@@ -230,7 +232,7 @@ export const DataProvider = ({ children }) => {
         updateQuantity,
         removeItem,
         calculateTotal,
-        cartItemCount,
+        updateCartItemCount,
         formatMoney,
         setToken,
         token,
