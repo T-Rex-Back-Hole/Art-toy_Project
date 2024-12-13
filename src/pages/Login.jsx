@@ -31,7 +31,7 @@ const Login = () => {
       console.log('Attempting login...');
 
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/client/login`,
+        `${import.meta.env.VITE_USER_URL}/client/login`,
         { email, password },
         {
           headers: {

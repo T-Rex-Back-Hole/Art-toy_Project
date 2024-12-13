@@ -4,7 +4,6 @@ import { useData } from "../context/DataProvider";
 const CartItem = ({
   item,
   removeItem,
-  updateQuantity,
   isChecked,
   onSelectItem,
   productId,
