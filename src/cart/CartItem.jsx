@@ -15,13 +15,13 @@ const CartItem = ({
     <div className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-md p-4">
       {/* check-trash --------------------------------------------------------------------------- */}
       <div id="check-trash" className="flex flex-col items-stretch">
-        <div className="flex justify-between mb-2">
-          <input
+        <div className="flex justify-end mb-2">
+          {/* <input
             type="checkbox"
             className="mr-2 inline"
             checked={isChecked}
             onChange={onSelectItem}
-          />
+          /> */}
           <i
             onClick={() => removeItem(productId)}
             className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
