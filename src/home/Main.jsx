@@ -15,6 +15,7 @@ import Category from "./Category";
 
 const Main = () => {
   const { products } = useData();
+  console.log("Products: ", products);
 
   return (
     <>
