@@ -4,23 +4,26 @@ import { useData } from "../context/DataProvider";
 const CartItem = ({
   item,
   removeItem,
-  isChecked,
-  onSelectItem,
   productId,
+  updateQuantity,
 }) => {
   const { formatMoney } = useData();
+
+  const handleIncrease = () => {
+    updateQuantity(productId, item.quantity + 1); // Increment quantity
+  };
+
+  const handleDecrease = () => {
+    if (item.quantity > 1) {
+      updateQuantity(productId, item.quantity - 1); // Decrement quantity
+    }
+  };
 
   return (
     <div className="flex flex-col bg-white border border-gray-200 rounded-lg shadow-md p-4">
       {/* check-trash --------------------------------------------------------------------------- */}
       <div id="check-trash" className="flex flex-col items-stretch">
         <div className="flex justify-end mb-2">
-          {/* <input
-            type="checkbox"
-            className="mr-2 inline"
-            checked={isChecked}
-            onChange={onSelectItem}
-          /> */}
           <i
             onClick={() => removeItem(productId)}
             className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
@@ -63,7 +66,23 @@ const CartItem = ({
             </p>
           </div>
 
-    
+          {/* Quantity controls */}
+          <div className="flex items-center mt-4">
+            <button
+              onClick={handleDecrease}
+              className="bg-gray-200 px-3 py-1 rounded-md text-lg font-semibold"
+            >
+              -
+            </button>
+            <span className="mx-4">{item.quantity}</span>{" "}
+            {/* Display the quantity */}
+            <button
+              onClick={handleIncrease}
+              className="bg-gray-200 px-3 py-1 rounded-md text-lg font-semibold"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
     </div>
