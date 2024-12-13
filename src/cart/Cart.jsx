@@ -4,14 +4,17 @@ import CartItem from "../cart/CartItem";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeItem, updateQuantity, getItems, token, calculateTotal } =
+  const { cart, removeItem, removeAllItem, updateQuantity, getItems, token, calculateTotal } =
     useData(); // ดึง calculateTotal
   const [selectedItems, setSelectedItems] = useState([]);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedItems(cart.map((item) => item._id));
+      // เมื่อ checkbox "Select All" ถูกเช็ค, เลือกรายการทั้งหมด
+      const selected = Object.keys(cart);  // เก็บ ID ของทุกๆ รายการใน cart
+      setSelectedItems(selected);  // อัปเดต selectedItems ให้เลือกทั้งหมด
     } else {
+      // เมื่อ checkbox "Select All" ถูกยกเลิก, รีเซ็ต selectedItems
       setSelectedItems([]);
     }
   };
@@ -26,29 +29,12 @@ const Cart = () => {
 
   const isChecked = (id) => selectedItems.includes(id);
 
-  // useEffect(() => {
-  //   const fetchCartData = async () => {
-  //     if (token) {
-  //       try {
-  //         // Check if cart is not empty and getItems is properly called
-  //         if (cart && cart.length > 0) {
-  //           await Promise.all(cart.map((item) => getItems(item))); // Make sure 'item' is not undefined
-  //         }
-  //       } catch (error) {
-  //         console.error("Error fetching cart items:", error);
-  //       }
-  //     }
-  //   };
-
-  //   fetchCartData();
-  // }, [token, cart, getItems]);
-
   useEffect(() => {
     getItems();
   }, []);
-  console.log("cart ==>>", cart);
-  // คำนวณยอดรวมทั้งหมด
-  const { total, totalItems } = calculateTotal(); // ใช้ฟังก์ชัน calculateTotal ที่มีใน Context
+
+  // คำนวณยอดรวมทั้งหมดใน Cart.js
+  const { total } = calculateTotal(); // ดึงข้อมูลยอดรวมจาก calculateTotal
 
   return (
     <section className="mt-3 antialiased lg:flex lg:justify-center mx-auto ">
@@ -59,17 +45,17 @@ const Cart = () => {
           </h2>
           <div className="space-y-2">
             <div className="flex justify-between items-center rounded-lg border py-2 px-4 border-gray-200 bg-white shadow-md">
-              <div className="flex items-center">
+              {/* <div className="flex items-center">
                 <input
                   type="checkbox"
                   onChange={handleSelectAll}
                   className=""
                 />
-                <h1 className="font-semibold ml-4">Select All</h1>
-              </div>
+              </div> */}
+                <h1 className="font-semibold ml-2">Delete All</h1>
               <i
                 className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
-                onClick={() => selectedItems.forEach((id) => removeItem(id))}
+                onClick={removeAllItem}
               ></i>
             </div>
             {Object.values(cart).length > 0 ? (
@@ -103,7 +89,7 @@ const Cart = () => {
                   Subtotal
                 </dt>
                 <dd className="text-base font-medium text-gray-900">
-                  ฿{total ? total.toFixed(2) : "0.00"}
+                  ฿{total && total > 0 ? total.toFixed(2) : "0.00"}
                 </dd>
               </dl>
               <dl className="flex items-center justify-between gap-4">
@@ -116,7 +102,10 @@ const Cart = () => {
             <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
               <dt className="text-base font-bold text-gray-900">Total</dt>
               <dd className="text-base font-bold text-green-600">
-                ฿{(total + 0).toFixed(2)} {/* รวมยอดรวมกับค่าจัดส่ง */}
+                ฿
+                {total && !isNaN(total) && total > 0
+                  ? total.toFixed(2)
+                  : "0.00"}
               </dd>
             </dl>
           </div>

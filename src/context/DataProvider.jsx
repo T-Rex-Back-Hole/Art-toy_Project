@@ -15,7 +15,7 @@ export const DataProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartItemCount, setCartItemCount] = useState(0);
-  const backendUrl = import.meta.env.VITE_USER_URL;
+  const backendUrl = import.meta.env.VITE_API_URL;
   const [token, setToken] = useState(localStorage.getItem("token") || ""); // Initialize token from localStorage
 
   // Fetch data from backend
@@ -38,12 +38,10 @@ export const DataProvider = ({ children }) => {
       const response = await axios.get(`${backendUrl}/cart/get`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      console.log(response.data);
       if (response.data.success) {
         const { cart } = response.data;
 
         setCart(cart);
-        console.log("set cart =>>", cart);
       }
     } catch (error) {
       console.error("Error getting items in cart:", error);
@@ -64,14 +62,15 @@ export const DataProvider = ({ children }) => {
 
   // Calculate total price
   const calculateTotal = () => {
-    if (Array.isArray(cart)) {
-      const total = cart.reduce(
+    if (cart && Object.keys(cart).length > 0) {
+      // Use Object.values to get an array of the cart items
+      const total = Object.values(cart).reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
       );
-      return { total, totalItems: cart.length };
+      return { total };
     }
-    return { total: 0, totalItems: 0 };
+    return { total: 0 };
   };
 
   // Add product to cart
@@ -172,6 +171,32 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const removeAllItem = async (id) => {
+    setLoading(true);
+    try {
+      // ส่งคำขอ DELETE ไปยัง backend เพื่อลบสินค้าจากฐานข้อมูล
+      const response = await axios.delete(`${backendUrl}/cart/removeAllItem`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // ตรวจสอบว่า API ลบสำเร็จหรือไม่
+      if (response.data.success) {
+        // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
+        setCart(response.data.cart); // อัปเดต cartData จาก API
+        updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
+        toast.success("Item removed All from cart! ✅😎 ");
+      } else {
+        console.error("Error Remove All Item :", response.data.message);
+        toast.error(`Error Remove All Item ${response.data.message} 🔥🔥`);
+      }
+    } catch (error) {
+      console.error("Error removing All item from cart", error);
+      toast.error("Error removing All item from cart. Please try again.‼️");
+    } finally {
+      setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
+    }
+  };
+
   // Format money
   function formatMoney(money) {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -211,6 +236,7 @@ export const DataProvider = ({ children }) => {
         token,
         getItems,
         setCart,
+        removeAllItem,
       }}
     >
       {children}
