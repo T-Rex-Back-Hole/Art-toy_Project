@@ -26,29 +26,12 @@ const Cart = () => {
 
   const isChecked = (id) => selectedItems.includes(id);
 
-  // useEffect(() => {
-  //   const fetchCartData = async () => {
-  //     if (token) {
-  //       try {
-  //         // Check if cart is not empty and getItems is properly called
-  //         if (cart && cart.length > 0) {
-  //           await Promise.all(cart.map((item) => getItems(item))); // Make sure 'item' is not undefined
-  //         }
-  //       } catch (error) {
-  //         console.error("Error fetching cart items:", error);
-  //       }
-  //     }
-  //   };
-
-  //   fetchCartData();
-  // }, [token, cart, getItems]);
-
   useEffect(() => {
     getItems();
   }, []);
-  console.log("cart ==>>", cart);
-  // คำนวณยอดรวมทั้งหมด
-  const { total, totalItems } = calculateTotal(); // ใช้ฟังก์ชัน calculateTotal ที่มีใน Context
+
+  // คำนวณยอดรวมทั้งหมดใน Cart.js
+  const { total } = calculateTotal(); // ดึงข้อมูลยอดรวมจาก calculateTotal
 
   return (
     <section className="mt-3 antialiased lg:flex lg:justify-center mx-auto ">
@@ -103,7 +86,7 @@ const Cart = () => {
                   Subtotal
                 </dt>
                 <dd className="text-base font-medium text-gray-900">
-                  ฿{total ? total.toFixed(2) : "0.00"}
+                  ฿{total && total > 0 ? total.toFixed(2) : "0.00"}
                 </dd>
               </dl>
               <dl className="flex items-center justify-between gap-4">
@@ -116,7 +99,10 @@ const Cart = () => {
             <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
               <dt className="text-base font-bold text-gray-900">Total</dt>
               <dd className="text-base font-bold text-green-600">
-                ฿{(total + 0).toFixed(2)} {/* รวมยอดรวมกับค่าจัดส่ง */}
+                ฿
+                {total && !isNaN(total) && total > 0
+                  ? total.toFixed(2)
+                  : "0.00"}
               </dd>
             </dl>
           </div>
