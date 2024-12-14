@@ -1,204 +1,288 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useData } from "../context/DataProvider";
 import axios from "axios";
 
-const Checkout = () => {
-  const navigate = useNavigate();
-  const { cart, token } = useData();
+function Checkout() {
   const [formData, setFormData] = useState({
-    fullname: "",
-    phoneNumber: "",
-    province: "",
-    district: "",
-    subDistrict: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    street: "",
+    city: "",
+    state: "",
     zipcode: "",
-    notes: ""
+    country: "TH", // ประเทศที่เลือกเป็นประเทศไทย
+    phone: "",
+    notes: "", // เพิ่มช่องสำหรับโน้ต
   });
-  const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-      return;
-    }
-  }, [token, navigate]);
+  const [method, setMethod] = useState("stripe"); // กำหนดค่าเริ่มต้นเป็น stripe
+  const [isProcessing, setIsProcessing] = useState(false); // ใช้เพื่อแสดงสถานะกำลังประมวลผล
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const cartItems = [
+    {
+      productId: "product1",
+      quantity: 1,
+      name: "Product 1",
+      price: "100",
+      image: "image_url",
+      category: "Category 1",
+      materials: "Material 1",
+      product_type: "Type 1",
+      description: "Description 1",
+    },
+  ];
+
+  const totalAmount = cartItems.reduce(
+    (total, item) => total + parseFloat(item.price) * item.quantity,
+    0
+  );
+
+  const onChangeHandler = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setFormData((data) => ({ ...data, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    setIsProcessing(true);
 
     try {
-      // แปลงข้อมูลตะกร้าให้อยู่ในรูปแบบที่ต้องการ
-      const items = Object.entries(cart).map(([id, item]) => ({
-        id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        image: item.image
-      }));
+      if (
+        !formData.firstName ||
+        !formData.lastName ||
+        !formData.email ||
+        !formData.street ||
+        !formData.city ||
+        !formData.zipcode ||
+        !formData.country ||
+        !formData.phone
+      ) {
+        alert("Please fill out all fields.");
+        return;
+      }
 
-      // คำนวณยอดรวม
-      const totalAmount = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/order/stripe`,
-        {
-          items,
-          amount: totalAmount,
-          address: formData
+      const orderData = {
+        userId: localStorage.getItem("userId"),
+        cartItems: cartItems,
+        totalAmount: totalAmount,
+        addressInfo: {
+          addressId: "address_id",
+          address: formData.street,
+          city: formData.city,
+          zipcode: formData.zipcode,
+          phone: formData.phone,
+          notes: formData.notes,
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
-        }
-      );
+        orderStatus: "pending",
+        paymentMethod: method,
+        paymentStatus: false,
+        orderDate: new Date(),
+      };
 
-      if (response.data.success) {
-        window.location.href = response.data.session_url;
-      } else {
-        setError("Failed to create checkout session");
+      switch (method) {
+        case "stripe": {
+          const responseStripe = await axios.post(
+            "/api/order/stripe",
+            orderData,
+            {
+              headers: { token: localStorage.getItem("userToken") },
+            }
+          );
+
+          if (responseStripe.data.success) {
+            const { session_url } = responseStripe.data;
+            window.location.replace(session_url);
+          } else {
+            alert(responseStripe.data.message);
+          }
+          break;
+        }
+
+        default:
+          break;
       }
     } catch (error) {
-      console.error("Checkout error:", error);
-      setError(error.response?.data?.message || "An error occurred");
+      console.log(error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setIsProcessing(false);
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Checkout</h1>
-
-      {/* Order Summary */}
-      <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-        <div className="bg-gray-50 p-4 rounded">
-          {Object.entries(cart).map(([id, item]) => (
-            <div key={id} className="flex justify-between mb-2">
-              <div className="flex items-center">
-                <img src={item.image} alt={item.name} className="w-12 h-12 object-cover mr-4" />
-                <span>{item.name} x {item.quantity}</span>
-              </div>
-              <span>฿{item.price * item.quantity}</span>
-            </div>
-          ))}
-          <div className="border-t mt-4 pt-4">
-            <div className="flex justify-between font-bold">
-              <span>Total</span>
-              <span>฿{Object.values(cart).reduce((sum, item) => sum + (item.price * item.quantity), 0)}</span>
-            </div>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <form
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-5 sm:pt-14 min-h-[80vh] border-t"
+        onSubmit={onSubmitHandler}
+      >
+        {/* ------------- Delivery Information ---------------- */}
+        <div className="flex flex-col gap-6 w-full">
+          <div className="text-xl sm:text-2xl my-3 font-semibold text-gray-800">
+            Delivery Information
           </div>
-        </div>
-      </div>
 
-      {/* Shipping Form */}
-      <form onSubmit={handleSubmit} className="max-w-lg">
-        <h2 className="text-xl font-semibold mb-4">Shipping Information</h2>
-        
-        {error && (
-          <div className="bg-red-100 text-red-700 p-3 rounded mb-4">
-            {error}
-          </div>
-        )}
-
-        <div className="space-y-4">
-          <div>
-            <label className="block mb-1">Full Name</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <input
-              type="text"
-              name="fullname"
-              value={formData.fullname}
-              onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              name="firstName"
+              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+              type="text"
+              placeholder="First name"
+              value={formData.firstName}
+              onChange={onChangeHandler}
+            />
+            <input
+              required
+              name="lastName"
+              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+              type="text"
+              placeholder="Last name"
+              value={formData.lastName}
+              onChange={onChangeHandler}
             />
           </div>
 
-          <div>
-            <label className="block mb-1">Phone Number</label>
+          <input
+            required
+            name="email"
+            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+            type="email"
+            placeholder="Email address"
+            value={formData.email}
+            onChange={onChangeHandler}
+          />
+          <input
+            required
+            name="street"
+            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+            type="text"
+            placeholder="Street"
+            value={formData.street}
+            onChange={onChangeHandler}
+          />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <input
-              type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
+              name="city"
+              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+              type="text"
+              placeholder="City"
+              value={formData.city}
+              onChange={onChangeHandler}
+            />
+            <input
+              name="state"
+              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+              type="text"
+              placeholder="State"
+              value={formData.state}
+              onChange={onChangeHandler}
             />
           </div>
 
-          <div>
-            <label className="block mb-1">Province</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <input
-              type="text"
-              name="province"
-              value={formData.province}
-              onChange={handleChange}
               required
-              className="w-full p-2 border rounded"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1">District</label>
-            <input
-              type="text"
-              name="district"
-              value={formData.district}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1">Sub District</label>
-            <input
-              type="text"
-              name="subDistrict"
-              value={formData.subDistrict}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border rounded"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1">Zipcode</label>
-            <input
-              type="text"
               name="zipcode"
+              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+              type="number"
+              placeholder="Zipcode"
               value={formData.zipcode}
-              onChange={handleChange}
+              onChange={onChangeHandler}
+            />
+            <select
               required
-              className="w-full p-2 border rounded"
-            />
+              name="country"
+              className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+              value={formData.country}
+              onChange={onChangeHandler}
+              disabled
+            >
+              <option value="TH">Thailand</option>
+            </select>
           </div>
 
-          <div>
-            <label className="block mb-1">Notes (Optional)</label>
-            <textarea
-              name="notes"
-              value={formData.notes}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              rows="3"
-            />
+          <input
+            required
+            name="phone"
+            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+            type="number"
+            placeholder="Phone"
+            value={formData.phone}
+            onChange={onChangeHandler}
+          />
+          <textarea
+            name="notes"
+            className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
+            placeholder="Additional notes"
+            value={formData.notes}
+            onChange={onChangeHandler}
+          />
+        </div>
+
+        {/* ------------- Order Summary and Payment Method (ใน div เดียวกัน) ---------------- */}
+        <div className="space-y-6 w-full lg:w-96">
+          {/* Order Summary */}
+          <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-md sm:p-6">
+            <p className="text-xl font-semibold text-gray-900">Order summary</p>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <dl className="flex items-center justify-between gap-4">
+                  <dt className="text-base font-normal text-gray-500">
+                    Subtotal
+                  </dt>
+                  <dd className="text-base font-medium text-gray-900">
+                    ฿{totalAmount.toFixed(2)}
+                  </dd>
+                </dl>
+                <dl className="flex items-center justify-between gap-4">
+                  <dt className="text-base font-normal text-gray-500">
+                    Shipping Fee
+                  </dt>
+                  <dd className="text-base font-medium text-gray-900">฿ 0</dd>
+                </dl>
+              </div>
+              <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
+                <dt className="text-base font-bold text-gray-900">Total</dt>
+                <dd className="text-base font-bold text-green-600">
+                  ฿{totalAmount.toFixed(2)}
+                </dd>
+              </dl>
+            </div>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-[#B47AEA] text-white py-3 px-4 rounded hover:bg-purple-600"
-          >
-            Proceed to Payment
-          </button>
+          {/* Payment Method */}
+          <div className="flex flex-col gap-6 w-full mt-8">
+            <div className="text-xl sm:text-2xl my-3 font-semibold text-gray-800">
+              Payment Method
+            </div>
+
+            <div className="flex gap-6 flex-col sm:flex-row">
+              <div
+                className={`flex items-center gap-3 border p-4 rounded-lg cursor-pointer ${
+                  method === "stripe" ? "border-green-500" : "border-gray-300"
+                }`}
+                onClick={() => setMethod("stripe")}
+              >
+                <p className="text-gray-500 text-sm font-medium">Stripe</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Place Order Button */}
+          <div className="w-full">
+            <button
+              type="submit"
+              className="bg-black text-white px-16 py-3 text-sm rounded-md disabled:opacity-50"
+              disabled={isProcessing}
+            >
+              {isProcessing ? "Processing..." : "Place Order"}
+            </button>
+          </div>
         </div>
       </form>
     </div>

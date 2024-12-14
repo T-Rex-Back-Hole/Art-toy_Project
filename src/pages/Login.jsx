@@ -9,7 +9,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); // state สำหรับข้อความ error
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { token, setToken } = useData();
 
@@ -28,44 +28,35 @@ const Login = () => {
     setErrorMessage("");
 
     try {
-      console.log('Attempting login...');
+      console.log("Attempting login...");
 
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/client/login`,
         { email, password },
         {
           headers: {
-            'Content-Type': 'application/json'
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
 
-      console.log('Login response:', response.data);
+      console.log("Login response:", response.data);
 
       if (response.data.success) {
-        localStorage.setItem('token', response.data.token);
+        localStorage.setItem("token", response.data.token);
         setToken(response.data.token);
-        navigate('/personal');
+        navigate("/personal");
       } else {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       setErrorMessage(
-        error.response?.data?.message || 
-        'An error occurred during login'
+        error.response?.data?.message || "An error occurred during login"
       );
     } finally {
       setIsLoading(false);
     }
-  };
-
-  // ฟังก์ชันสำหรับการล็อกเอาท์
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // ลบ token ออกจาก localStorage
-    setToken(null); // รีเซ็ต token ใน context
-    navigate("/login"); // เปลี่ยนเส้นทางไปที่หน้า login
-
   };
 
   return (
