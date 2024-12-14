@@ -60,6 +60,7 @@ const Register = () => {
     setLoading(true);
     setError("");
 
+    try {
       console.log('Sending data:', {
         userName: formUser.userName,
         email: formUser.email
