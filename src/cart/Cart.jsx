@@ -34,6 +34,7 @@ const Cart = () => {
         setIsProcessing(true);
         if (success === 'true') {
           await removeAllItem();
+          await getItems();
           navigate('/cart', { replace: true });
         } else if (success === 'false') {
           navigate('/cart', { replace: true });
@@ -46,7 +47,7 @@ const Cart = () => {
     };
 
     handlePaymentResult();
-  }, [success, removeAllItem, navigate, isProcessing]);
+  }, [success, removeAllItem, navigate, isProcessing, getItems]);
 
   // ฟังก์ชันเลือกสินค้าทั้งหมด
   const handleSelectAll = (e) => {
@@ -164,7 +165,7 @@ const Cart = () => {
         </div>
       </div>
 
-      {/* Modal สำหรับการยืนยันการลบทั้งหมด */}
+      {/* Modal สำหรับการยืนยันการลบทั้งห���ด */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg w-4/5 md:w-1/3 shadow-xl">
