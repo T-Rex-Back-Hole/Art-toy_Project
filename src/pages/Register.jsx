@@ -11,7 +11,6 @@ const Register = () => {
     userName: "",
     email: "",
     password: "",
-    role: " ",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -51,15 +50,15 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+    console.log("Form Data:", formUser);
+
     if (!formUser.userName || !formUser.email || !formUser.password) {
-      setError("Please fill in all required fields");
+      setError("Please fill out all the fields.");
       return;
     }
 
-    try {
-      setLoading(true);
-      setError("");
+    setLoading(true);
+    setError("");
 
       console.log('Sending data:', {
         userName: formUser.userName,
