@@ -9,6 +9,7 @@ const CartItem = ({
 }) => {
   const { formatMoney } = useData();
 
+
   const handleIncrease = () => {
     updateQuantity(productId, item.quantity + 1); // Increment quantity
   };
@@ -74,7 +75,7 @@ const CartItem = ({
             >
               -
             </button>
-            <span className="mx-4">{item.quantity}</span>{" "}
+            <span className="mx-4">{item.quantity}</span>
             {/* Display the quantity */}
             <button
               onClick={handleIncrease}
