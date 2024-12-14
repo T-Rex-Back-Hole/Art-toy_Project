@@ -60,23 +60,55 @@ const Register = () => {
     setLoading(true);
     setError("");
 
-    try {
-      const response = await axios.post(`${backendUrl}/register`, formUser, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      console.log('Sending data:', {
+        userName: formUser.userName,
+        email: formUser.email
       });
 
-      if (response.status === 201) {
-        navigate("/login");
+      const registerResponse = await axios.post(
+        `${import.meta.env.VITE_API_URL}/client/register`,
+        formUser,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      console.log('Register response:', registerResponse.data);
+
+      if (registerResponse.data.success) {
+        const loginResponse = await axios.post(
+          `${import.meta.env.VITE_API_URL}/client/login`,
+          {
+            email: formUser.email,
+            password: formUser.password
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+        console.log('Login response:', loginResponse.data);
+
+        if (loginResponse.data.success) {
+          localStorage.setItem('token', loginResponse.data.token);
+          alert("Registration and login successful!");
+          navigate('/personal');
+        } else {
+          throw new Error(loginResponse.data.message || 'Auto login failed');
+        }
       } else {
-        setError(response.data.message || "Registration failed");
+        throw new Error(registerResponse.data.message || 'Registration failed');
       }
     } catch (error) {
-      console.error("Error in handleSubmit:", error);
+      console.error("Error details:", error);
       setError(
-        error.response?.data?.message ||
-          "Something went wrong. Please try again later."
+        error.response?.data?.message || 
+        error.message || 
+        "An error occurred during registration"
       );
     } finally {
       setLoading(false);
