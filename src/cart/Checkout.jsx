@@ -16,12 +16,11 @@ function Checkout() {
     notes: "", // เพิ่มช่องสำหรับโน้ต
   });
 
-  const [method, setMethod] = useState("cod"); // สามารถเลือกได้ระหว่าง stripe หรือ cod (Cash on Delivery)
+  const [method, setMethod] = useState("stripe"); // กำหนดค่าเริ่มต้นเป็น stripe
   const [isProcessing, setIsProcessing] = useState(false); // ใช้เพื่อแสดงสถานะกำลังประมวลผล
   const navigate = useNavigate();
 
   const cartItems = [
-    // สมมติว่าเราเก็บ cartItems ไว้ในตัวแปรนี้
     {
       productId: "product1",
       quantity: 1,
@@ -33,13 +32,12 @@ function Checkout() {
       product_type: "Type 1",
       description: "Description 1",
     },
-    // สามารถเพิ่มสินค้าตามที่ต้องการ
   ];
 
   const totalAmount = cartItems.reduce(
     (total, item) => total + parseFloat(item.price) * item.quantity,
     0
-  ); // คำนวณยอดรวม
+  );
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -52,7 +50,6 @@ function Checkout() {
     setIsProcessing(true);
 
     try {
-      // ตรวจสอบข้อมูลที่อยู่และกรอกให้ครบถ้วน
       if (
         !formData.firstName ||
         !formData.lastName ||
@@ -68,38 +65,24 @@ function Checkout() {
       }
 
       const orderData = {
-        userId: localStorage.getItem("userId"), // สมมติว่าเรามี userId ใน localStorage
-        cartItems: cartItems, // ส่งข้อมูล cartItems
-        totalAmount: totalAmount, // ยอดรวมที่คำนวณได้
+        userId: localStorage.getItem("userId"),
+        cartItems: cartItems,
+        totalAmount: totalAmount,
         addressInfo: {
-          addressId: "address_id", // ใช้ addressId จริงๆ ถ้ามี
+          addressId: "address_id",
           address: formData.street,
           city: formData.city,
           zipcode: formData.zipcode,
           phone: formData.phone,
           notes: formData.notes,
         },
-        orderStatus: "pending", // สถานะของคำสั่งซื้อ
-        paymentMethod: method, // วิธีการชำระเงิน (COD หรือ Stripe)
-        paymentStatus: false, // สถานะการชำระเงินยังไม่เสร็จ
-        orderDate: new Date(), // วันเวลาในการสั่งซื้อ
+        orderStatus: "pending",
+        paymentMethod: method,
+        paymentStatus: false,
+        orderDate: new Date(),
       };
 
       switch (method) {
-        case "cod": {
-          const response = await axios.post("/api/order/place", orderData, {
-            headers: { token: localStorage.getItem("userToken") },
-          });
-
-          if (response.data.success) {
-            alert("Order placed successfully");
-            navigate("/orders");
-          } else {
-            alert(response.data.message);
-          }
-          break;
-        }
-
         case "stripe": {
           const responseStripe = await axios.post(
             "/api/order/stripe",
@@ -132,7 +115,7 @@ function Checkout() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <form
-        className="grid grid-cols-1 gap-8 pt-5 sm:pt-14 min-h-[80vh] border-t"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-5 sm:pt-14 min-h-[80vh] border-t"
         onSubmit={onSubmitHandler}
       >
         {/* ------------- Delivery Information ---------------- */}
@@ -211,7 +194,6 @@ function Checkout() {
               value={formData.zipcode}
               onChange={onChangeHandler}
             />
-            {/* ------------- Country Select Dropdown ---------------- */}
             <select
               required
               name="country"
@@ -242,36 +224,57 @@ function Checkout() {
           />
         </div>
 
-        {/* ------------- Payment Method ---------------- */}
-        <div className="flex flex-col gap-6 w-full mt-8">
-          <div className="text-xl sm:text-2xl my-3 font-semibold text-gray-800">
-            Payment Method
+        {/* ------------- Order Summary and Payment Method (ใน div เดียวกัน) ---------------- */}
+        <div className="space-y-6 w-full lg:w-96">
+          {/* Order Summary */}
+          <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-md sm:p-6">
+            <p className="text-xl font-semibold text-gray-900">Order summary</p>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <dl className="flex items-center justify-between gap-4">
+                  <dt className="text-base font-normal text-gray-500">
+                    Subtotal
+                  </dt>
+                  <dd className="text-base font-medium text-gray-900">
+                    ฿{totalAmount.toFixed(2)}
+                  </dd>
+                </dl>
+                <dl className="flex items-center justify-between gap-4">
+                  <dt className="text-base font-normal text-gray-500">
+                    Shipping Fee
+                  </dt>
+                  <dd className="text-base font-medium text-gray-900">฿ 0</dd>
+                </dl>
+              </div>
+              <dl className="flex items-center justify-between gap-4 border-t border-gray-200 pt-2">
+                <dt className="text-base font-bold text-gray-900">Total</dt>
+                <dd className="text-base font-bold text-green-600">
+                  ฿{totalAmount.toFixed(2)}
+                </dd>
+              </dl>
+            </div>
           </div>
 
-          <div className="flex gap-6 flex-col sm:flex-row">
-            <div
-              className={`flex items-center gap-3 border p-4 rounded-lg cursor-pointer ${
-                method === "stripe" ? "border-green-500" : "border-gray-300"
-              }`}
-              onClick={() => setMethod("stripe")}
-            >
-              <p className="text-gray-500 text-sm font-medium">Stripe</p>
+          {/* Payment Method */}
+          <div className="flex flex-col gap-6 w-full mt-8">
+            <div className="text-xl sm:text-2xl my-3 font-semibold text-gray-800">
+              Payment Method
             </div>
 
-            <div
-              className={`flex items-center gap-3 border p-4 rounded-lg cursor-pointer ${
-                method === "cod" ? "border-green-500" : "border-gray-300"
-              }`}
-              onClick={() => setMethod("cod")}
-            >
-              <p className="text-gray-500 text-sm font-medium">
-                Cash on Delivery
-              </p>
+            <div className="flex gap-6 flex-col sm:flex-row">
+              <div
+                className={`flex items-center gap-3 border p-4 rounded-lg cursor-pointer ${
+                  method === "stripe" ? "border-green-500" : "border-gray-300"
+                }`}
+                onClick={() => setMethod("stripe")}
+              >
+                <p className="text-gray-500 text-sm font-medium">Stripe</p>
+              </div>
             </div>
           </div>
 
-          {/* Moved Place Order button here */}
-          <div className="w-full text-end mt-8">
+          {/* Place Order Button */}
+          <div className="w-full">
             <button
               type="submit"
               className="bg-black text-white px-16 py-3 text-sm rounded-md disabled:opacity-50"
