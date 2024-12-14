@@ -4,7 +4,8 @@ import { useData } from "../context/DataProvider";
 
 const DetailModel = () => {
   const { id } = useParams();
-  const { products, loading, error, addToCart } = useData();
+
+  const { products, loading, error, addToCart, getSingleItem } = useData();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -20,14 +21,12 @@ const DetailModel = () => {
     findProduct();
   }, [id, products, loading]);
 
-  
   const handleAddToCart = () => {
     if (product) {
-      console.log("Log product =>>",product)
+      console.log("Log product =>>", product);
       addToCart({ ...product, quantity });
     }
   };
-
 
   const formatMoney = (money) => {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
@@ -62,7 +61,7 @@ const DetailModel = () => {
           <img
             src={product.image}
             alt={product.name}
-            className="h-1/2 w-auto lg:w-5/6"
+            className="h-[600px] w-full "
           />
         </div>
 
@@ -72,22 +71,22 @@ const DetailModel = () => {
           className="flex flex-col justify-center h-full lg:w-1/2 p-4 lg:p-10 lg:shadow-lg lg:rounded-md"
         >
           <div className="m-auto">
-            <h1 className="text-2xl font-bold lg:text-3xl">{product.name}</h1>
-            <h2 className="text-lg font-semibold text-[#5BDEE7] lg:text-2xl my-2">
-              Price: {formatMoney(product.price)} ฿
-            </h2>
-            <span className="text-base text-gray-400">
-              <strong>Description : </strong>
-              {product.description}
-            </span>
-          </div>
+            <h1 className="text-2xl font-bold mb-2 lg:text-3xl">{product.name}</h1>
 
-          {/* Availability */}
-          <div className="flex justify-between items-center">
-            <h1 className="text-green-500 text-lg font-semibold my-4">
-              In Stock
-            </h1>
-           
+            <span className="text-base text-gray-400">
+              Description :{product.description}
+            </span>
+
+            {/* Availability */}
+            <div className="flex items-center">
+              <h2 className="text-2xl font-semibold text-[#B47AEA] lg:text-2xl my-2">
+                {formatMoney(product.price)} ฿
+              </h2>
+              <h1 className="text-green-500 text-lg font-semibold my-4 ml-4">
+                In Stock
+              </h1>
+            </div>
+         
           </div>
 
           {/* Action Buttons */}
@@ -99,7 +98,6 @@ const DetailModel = () => {
               ADD TO CART
             </button>
           </div>
-
         </div>
       </div>
     </section>

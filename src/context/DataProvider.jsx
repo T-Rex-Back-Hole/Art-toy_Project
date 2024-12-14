@@ -220,6 +220,7 @@ export const DataProvider = ({ children }) => {
       localStorage.setItem("token", token);
     }
   }, [token]); // Only update localStorage when token changes
+
   return (
     <DataContext.Provider
       value={{
