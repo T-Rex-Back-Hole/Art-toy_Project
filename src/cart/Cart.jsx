@@ -34,7 +34,6 @@ const Cart = () => {
         setIsProcessing(true);
         if (success === 'true') {
           await removeAllItem();
-          await getItems();
           navigate('/cart', { replace: true });
         } else if (success === 'false') {
           navigate('/cart', { replace: true });
@@ -47,7 +46,7 @@ const Cart = () => {
     };
 
     handlePaymentResult();
-  }, [success, removeAllItem, navigate, isProcessing, getItems]);
+  }, [success, removeAllItem, navigate, isProcessing]);
 
   // ฟังก์ชันเลือกสินค้าทั้งหมด
   const handleSelectAll = (e) => {
@@ -70,7 +69,7 @@ const Cart = () => {
     );
   };
 
-  // เช็คว่าไอเทมถูกเลือกหรือไม่
+  // เช็คว่าไอเ���มถูกเลือกหรือไม่
   const isChecked = (id) => selectedItems.includes(id);
 
   // คำนวณยอดรวมทุกครั้งที่ cart เปลี่ยนแปลง
@@ -165,7 +164,7 @@ const Cart = () => {
         </div>
       </div>
 
-      {/* Modal สำหรับการยืนยันการลบทั้งห���ด */}
+      {/* Modal สำหรับการยืนยันการลบทั้งหมด */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg w-4/5 md:w-1/3 shadow-xl">
