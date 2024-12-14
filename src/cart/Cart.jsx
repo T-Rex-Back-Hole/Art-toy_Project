@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useData } from "../context/DataProvider";
 import CartItem from "../cart/CartItem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 const Cart = () => {
   const {
@@ -12,9 +12,41 @@ const Cart = () => {
     getItems,
     token,
     calculateTotal,
-  } = useData(); // ดึง calculateTotal
+  } = useData();
   const [selectedItems, setSelectedItems] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // สถานะการเปิด/ปิด modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const success = searchParams.get('success');
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // ดึงข้อมูลตะกร้าครั้งแรก
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  // จัดการผลลัพธ์การชำระเงิน
+  useEffect(() => {
+    const handlePaymentResult = async () => {
+      if (isProcessing || !success) return;
+
+      try {
+        setIsProcessing(true);
+        if (success === 'true') {
+          await removeAllItem();
+          navigate('/cart', { replace: true });
+        } else if (success === 'false') {
+          navigate('/cart', { replace: true });
+        }
+      } catch (error) {
+        console.error('Error handling payment result:', error);
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+
+    handlePaymentResult();
+  }, [success, removeAllItem, navigate, isProcessing]);
 
   // ฟังก์ชันเลือกสินค้าทั้งหมด
   const handleSelectAll = (e) => {
@@ -37,7 +69,7 @@ const Cart = () => {
     );
   };
 
-  // เช็คว่าไอเทมถูกเลือกหรือไม่
+  // เช็คว่าไอเ���มถูกเลือกหรือไม่
   const isChecked = (id) => selectedItems.includes(id);
 
   // คำนวณยอดรวมทุกครั้งที่ cart เปลี่ยนแปลง
@@ -45,12 +77,7 @@ const Cart = () => {
     calculateTotal();
   }, [cart]);
 
-  // ดึงข้อมูลตะกร้าจาก backend
-  useEffect(() => {
-    getItems();
-  }, []);
-
-  // คำนวณยอดรวม
+  // ดำนวณยอดรวม
   const { total } = calculateTotal(); // ดึงข้อมูลยอดรวมจาก calculateTotal
 
   return (
