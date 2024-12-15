@@ -10,8 +10,8 @@ const Cart = () => {
     removeAllItem,
     updateQuantity,
     getItems,
-    token,
     calculateTotal,
+    formatMoney,
   } = useData();
   const [selectedItems, setSelectedItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -132,7 +132,7 @@ const Cart = () => {
                   Subtotal
                 </dt>
                 <dd className="text-base font-medium text-gray-900">
-                  ฿{total && total > 0 ? total.toFixed(2) : "0.00"}
+                  ฿{total && total > 0 ? formatMoney(total.toFixed(2)) : "0.00"}
                 </dd>
               </dl>
               <dl className="flex items-center justify-between gap-4">
@@ -147,7 +147,7 @@ const Cart = () => {
               <dd className="text-base font-bold text-green-600">
                 ฿
                 {total && !isNaN(total) && total > 0
-                  ? total.toFixed(2)
+                  ? formatMoney(total.toFixed(2))
                   : "0.00"}
               </dd>
             </dl>

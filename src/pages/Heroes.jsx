@@ -126,7 +126,7 @@ const Hero = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentProducts.length > 0 ? (
           currentProducts.map((hero) => (
-            <div key={hero._id} className="border p-6 rounded-lg shadow-md">
+            <div key={hero._id} className="flex flex-col justify-end border p-6 rounded-lg shadow-md">
               <Link
                 to={`/detail/${hero._id}`}
                 className="text-blue-500 flex justify-center items-center"

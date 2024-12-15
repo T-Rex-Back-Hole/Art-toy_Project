@@ -36,7 +36,7 @@ const CartItem = ({
       <div id="content-box" className="flex lg:justify-evenly">
         <div id="img" className="w-1/2 mx-2 lg:w-1/3">
           <Link
-            to={`/detail/${item._id}`} // ใช้ item._id แทน item.id
+            to={`/detail/${item._id}`}
             className="border-2 rounded-lg border-gray-200 mr-4 flex p-2"
           >
             <img className="" src={item.image} alt={item.name} />

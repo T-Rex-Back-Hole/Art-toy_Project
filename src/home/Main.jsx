@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../context/DataProvider";
 import Question from "./Question";
@@ -13,6 +14,11 @@ import Arrival from "./Arrival";
 import Category from "./Category";
 const Main = () => {
   const { products } = useData();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <section id="refer">

@@ -71,6 +71,7 @@ export const DataProvider = ({ children }) => {
         0
       );
       return { total };
+      
     }
     return { total: 0 };
   };
