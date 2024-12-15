@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../context/DataProvider";
 import ReactLoading from "react-loading";
+import GoBackButton from "../components/GoBackButton";
 
 const Arttoy = () => {
   const { products, loading, error, fetchData, addToCart, formatMoney } =
@@ -82,6 +83,7 @@ const Arttoy = () => {
 
   return (
     <section id="arttoy" className="mx-5 lg:mx-20">
+      <GoBackButton className="mt-5" />
       <h2 className="text-4xl font-bold mb-6 text-center mt-10">
         Arttoy Products
       </h2>
