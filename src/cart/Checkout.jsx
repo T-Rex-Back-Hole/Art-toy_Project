@@ -5,7 +5,7 @@ import axios from "axios";
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { cart, token, calculateTotal } = useData();
+  const { cart, token, calculateTotal, formatMoney } = useData();
   const [formData, setFormData] = useState({
     fullname: "",
     phoneNumber: "",
@@ -13,7 +13,7 @@ const Checkout = () => {
     district: "",
     subDistrict: "",
     zipcode: "",
-    notes: ""
+    notes: "",
   });
   const [error, setError] = useState("");
   const { total } = calculateTotal();
@@ -28,7 +28,7 @@ const Checkout = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -43,7 +43,7 @@ const Checkout = () => {
         name: item.name,
         price: item.price,
         quantity: item.quantity,
-        image: item.image
+        image: item.image,
       }));
 
       const response = await axios.post(
@@ -51,13 +51,13 @@ const Checkout = () => {
         {
           items,
           amount: total, // ส่งยอดรวมไปให้ server คำนวณค่าส่งเพิ่ม
-          address: formData
+          address: formData,
         },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -68,7 +68,9 @@ const Checkout = () => {
       }
     } catch (error) {
       console.error("Checkout error:", error);
-      setError(error.response?.data?.message || "An error occurred during checkout");
+      setError(
+        error.response?.data?.message || "An error occurred during checkout"
+      );
     }
   };
 
@@ -83,16 +85,22 @@ const Checkout = () => {
           {Object.entries(cart).map(([id, item]) => (
             <div key={id} className="flex justify-between mb-2">
               <div className="flex items-center">
-                <img src={item.image} alt={item.name} className="w-12 h-12 object-cover mr-4" />
-                <span>{item.name} x {item.quantity}</span>
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-12 h-12 object-contain mr-4"
+                />
+                <span>
+                  {item.name} x {item.quantity}
+                </span>
               </div>
-              <span>฿{item.price * item.quantity}</span>
+              <span>฿{formatMoney(item.price * item.quantity)}</span>
             </div>
           ))}
           <div className="border-t mt-4 pt-4">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span>฿{total}</span>
+              <span>฿{formatMoney(total)}</span>
             </div>
             <div className="flex justify-between">
               <span>Shipping Fee</span>
@@ -100,7 +108,7 @@ const Checkout = () => {
             </div>
             <div className="flex justify-between font-bold mt-2">
               <span>Total</span>
-              <span>฿{total + 30}</span>
+              <span>฿{formatMoney(total + 30)}</span>
             </div>
           </div>
         </div>
@@ -109,9 +117,7 @@ const Checkout = () => {
       {/* Shipping Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
-          <div className="bg-red-100 text-red-700 p-3 rounded">
-            {error}
-          </div>
+          <div className="bg-red-100 text-red-700 p-3 rounded">{error}</div>
         )}
 
         <div>
@@ -139,7 +145,7 @@ const Checkout = () => {
         </div>
 
         {/* ฟิลด์ที่อยู่อื่นๆ */}
-        
+
         <button
           type="submit"
           className="w-full bg-[#B47AEA] text-white py-3 px-4 rounded hover:bg-purple-600"
