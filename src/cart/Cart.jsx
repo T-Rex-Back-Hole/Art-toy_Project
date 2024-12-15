@@ -69,7 +69,6 @@ const Cart = () => {
     );
   };
 
-  // เช็คว่าไอเ���มถูกเลือกหรือไม่
   const isChecked = (id) => selectedItems.includes(id);
 
   // คำนวณยอดรวมทุกครั้งที่ cart เปลี่ยนแปลง
@@ -94,7 +93,7 @@ const Cart = () => {
               <i
                 className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
                 onClick={() => setIsModalOpen(true)} // เปิด modal เมื่อคลิก
-              ></i>
+             disabled></i>
             </div>
             {/* แสดงรายการในตะกร้า */}
             {Object.values(cart).length > 0 ? (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useData } from "../context/DataProvider";
+import GoBackButton from "./GoBackButton";
 
 const DetailModel = () => {
   const { id } = useParams();
@@ -55,6 +56,7 @@ const DetailModel = () => {
 
   return (
     <section id="detailModel" className="p-4 lg:p-10">
+      <GoBackButton />
       <div className="container m-auto flex flex-col justify-center items-center lg:flex-row">
         {/* Image Carousel */}
         <div className="flex items-center justify-center lg:px-10 lg:mx-10">
@@ -71,7 +73,9 @@ const DetailModel = () => {
           className="flex flex-col justify-center h-full lg:w-1/2 p-4 lg:p-10 lg:shadow-lg lg:rounded-md"
         >
           <div className="m-auto">
-            <h1 className="text-2xl font-bold mb-2 lg:text-3xl">{product.name}</h1>
+            <h1 className="text-2xl font-bold mb-2 lg:text-3xl">
+              {product.name}
+            </h1>
 
             <span className="text-base text-gray-400">
               Description :{product.description}
@@ -86,7 +90,6 @@ const DetailModel = () => {
                 In Stock
               </h1>
             </div>
-         
           </div>
 
           {/* Action Buttons */}

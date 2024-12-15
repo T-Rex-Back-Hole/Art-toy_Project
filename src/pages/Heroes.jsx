@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useData } from "../context/DataProvider";
 import ReactLoading from "react-loading";
+import GoBackButton from "../components/GoBackButton";
 
 const Hero = () => {
   const { products, loading, error, fetchData, addToCart, formatMoney } =
@@ -79,6 +80,7 @@ const Hero = () => {
 
   return (
     <section id="hero" className="mx-5 lg:mx-20">
+      <GoBackButton className="mt-5" />
       <h2 className="text-4xl font-bold mb-6 text-center mt-10">
         Hero Products
       </h2>
@@ -126,7 +128,10 @@ const Hero = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentProducts.length > 0 ? (
           currentProducts.map((hero) => (
-            <div key={hero._id} className="flex flex-col justify-end border p-6 rounded-lg shadow-md">
+            <div
+              key={hero._id}
+              className="flex flex-col justify-end border p-6 rounded-lg shadow-md"
+            >
               <Link
                 to={`/detail/${hero._id}`}
                 className="text-blue-500 flex justify-center items-center"
@@ -162,8 +167,8 @@ const Hero = () => {
         )}
       </div>
 
-       {/* Pagination */}
-       <div className="flex justify-center items-center my-8 space-x-2">
+      {/* Pagination */}
+      <div className="flex justify-center items-center my-8 space-x-2">
         {/* Previous Button */}
         <button
           onClick={() => paginate(currentPage - 1)}
@@ -205,7 +210,6 @@ const Hero = () => {
           Next
         </button>
       </div>
-
     </section>
   );
 };
