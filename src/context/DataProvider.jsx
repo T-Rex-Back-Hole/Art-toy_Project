@@ -71,35 +71,34 @@ export const DataProvider = ({ children }) => {
         0
       );
       return { total };
-      
     }
     return { total: 0 };
   };
 
   // Add product to cart
-  // Add product to cart
   const addToCart = async (product, quantity) => {
     const { _id } = product;
-
     const token = localStorage.getItem("token");
 
-    // ตรวจสอบว่ามี token หรือไม่
     if (!token) {
       toast.error("Please log in to add products to the cart.");
-      return; // หยุดการทำงานหากไม่มี token
+      return;
     }
 
     // อัปเดตข้อมูลตะกร้าใน state
     setCart((prevCart) => {
-      const updatedCart = { ...prevCart }; // Create a shallow copy of cart
+      const updatedCart = { ...prevCart };
 
       if (updatedCart[_id]) {
-        updatedCart[_id].quantity += quantity; // Update the quantity if the product already exists
+        updatedCart[_id].quantity += quantity;
       } else {
-        updatedCart[_id] = { ...product, quantity }; // Add the product to cart if it doesn't exist
+        updatedCart[_id] = { ...product, quantity };
       }
 
-      return updatedCart; // Return the updated cart object
+      // อัปเดตข้อมูลใน localStorage
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+      return updatedCart;
     });
 
     toast.success("Product added to cart!", {
@@ -118,10 +117,7 @@ export const DataProvider = ({ children }) => {
       // ส่งข้อมูลตะกร้าไปยัง backend
       await axios.post(
         `${backendUrl}/cart/add`,
-        {
-          itemId: _id,
-          quantity,
-        },
+        { itemId: _id, quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );
     } catch (error) {
@@ -150,53 +146,57 @@ export const DataProvider = ({ children }) => {
   const removeItem = async (id) => {
     setLoading(true);
     try {
-      // ส่งคำขอ DELETE ไปยัง backend เพื่อลบสินค้าจากฐานข้อมูล
       const response = await axios.delete(`${backendUrl}/cart/removeItem`, {
         params: { itemId: id },
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // ตรวจสอบว่า API ลบสำเร็จหรือไม่
       if (response.data.success) {
-        // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
-        setCart(response.data.cart); // อัปเดต cartData จาก API
-        updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
+        // อัปเดตตะกร้าใน state
+        setCart(response.data.cart);
+
+        // อัปเดตข้อมูลใน localStorage
+        localStorage.setItem("cart", JSON.stringify(response.data.cart));
+
+        updateCartItemCount();
         toast.success("Item removed from cart! ✅🎉 ");
       } else {
         console.error("Error Remove Item :", response.data.message);
-        toast.error(`Error Remove Item ${response.data.message} 🔥🔥`);
+        toast.error(`Error Remove Item: ${response.data.message} 🔥🔥`);
       }
     } catch (error) {
       console.error("Error removing item from cart", error);
       toast.error("Error removing item from cart. Please try again.");
     } finally {
-      setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
+      setLoading(false);
     }
   };
 
-  const removeAllItem = async (id) => {
+  const removeAllItem = async () => {
     setLoading(true);
     try {
-      // ส่งคำขอ DELETE ไปยัง backend เพื่อลบสินค้าจากฐานข้อมูล
       const response = await axios.delete(`${backendUrl}/cart/removeAllItem`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // ตรวจสอบว่า API ลบสำเร็จหรือไม่
       if (response.data.success) {
-        // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
-        setCart(response.data.cart); // อัปเดต cartData จาก API
-        updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
-        toast.success("Item removed All from cart! ✅😎 ");
+        // อัปเดตตะกร้าใน state
+        setCart(response.data.cart);
+
+        // อัปเดตข้อมูลใน localStorage
+        localStorage.setItem("cart", JSON.stringify(response.data.cart));
+
+        updateCartItemCount();
+        toast.success("All items removed from cart! ✅😎 ");
       } else {
         console.error("Error Remove All Item :", response.data.message);
-        toast.error(`Error Remove All Item ${response.data.message} 🔥🔥`);
+        toast.error(`Error Remove All Item: ${response.data.message} 🔥🔥`);
       }
     } catch (error) {
-      console.error("Error removing All item from cart", error);
-      toast.error("Error removing All item from cart. Please try again.‼️");
+      console.error("Error removing all items from cart", error);
+      toast.error("Error removing all items from cart. Please try again.");
     } finally {
-      setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
+      setLoading(false);
     }
   };
 
@@ -205,22 +205,31 @@ export const DataProvider = ({ children }) => {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
 
-  // Fetch data and update cart count on initial load
   useEffect(() => {
     fetchData();
-  }, []); // Only run once on component mount
+  }, []); // Fetch products when component mounts
 
-  // Update cart item count when cart changes
+  // Update cart item count whenever cart changes
   useEffect(() => {
     updateCartItemCount();
-  }, [cart]); // Recalculate total count when cart changes
+  }, [cart]);
 
-  // Token management in localStorage
+  // Token management (update localStorage when token changes)
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
     }
-  }, [token]); // Only update localStorage when token changes
+  }, [token]);
+
+  // Get cart items on initial load
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+      setCart(JSON.parse(savedCart)); // Set cart data from localStorage if exists
+    } else {
+      getItems(); // If no cart data, fetch from backend
+    }
+  }, []);
 
   return (
     <DataContext.Provider

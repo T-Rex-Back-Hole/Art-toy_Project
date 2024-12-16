@@ -10,11 +10,11 @@ const Navbar = () => {
   useEffect(() => {
     // คำนวณจำนวนสินค้าทั้งหมดในตะกร้า
     const totalItems = Object.values(cart).reduce(
-      (total, item) => total + item.quantity,
+      (total, item) => total + (item.quantity || 0),
       0
     );
-    setCartItemCount(totalItems); // อัปเดตจำนวนสินค้าในตะกร้า
-  }, [cart]); // ทุกครั้งที่ cart เปลี่ยนแปลง, จะคำนวณใหม่
+    setCartItemCount(totalItems);
+  }, [cart]);
 
   return (
     <nav className="sticky top-0 z-50 bg-black px-12 py-2 flex flex-col items-center lg:flex-row lg:justify-between">

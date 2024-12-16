@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
 import { useData } from "../context/DataProvider";
 
-const CartItem = ({
-  item,
-  removeItem,
-  productId,
-  updateQuantity,
-}) => {
+const CartItem = ({ item, removeItem, productId, updateQuantity }) => {
   const { formatMoney } = useData();
 
 
@@ -36,7 +31,7 @@ const CartItem = ({
       <div id="content-box" className="flex lg:justify-evenly">
         <div id="img" className="w-1/2 mx-2 lg:w-1/3">
           <Link
-            to={`/detail/${item._id}`}
+            to={productId ? `/detail/${productId}` : "#"}
             className="border-2 rounded-lg border-gray-200 mr-4 flex p-2"
           >
             <img className="" src={item.image} alt={item.name} />

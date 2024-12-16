@@ -18,12 +18,14 @@ const Contact = () => {
               type="text"
               placeholder="Name"
               className="w-full rounded-full lg:w-1/2 px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+              required
             />
             <input
               id="email"
               type="email"
               placeholder="E-mail"
               className="w-full rounded-full lg:w-1/2 mt-4 md:mt-0 px-4 py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
+              required
             />
           </div>
 
@@ -34,7 +36,8 @@ const Contact = () => {
               rows="4"
               placeholder="Message"
               class="w-full rounded-2xl placeholder:pl-3 mt-4 lg:w-full lg:placeholder:pl-0 lg:mt-0 lg:px-4 lg:py-2 border border-gray-300 lg:rounded-md focus:ring-1 focus:outline-none"
-            ></textarea>
+              required
+            />
           </div>
           <div id="btn-contact" className="flex w-full">
             <button
@@ -67,6 +70,7 @@ const Contact = () => {
             type="email"
             placeholder="E-mail"
             className="h-10 mt-4 placeholder:pl-3 rounded-full w-full lg:w-96 lg:h-12 lg:m-4 lg:px-4 lg:py-2 border border-gray-300 lg:rounded-md lg:placeholder:pl-0 focus:ring-1 focus:outline-none"
+            required
           />
           <button
             type="submit"

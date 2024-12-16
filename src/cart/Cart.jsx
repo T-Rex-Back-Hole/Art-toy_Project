@@ -13,7 +13,6 @@ const Cart = () => {
     calculateTotal,
     formatMoney,
   } = useData();
-  const [selectedItems, setSelectedItems] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -48,28 +47,6 @@ const Cart = () => {
     handlePaymentResult();
   }, [success, removeAllItem, navigate, isProcessing]);
 
-  // ฟังก์ชันเลือกสินค้าทั้งหมด
-  const handleSelectAll = (e) => {
-    if (e.target.checked) {
-      // เมื่อ checkbox "Select All" ถูกเช็ค, เลือกรายการทั้งหมด
-      const selected = Object.keys(cart); // เก็บ ID ของทุกๆ รายการใน cart
-      setSelectedItems(selected); // อัปเดต selectedItems ให้เลือกทั้งหมด
-    } else {
-      // เมื่อ checkbox "Select All" ถูกยกเลิก, รีเซ็ต selectedItems
-      setSelectedItems([]);
-    }
-  };
-
-  // ฟังก์ชันเลือกสินค้ารายการ
-  const handleSelectItem = (id) => {
-    setSelectedItems((prevSelected) =>
-      prevSelected.includes(id)
-        ? prevSelected.filter((itemId) => itemId !== id)
-        : [...prevSelected, id]
-    );
-  };
-
-  const isChecked = (id) => selectedItems.includes(id);
 
   // คำนวณยอดรวมทุกครั้งที่ cart เปลี่ยนแปลง
   useEffect(() => {
@@ -104,8 +81,6 @@ const Cart = () => {
                     item={item}
                     removeItem={removeItem}
                     updateQuantity={updateQuantity}
-                    isChecked={isChecked(id)}
-                    onSelectItem={() => handleSelectItem(id)}
                     productId={id}
                   />
                 ) : null
