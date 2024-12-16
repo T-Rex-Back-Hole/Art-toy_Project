@@ -4,28 +4,26 @@ import { useData } from "../context/DataProvider";
 import GoBackButton from "./GoBackButton";
 
 const DetailModel = () => {
-  const { id } = useParams();
-
-  const { products, loading, error, addToCart, getSingleItem } = useData();
+  const { id } = useParams(); // ดึง id จาก URL
+  const { products, loading, error, addToCart } = useData(); // ดึงข้อมูลจาก DataProvider
   const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
+    // ค้นหาสินค้าจาก products โดยใช้ id
     const findProduct = () => {
       if (!loading && products.length > 0) {
         const selectedProduct = products.find((product) => product._id === id);
-
-        setProduct(selectedProduct);
+        setProduct(selectedProduct); // ตั้งค่า product เมื่อค้นหาสำเร็จ
       }
     };
 
     findProduct();
   }, [id, products, loading]);
 
+
   const handleAddToCart = () => {
     if (product) {
-      console.log("Log product =>>", product);
-      addToCart({ ...product, quantity });
+      addToCart(product, 1); // เพิ่มสินค้าไปที่ตะกร้า
     }
   };
 
@@ -78,7 +76,7 @@ const DetailModel = () => {
             </h1>
 
             <span className="text-base text-gray-400">
-              Description :{product.description}
+              Description : {product.description}
             </span>
 
             {/* Availability */}

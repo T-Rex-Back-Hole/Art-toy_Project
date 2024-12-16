@@ -5,8 +5,14 @@ import ReactLoading from "react-loading";
 import GoBackButton from "../components/GoBackButton";
 
 const Arttoy = () => {
-  const { products, loading, error, fetchData, addToCart, formatMoney } =
-    useData();
+  const {
+    products,
+    loading,
+    error,
+    fetchData,
+    addToCart,
+    formatMoney,
+  } = useData();
 
   const [quantities, setQuantities] = useState({});
   const [sortType, setSortType] = useState("default");
@@ -26,6 +32,7 @@ const Arttoy = () => {
       fetchData(); // Fetch data from the backend
     }
   }, [products, fetchData]); // Add fetchData to dependency array
+
 
   if (loading) {
     return (
@@ -121,7 +128,10 @@ const Arttoy = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {currentProducts.length > 0 ? (
           currentProducts.map((arttoy) => (
-            <div key={arttoy._id} className="flex flex-col justify-end border p-6 rounded-lg shadow-md">
+            <div
+              key={arttoy._id}
+              className="flex flex-col justify-end border p-6 rounded-lg shadow-md"
+            >
               <Link
                 to={`/detail/${arttoy._id}`}
                 className="text-blue-500 flex justify-center items-center "
