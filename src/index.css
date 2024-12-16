@@ -47,63 +47,38 @@
   .buynow-btn {
     @apply bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF] w-full;
   }
-
-  /* สำหรับการแสดงสินค้า */
-.products-container {
-  display: flex;
-  flex-wrap: nowrap; /* สินค้าไม่ตัดแถว */
-}
-
-/* สำหรับสินค้าที่มีความกว้างที่เหมาะสมในทุกขนาดหน้าจอ */
-.product {
-  flex-shrink: 0;
-  width: 25%; /* 4 ตัวในหนึ่งแถวบนหน้าจอใหญ่ */
-}
-
-/* ปรับแอนิเมชั่นให้เร็วขึ้นบนมือถือ */
-@media (max-width: 1024px) {
   .animate-marquee-mobile {
-    animation: marquee-mobile 10s linear infinite; /* เลื่อนเร็วขึ้นในมือถือ */
+    animation: marquee 15s linear infinite;
   }
 
-  .products-container {
-    flex-wrap: nowrap; /* สินค้าไม่ตัดแถว */
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
   }
 
-  .product {
-    width: 50%; /* ให้แสดงสินค้า 2 ตัวในแถวบนแท็บเล็ตและมือถือ */
-  }
-
-  /* แอนิเมชั่นการเลื่อนสำหรับมือถือ */
-  @keyframes marquee-mobile {
+  @keyframes marquee {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%); /* เลื่อนไปที่ตัวที่สอง */
+      transform: translateX(-100%);
     }
   }
 }
 
-/* สำหรับหน้าจอใหญ่ 1024px ขึ้นไป */
+/* หยุดการเคลื่อนไหวเมื่อ Hover ที่ div หรือสินค้า */
+.flex:hover {
+  animation-play-state: paused;
+}
+
+/* ปรับการแสดงผลให้สมบูรณ์ */
+@media (max-width: 768px) {
+  .animate-marquee-mobile {
+    animation-duration: 20s; /* เพิ่มความช้าของการเคลื่อนไหวบนมือถือ */
+  }
+}
+
 @media (min-width: 1024px) {
-  .product {
-    width: 16.6667%; /* 6 ตัวในแถว */
-  }
-
   .animate-marquee {
-    animation: marquee 20s linear infinite; /* เลื่อนช้าในหน้าจอขนาดใหญ่ */
+    animation-duration: 30s; /* ความเร็วที่ช้าลงในหน้าจอขนาดใหญ่ */
   }
-}
-
-/* การเลื่อนแบบต่อเนื่อง */
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-16.6667%); /* เลื่อนสินค้าประมาณ 1/6 ของความกว้างทั้งหมด */
-  }
-}
-
 }

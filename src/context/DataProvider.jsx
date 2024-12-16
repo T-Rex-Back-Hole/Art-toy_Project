@@ -11,12 +11,12 @@ export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState({}); // Initializing as an empty array
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cartItemCount, setCartItemCount] = useState(0);
   const backendUrl = import.meta.env.VITE_API_URL;
-  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [token, setToken] = useState(localStorage.getItem("token") || ""); // Initialize token from localStorage
 
   // Fetch data from backend
   const fetchData = async () => {
@@ -31,18 +31,17 @@ export const DataProvider = ({ children }) => {
     }
   };
 
-  // Fetch cart items from the backend
+  // Fetch data cart
   const getItems = async () => {
-    if (!token) {
-      return toast.error("Please log in to view your cart.");
-    }
-
     try {
+      // เรียก API เพื่อดึงข้อมูลตะกร้าและข้อมูลผู้ใช้ (userId, token)
       const response = await axios.get(`${backendUrl}/cart/get`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       if (response.data.success) {
-        setCart(response.data.cart); // Set cart from backend
+        const { cart } = response.data;
+
+        setCart(cart);
       }
     } catch (error) {
       console.error("Error getting items in cart:", error);
@@ -66,39 +65,64 @@ export const DataProvider = ({ children }) => {
   // Calculate total price
   const calculateTotal = () => {
     if (cart && Object.keys(cart).length > 0) {
+      // Use Object.values to get an array of the cart items
       const total = Object.values(cart).reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
       );
       return { total };
+      
     }
     return { total: 0 };
   };
 
   // Add product to cart
   const addToCart = async (product, quantity) => {
-    if (!token) {
-      toast.error("Please log in to add products to the cart.");
-      return;
-    }
-
     const { _id } = product;
 
+    const token = localStorage.getItem("token");
+
+    // ตรวจสอบว่ามี token หรือไม่
+    if (!token) {
+      toast.error("Please log in to add products to the cart.");
+      return; // หยุดการทำงานหากไม่มี token
+    }
+
+    // อัปเดตข้อมูลตะกร้าใน state
+    setCart((prevCart) => {
+      const updatedCart = { ...prevCart }; // Create a shallow copy of cart
+
+      if (updatedCart[_id]) {
+        updatedCart[_id].quantity += quantity; // Update the quantity if the product already exists
+      } else {
+        updatedCart[_id] = { ...product, quantity }; // Add the product to cart if it doesn't exist
+      }
+
+      return updatedCart; // Return the updated cart object
+    });
+
+    toast.success("Product added to cart!", {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      theme: "dark",
+    });
+
+    updateCartItemCount();
+
     try {
-      // Add product to cart in backend
-      const response = await axios.post(
+      // ส่งข้อมูลตะกร้าไปยัง backend
+      await axios.post(
         `${backendUrl}/cart/add`,
-        { itemId: _id, quantity },
+        {
+          itemId: _id,
+          quantity,
+        },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      if (response.data.success) {
-        setCart(response.data.cart); // Update cart from backend response
-        toast.success("Product added to cart!");
-        updateCartItemCount();
-      } else {
-        toast.error("Failed to add product to cart. Please try again.");
-      }
     } catch (error) {
       console.error("Error adding to cart:", error);
       toast.error("Failed to add product to cart. Please try again.");
@@ -106,66 +130,72 @@ export const DataProvider = ({ children }) => {
   };
 
   // Update product quantity in cart
-  const updateQuantity = async (id, newQuantity) => {
+  const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
 
-    try {
-      const response = await axios.put(
-        `${backendUrl}/cart/updateQuantity`,
-        { itemId: id, quantity: newQuantity },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+    setCart((prevCart) => {
+      const updatedCart = { ...prevCart }; // Create a shallow copy of cart
 
-      if (response.data.success) {
-        setCart(response.data.cart); // Update cart from backend response
-        updateCartItemCount();
-      } else {
-        toast.error("Failed to update product quantity.");
+      if (updatedCart[id]) {
+        updatedCart[id].quantity = newQuantity; // Update the quantity of the specific product
       }
-    } catch (error) {
-      console.error("Error updating quantity:", error);
-      toast.error("Error updating product quantity.");
-    }
+
+      return updatedCart; // Return the updated cart object
+    });
+
+    updateCartItemCount();
   };
 
-  // Remove item from cart
   const removeItem = async (id) => {
+    setLoading(true);
     try {
+      // ส่งคำขอ DELETE ไปยัง backend เพื่อลบสินค้าจากฐานข้อมูล
       const response = await axios.delete(`${backendUrl}/cart/removeItem`, {
         params: { itemId: id },
         headers: { Authorization: `Bearer ${token}` },
       });
 
+      // ตรวจสอบว่า API ลบสำเร็จหรือไม่
       if (response.data.success) {
-        setCart(response.data.cart); // Update cart from backend response
-        toast.success("Item removed from cart!");
-        updateCartItemCount();
+        // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
+        setCart(response.data.cart); // อัปเดต cartData จาก API
+        updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
+        toast.success("Item removed from cart! ✅🎉 ");
       } else {
-        toast.error("Failed to remove item from cart.");
+        console.error("Error Remove Item :", response.data.message);
+        toast.error(`Error Remove Item ${response.data.message} 🔥🔥`);
       }
     } catch (error) {
       console.error("Error removing item from cart", error);
-      toast.error("Error removing item from cart.");
+      toast.error("Error removing item from cart. Please try again.");
+    } finally {
+      setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
     }
   };
 
-  // Remove all items from cart
-  const removeAllItem = async () => {
+  const removeAllItem = async (id) => {
+    setLoading(true);
     try {
+      // ส่งคำขอ DELETE ไปยัง backend เพื่อลบสินค้าจากฐานข้อมูล
       const response = await axios.delete(`${backendUrl}/cart/removeAllItem`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
+      // ตรวจสอบว่า API ลบสำเร็จหรือไม่
       if (response.data.success) {
-        setCart(response.data.cart); // Update cart from backend response
-        toast.success("All items removed from cart!");
-        updateCartItemCount();
+        // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
+        setCart(response.data.cart); // อัปเดต cartData จาก API
+        updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
+        toast.success("Item removed All from cart! ✅😎 ");
       } else {
-        toast.error("Failed to remove all items from cart.");
+        console.error("Error Remove All Item :", response.data.message);
+        toast.error(`Error Remove All Item ${response.data.message} 🔥🔥`);
       }
     } catch (error) {
-      console.error("Error removing all items from cart", error);
-      toast.error("Error removing all items from cart.");
+      console.error("Error removing All item from cart", error);
+      toast.error("Error removing All item from cart. Please try again.‼️");
+    } finally {
+      setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
     }
   };
 
@@ -174,28 +204,22 @@ export const DataProvider = ({ children }) => {
     return money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   }
 
+  // Fetch data and update cart count on initial load
   useEffect(() => {
-    fetchData(); // Fetch products on mount
-  }, []);
+    fetchData();
+  }, []); // Only run once on component mount
 
   // Update cart item count when cart changes
   useEffect(() => {
     updateCartItemCount();
-  }, [cart]);
+  }, [cart]); // Recalculate total count when cart changes
 
-  // Token management (update localStorage when token changes)
+  // Token management in localStorage
   useEffect(() => {
     if (token) {
-      localStorage.setItem("token", token); // Store token in localStorage
+      localStorage.setItem("token", token);
     }
-  }, [token]);
-
-  // Get cart items on initial load
-  useEffect(() => {
-    if (token) {
-      getItems(); // Fetch cart from backend if token is available
-    }
-  }, [token]);
+  }, [token]); // Only update localStorage when token changes
 
   return (
     <DataContext.Provider
@@ -214,6 +238,7 @@ export const DataProvider = ({ children }) => {
         setToken,
         token,
         getItems,
+        setCart,
         removeAllItem,
       }}
     >
