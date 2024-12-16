@@ -16,29 +16,27 @@ const Cart = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const success = searchParams.get('success');
+  const success = searchParams.get("success");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // ดึงข้อมูลตะกร้าครั้งแรก
   useEffect(() => {
     getItems();
   }, []);
 
-  // จัดการผลลัพธ์การชำระเงิน
   useEffect(() => {
     const handlePaymentResult = async () => {
       if (isProcessing || !success) return;
 
       try {
         setIsProcessing(true);
-        if (success === 'true') {
+        if (success === "true") {
           await removeAllItem();
-          navigate('/cart', { replace: true });
-        } else if (success === 'false') {
-          navigate('/cart', { replace: true });
+          navigate("/cart", { replace: true });
+        } else if (success === "false") {
+          navigate("/cart", { replace: true });
         }
       } catch (error) {
-        console.error('Error handling payment result:', error);
+        console.error("Error handling payment result:", error);
       } finally {
         setIsProcessing(false);
       }
@@ -47,14 +45,11 @@ const Cart = () => {
     handlePaymentResult();
   }, [success, removeAllItem, navigate, isProcessing]);
 
-
-  // คำนวณยอดรวมทุกครั้งที่ cart เปลี่ยนแปลง
   useEffect(() => {
     calculateTotal();
   }, [cart]);
 
-  // ดำนวณยอดรวม
-  const { total } = calculateTotal(); // ดึงข้อมูลยอดรวมจาก calculateTotal
+  const { total } = calculateTotal();
 
   return (
     <section className="mt-3 antialiased lg:flex lg:justify-center mx-auto ">
@@ -64,17 +59,18 @@ const Cart = () => {
             MY CART
           </h2>
           <div className="space-y-2">
-            {/* ปุ่มลบทั้งหมด */}
             <div className="flex justify-between items-center rounded-lg border py-2 px-4 border-gray-200 bg-white shadow-md">
               <h1 className="font-semibold ml-2">Delete All</h1>
               <i
                 className="fa-solid fa-trash hover:text-red-700 text-red-500 cursor-pointer"
-                onClick={() => setIsModalOpen(true)} // เปิด modal เมื่อคลิก
-             disabled></i>
+                onClick={() => setIsModalOpen(true)}
+                disabled
+              ></i>
             </div>
-            {/* แสดงรายการในตะกร้า */}
-            {Object.values(cart).length > 0 ? (
-              Object.entries(cart).map(([id, item]) =>
+
+            {/* Safely access cart */}
+            {Object.values(cart || {}).length > 0 ? (
+              Object.entries(cart || {}).map(([id, item]) =>
                 item ? (
                   <CartItem
                     key={id}
@@ -95,7 +91,6 @@ const Cart = () => {
         </div>
       </div>
 
-      {/* ส่วนสรุปการสั่งซื้อ */}
       <div className="mt-4 max-w-4xl lg:max-w-80 flex-1 space-y-4 lg:mt-[6.25rem] lg:sticky">
         <div className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-md sm:p-6 ">
           <p className="text-xl font-semibold text-gray-900">Order summary</p>
@@ -126,10 +121,9 @@ const Cart = () => {
               </dd>
             </dl>
           </div>
-          {/* ปุ่ม Checkout */}
-          <Link to={Object.keys(cart).length > 0 ? "/checkout" : "#"}>
+          <Link to={Object.keys(cart || {}).length > 0 ? "/checkout" : "#"}>
             <button
-              disabled={Object.keys(cart).length === 0}
+              disabled={Object.keys(cart || {}).length === 0}
               className="w-full rounded-lg bg-[#5BDEE7] px-5 py-2.5 text-lg font-semibold text-white lg:hover:bg-[#3ef2ff] disabled:opacity-50"
             >
               Checkout
@@ -138,7 +132,6 @@ const Cart = () => {
         </div>
       </div>
 
-      {/* Modal สำหรับการยืนยันการลบทั้งหมด */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg w-4/5 md:w-1/3 shadow-xl">
@@ -147,7 +140,7 @@ const Cart = () => {
             </h2>
             <div className="flex justify-end space-x-4">
               <button
-                onClick={() => setIsModalOpen(false)} // ปิด modal
+                onClick={() => setIsModalOpen(false)}
                 className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
               >
                 Cancel
@@ -155,8 +148,8 @@ const Cart = () => {
               <button
                 onClick={() => {
                   removeAllItem();
-                  setIsModalOpen(false); // ปิด modal หลังจากลบ
-                }} // ลบสินค้าทั้งหมด
+                  setIsModalOpen(false);
+                }}
                 className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
               >
                 Yes, Remove All
