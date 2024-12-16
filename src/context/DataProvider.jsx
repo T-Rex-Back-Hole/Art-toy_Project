@@ -45,7 +45,6 @@ export const DataProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Error getting items in cart:", error);
-      toast.error("Failed to get items in cart. Please try again.");
     }
   };
 
@@ -84,8 +83,9 @@ export const DataProvider = ({ children }) => {
 
     // ตรวจสอบว่ามี token หรือไม่
     if (!token) {
-      toast.error("Please log in to add products to the cart.");
-      return; // หยุดการทำงานหากไม่มี token
+      toast.error("Please log in to add items to your cart.");
+      return;
+
     }
 
     // อัปเดตข้อมูลตะกร้าใน state
@@ -101,7 +101,7 @@ export const DataProvider = ({ children }) => {
       return updatedCart; // Return the updated cart object
     });
 
-    toast.success("Product added to cart!", {
+    toast.success("Product successfully added to the cart! ✅", {
       position: "top-right",
       autoClose: 1000,
       hideProgressBar: false,
@@ -124,8 +124,8 @@ export const DataProvider = ({ children }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
     } catch (error) {
-      console.error("Error adding to cart:", error);
-      toast.error("Failed to add product to cart. Please try again.");
+      console.error("Error Unable to add product:", error);
+      toast.error("Unable to add product to cart. Please try again.");
     }
   };
 
@@ -157,17 +157,22 @@ export const DataProvider = ({ children }) => {
 
       // ตรวจสอบว่า API ลบสำเร็จหรือไม่
       if (response.data.success) {
-        // ถ้าลบสำเร็จ, อัปเดตตะกร้าใน state
-        setCart(response.data.cart); // อัปเดต cartData จาก API
-        updateCartItemCount(); // อัปเดตจำนวนสินค้าทั้งหมดในตะกร้า
-        toast.success("Item removed from cart! ✅🎉 ");
+        // อัปเดตตะกร้าใน state
+        setCart(response.data.cart);
+
+        // อัปเดตข้อมูลใน localStorage
+        localStorage.setItem("cart", JSON.stringify(response.data.cart));
+
+        updateCartItemCount();
+        toast.success("Item successfully removed from the cart! ✅🎉 ");
       } else {
-        console.error("Error Remove Item :", response.data.message);
-        toast.error(`Error Remove Item ${response.data.message} 🔥🔥`);
+        console.error("Error Unable to Remove Item :", response.data.message);
+        toast.error(`Unable to Remove Item: ${response.data.message} 🔥🔥`);
+
       }
     } catch (error) {
-      console.error("Error removing item from cart", error);
-      toast.error("Error removing item from cart. Please try again.");
+      console.error("Error Unable to remove item from cart", error);
+      toast.error("Unable to remove item from cart. Please try again.");
     } finally {
       setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
     }
@@ -192,8 +197,11 @@ export const DataProvider = ({ children }) => {
         toast.error(`Error Remove All Item ${response.data.message} 🔥🔥`);
       }
     } catch (error) {
-      console.error("Error removing All item from cart", error);
-      toast.error("Error removing All item from cart. Please try again.‼️");
+      console.error("Error‼️ Unable to remove all items from the cart", error);
+      toast.error(
+        "Unable to remove all items from the cart. Please try again."
+      );
+
     } finally {
       setLoading(false); // กำหนดสถานะ loading ให้เป็น false หลังจากเสร็จสิ้น
     }
