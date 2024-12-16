@@ -8,12 +8,16 @@ const Navbar = () => {
   const [cartItemCount, setCartItemCount] = useState(0); // สถานะสำหรับเก็บจำนวนสินค้าในตะกร้า
 
   useEffect(() => {
-    // คำนวณจำนวนสินค้าทั้งหมดในตะกร้า
-    const totalItems = Object.values(cart).reduce(
-      (total, item) => total + (item.quantity || 0),
-      0
-    );
-    setCartItemCount(totalItems);
+    if (cart && Object.keys(cart).length > 0) {
+      // คำนวณจำนวนสินค้าทั้งหมดในตะกร้า
+      const totalItems = Object.values(cart).reduce(
+        (total, item) => total + (item.quantity || 0),
+        0
+      );
+      setCartItemCount(totalItems);
+    } else {
+      setCartItemCount(0);
+    }
   }, [cart]);
 
   return (
