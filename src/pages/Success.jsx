@@ -36,17 +36,13 @@ const Success = () => {
         );
 
         if (response.data.success) {
-          // ล้างตะกร้าและอัพเดทข��อมูล
-          try {
-            await removeAllItem();
-            await getItems();
-            // แสดงข้อความสำเร็จ 2 วินาทีก่อน redirect
-            setTimeout(() => {
-              navigate('/cart');
-            }, 2000);
-          } catch (error) {
-            console.error('Error clearing cart:', error);
-          }
+          // ล้างตะกร้าและอัพเดทข้อมูล
+          await removeAllItem();
+          await getItems();
+          // แสดงข้อความสำเร็จ 2 วินาทีก่อน redirect
+          setTimeout(() => {
+            navigate('/cart');
+          }, 2000);
         } else {
           setError('Payment verification failed');
           setTimeout(() => {
