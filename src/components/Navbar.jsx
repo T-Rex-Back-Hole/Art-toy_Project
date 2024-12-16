@@ -31,15 +31,6 @@ const Navbar = () => {
         id="menu-icon"
         className="flex justify-between my-2 lg:my-0 lg:justify-between lg:items-center"
       >
-        <div id="search">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="relative hidden lg:w-64 lg:inline m-4 px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:outline-none"
-          />
-          <i className="fa-solid fa-magnifying-glass absolute hidden lg:inline nav-icon end-56 top-1/2 transform -translate-y-1/2 text-gray-300 px-5"></i>
-        </div>
-
         <Link to="/login">
           <i className="fa-solid fa-user nav-icon px-4 lg:hover:text-purple-600"></i>
         </Link>
