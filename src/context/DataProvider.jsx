@@ -225,7 +225,7 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
-      setCart(JSON.parse(savedCart)); // Set cart data from localStorage if exists
+      setCart(JSON.parse(savedCart));
     } else {
       getItems(); // If no cart data, fetch from backend
     }
