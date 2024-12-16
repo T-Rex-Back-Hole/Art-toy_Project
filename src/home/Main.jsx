@@ -21,29 +21,31 @@ const Main = () => {
 
   return (
     <>
+      {/* Component Refer */}
       <section id="refer">
         <h1 className="font-bold text-3xl text-center my-10 lg:text-5xl">
           Art Toy reference
         </h1>
         <div className="overflow-hidden relative">
-          <div className="flex lg:space-x-5 animate-marquee-mobile lg:animate-marquee">
+          <div className="flex lg:space-x-5 animate-marquee products-container">
             {/* แสดงสินค้าทั้งหมดและทำสำเนาเพื่อให้เลื่อนไหลแบบไม่หยุด */}
-            {products.map((product, index) => (
-              <Link
+            {products.concat(products, products).map((product, index) => (
+              <a
                 key={index}
-                to={`/detail/${product._id}`}
-                className="flex-shrink-0 w-full lg:w-1/6 product"
+                href={`/detail/${product._id}`}
+                className="flex-shrink-0 product"
               >
                 <img
                   src={product.image}
                   alt={product.name}
                   className="h-96 object-contain p-2 rounded-lg lg:aspect-square sm:h-56 md:h-96 lg:h-80"
                 />
-              </Link>
+              </a>
             ))}
           </div>
         </div>
       </section>
+
       {/* Category ---------------------------------------------------------------------------------------------------------------*/}
       <Category />
       {/* Arrival ---------------------------------------------------------------------------------------------------------------*/}

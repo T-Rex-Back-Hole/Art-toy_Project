@@ -47,9 +47,55 @@
   .buynow-btn {
     @apply bg-[#98F5FC] px-4 py-2 text-white font-semibold rounded-full lg:hover:bg-[#42F2FF] w-full;
   }
-}
 
-/* หยุดการเคลื่อนไหวเมื่อ Hover ที่ div หรือสินค้า */
-.flex:hover {
-  animation-play-state: paused;
+  /* สไตล์สำหรับการเลื่อนสินค้า */
+  .animate-marquee {
+    display: flex;
+    animation: marquee 15s linear infinite; /* เลื่อนช้าในหน้าจอขนาดใหญ่ */
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(
+        -33.3333%
+      ); /* ให้เลื่อนไปประมาณ 1/3 ของความกว้างทั้งหมด */
+    }
+  }
+
+  /* สำหรับสินค้าทั้งหมดในทุกขนาดหน้าจอ */
+  .products-container {
+    display: flex;
+    flex-wrap: nowrap; /* แสดงสินค้าต่อเนื่องแบบไม่ตัดแถว */
+  }
+
+  /* สำหรับสินค้าที่มีความกว้างที่เหมาะสมในทุกขนาดหน้าจอ */
+  .product {
+    flex-shrink: 0;
+    width: 25%; /* 4 ตัวในหนึ่งแถวบนหน้าจอใหญ่ */
+  }
+
+  /* ปรับแอนิเมชั่นให้เร็วขึ้นบนมือถือ */
+  @media (max-width: 1024px) {
+    .animate-marquee {
+      animation: marquee 5s linear infinite; /* เลื่อนเร็วขึ้นในมือถือ */
+    }
+
+    .products-container {
+      flex-wrap: nowrap; /* สินค้าไม่ตัดแถว */
+    }
+
+    .product {
+      width: 50%; /* ให้แสดงสินค้า 2 ตัวในแถวมือถือ */
+    }
+  }
+
+  /* สำหรับหน้าจอใหญ่ 1024px ขึ้นไป */
+  @media (min-width: 1024px) {
+    .product {
+      width: 16.6667%; /* 6 ตัวในแถว */
+    }
+  }
 }
