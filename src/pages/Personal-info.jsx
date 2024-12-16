@@ -69,6 +69,7 @@ const handlePasswordChange = async (e) => {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      window.scrollTo(0, 0);
       try {
         // ตรวจสอบว่ามี token หรือไม่
         const token = localStorage.getItem('token');
